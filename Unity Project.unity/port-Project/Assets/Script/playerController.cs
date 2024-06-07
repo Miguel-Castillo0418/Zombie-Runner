@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour //IDamage
 {
     [SerializeField] CharacterController charController;
 
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Start()
     {
         HPorig = HP;
-        updatePlayerUI();
+        //updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -93,18 +93,18 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        updatePlayerUI();
-        if (HP <= 0)
-        {
-            //Gamemanager.instance.youLose();
-        }
-    }
+    //public void takeDamage(int amount)
+    //{
+    //    HP -= amount;
+    //    updatePlayerUI();
+    //    if (HP <= 0)
+    //    {
+    //        //Gamemanager.instance.youLose();
+    //    }
+    //}
 
-    void updatePlayerUI()
-    {
-       // Gamemanager.instance.playerHPbar.fillAmount = (float)HP / HPorig;
-    }
+    //void updatePlayerUI()
+    //{
+    //   // Gamemanager.instance.playerHPbar.fillAmount = (float)HP / HPorig;
+    //}
 }
