@@ -250,15 +250,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charController: {fileID: 827008712}
+  cameraController: {fileID: 963194229}
   HP: 10
   speed: 3
-  sprintMod: 3
+  sprintMod: 1
   jumpMax: 2
   jumpSpeed: 3
-  gravity: 10
+  gravity: 5
   shootDamage: 1
   shootRate: 0.5
   shootDistance: 15
+  crouchHeight: 0.5
+  slideSpeed: 15
 --- !u!136 &827008708
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -341,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 827008705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 4.29, z: -10.04}
+  m_LocalPosition: {x: -0.15, y: 3, z: -10.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -597,21 +600,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1628500317101431470, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192162789329210410, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: gravity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192162789329210410, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: sprintMod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192162789329210410, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: slideSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192162789329210410, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: proneHeight
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4192162789329210410, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
+      propertyPath: crouchHeight
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4199786821349407853, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.29
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.04
+      value: -10.02
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 25f40a147b746fd478cab57b813363e0, type: 3}
       propertyPath: m_LocalRotation.w

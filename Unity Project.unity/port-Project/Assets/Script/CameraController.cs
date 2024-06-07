@@ -10,12 +10,13 @@ public class Cameracontroller : MonoBehaviour
     [SerializeField] bool invertY;
 
     float rotX;
-
+    Vector3 originalLocalPosition;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        originalLocalPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -40,6 +41,12 @@ public class Cameracontroller : MonoBehaviour
         //rotate the player on the Y axis
         transform.parent.Rotate(Vector3.up * mouseX);
 
+    }
+    public void AdjustHeight(float height)
+    {
+        Vector3 newPosition = originalLocalPosition;
+        newPosition.y = height;
+        transform.localPosition = newPosition;
     }
 }
 

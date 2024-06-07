@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour //IDamage
 {
     [SerializeField] CharacterController charController;
+    [SerializeField] Cameracontroller cameraController;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -17,9 +19,20 @@ public class PlayerController : MonoBehaviour //IDamage
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
 
+    [SerializeField] float crouchHeight;
+    [SerializeField] int slideSpeed;
+
+   
+    float origHeight;
+    float origCameraHeight = 1;
+    int origSpeed;
+    bool isSprinting = false;
+    bool isCrouching = false;
+    bool isProne = false;
     bool isShooting;
     int jumpCount;
     int HPorig;
+
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -27,6 +40,8 @@ public class PlayerController : MonoBehaviour //IDamage
     void Start()
     {
         HPorig = HP;
+        origHeight = charController.height;
+        origSpeed = speed;
         //updatePlayerUI();
     }
 
@@ -36,6 +51,7 @@ public class PlayerController : MonoBehaviour //IDamage
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
         movement();
         sprint();
+        crouch();
         if (Input.GetButton("Fire1") && isShooting == false)
             StartCoroutine(shoot());
     }
@@ -63,15 +79,60 @@ public class PlayerController : MonoBehaviour //IDamage
     void sprint()
     {
         if (Input.GetButtonDown("Sprint"))
-        {
+        { 
+            isSprinting = true;
             speed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
-        {
+        {            
+            isSprinting = false;
             speed /= sprintMod;
         }
     }
 
+    void crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            if (isSprinting)
+            {
+                StartCoroutine(Slide());
+            }
+            else if (!isCrouching && !isProne)
+            {
+                isCrouching = true;
+                isProne = false;
+                cameraController.AdjustHeight(0.5f);
+            }
+            else if (isCrouching)
+            {
+                isCrouching = false;
+                isProne = true;
+                charController.height = crouchHeight;
+                cameraController.AdjustHeight(0);
+            }
+            else if (isProne)
+            {
+                isProne = false;
+                charController.height = origHeight;
+                cameraController.AdjustHeight(origCameraHeight);
+            }
+        }
+    }
+
+    IEnumerator Slide()
+    {
+        int initialSpeed = speed;
+        speed = slideSpeed;
+        charController.height = crouchHeight;
+        cameraController.AdjustHeight(0);
+
+        yield return new WaitForSeconds(1);
+
+        charController.height = origHeight;
+        cameraController.AdjustHeight(origCameraHeight);
+        speed = origSpeed;
+    }
     IEnumerator shoot()
     {
         isShooting = true;
