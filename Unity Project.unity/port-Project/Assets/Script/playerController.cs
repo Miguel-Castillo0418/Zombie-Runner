@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour ,IDamage
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform shootPos;
 
     private float nextAttackTime;
 
@@ -119,14 +121,15 @@ public class PlayerController : MonoBehaviour ,IDamage
             {
                 isCrouching = true;
                 isProne = false;
-                cameraController.AdjustHeight(0.5f);
+                charController.height = crouchHeight;
+                cameraController.AdjustHeight(1);
             }
             else if (isCrouching)
             {
                 isCrouching = false;
                 isProne = true;
-                charController.height = crouchHeight;
-                cameraController.AdjustHeight(0);
+               
+                cameraController.AdjustHeight(0.1f);
             }
             else if (isProne)
             {
@@ -153,6 +156,10 @@ public class PlayerController : MonoBehaviour ,IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+
+        Instantiate(bullet, shootPos.position, shootPos.rotation);
+
+        // Perform the raycast
         RaycastHit hit;
         Vector3 rayOrigin = Camera.main.transform.position;
         Vector3 rayDirection = Camera.main.transform.forward;
@@ -169,6 +176,7 @@ public class PlayerController : MonoBehaviour ,IDamage
                 damage.takeDamage(shootDamage);
             }
         }
+
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
@@ -185,7 +193,7 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
     }
 
     IEnumerator MeleeAttack()
