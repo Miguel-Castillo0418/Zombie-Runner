@@ -65,10 +65,10 @@ public class PlayerController : MonoBehaviour ,IDamage
             StartCoroutine(shoot());
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetKeyDown(KeyCode.F)) // Replace with your preferred key
+            if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
             {
                 StartCoroutine(MeleeAttack());
-                nextAttackTime = Time.time + 1f / attackRate;
+                nextAttackTime = Time.time + attackRate;
             }
         }
     }
@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour ,IDamage
                 damageable.takeDamage(meleeDamage);
             }
         }
+
         yield return new WaitForSeconds(attackRate);
     }
 
