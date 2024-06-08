@@ -16,14 +16,18 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text pointsCountText;
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
+    [SerializeField] GameObject testhintText;
+    [SerializeField] GameObject hintobject;
     public Image playerHPBar;
 
     public GameObject player;
     public PlayerController playerScript;
 
+    public bool isHint;
     public bool isPaused;
     int enemycount;
     int points;
+    int round;
 
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +35,7 @@ public class gameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        updateRound(1);
     }
 
     // Update is called once per frame
@@ -49,6 +54,8 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
+        showHints();
+        updateAmmo();
     }
 
     public void statePause()
@@ -76,14 +83,29 @@ public class gameManager : MonoBehaviour
         enemyCountText.text = enemycount.ToString("F0");
         if (enemycount <= 0)
         {
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(isPaused);
+            round++;
+            if (round != 100)
+            {
+                updateRound(round);
+                //startnext round or restart spawners
+            }
+            else
+            {
+                statePause();
+                menuActive = menuWin;
+                menuActive.SetActive(isPaused);
+            }
 
         }
     }
+    public void updateRound(int amount)
+    {
+        round = amount;
+        roundCountText.text = round.ToString("F0");
+    }
     public void youLose()
     {
+        Debug.Log("Lose");
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
@@ -98,6 +120,24 @@ public class gameManager : MonoBehaviour
     {
         points -= amount;
         pointsCountText.text = points.ToString("F0");
+    }
+    public void showHints()
+    {
+        float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
+        if (hint < 3)
+        {
+            testhintText.SetActive(true);
+
+        }
+        else
+        {
+            testhintText.SetActive(false);
+        }
+    }
+    public void updateAmmo()
+    {
+        ammoMagCountText.text = playerScript.currentAmmo.ToString("F0");
+        ammoStockCountText.text = playerScript.stockAmmo.ToString("F0");
     }
 
 }
