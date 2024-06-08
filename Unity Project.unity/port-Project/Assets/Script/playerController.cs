@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour //IDamage
+public class PlayerController : MonoBehaviour ,IDamage
 {
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour //IDamage
     [SerializeField] float crouchHeight;
     [SerializeField] int slideSpeed;
 
-   
     float origHeight;
     float origCameraHeight = 1;
     int origSpeed;
@@ -42,7 +41,7 @@ public class PlayerController : MonoBehaviour //IDamage
         HPorig = HP;
         origHeight = charController.height;
         origSpeed = speed;
-        //updatePlayerUI();
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -154,18 +153,18 @@ public class PlayerController : MonoBehaviour //IDamage
         isShooting = false;
     }
 
-    //public void takeDamage(int amount)
-    //{
-    //    HP -= amount;
-    //    updatePlayerUI();
-    //    if (HP <= 0)
-    //    {
-    //        //Gamemanager.instance.youLose();
-    //    }
-    //}
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        updatePlayerUI();
+        if (HP <= 0)
+        {
+           gameManager.instance.youLose();
+        }
+    }
 
-    //void updatePlayerUI()
-    //{
-    //   // Gamemanager.instance.playerHPbar.fillAmount = (float)HP / HPorig;
-    //}
+    void updatePlayerUI()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+    }
 }
