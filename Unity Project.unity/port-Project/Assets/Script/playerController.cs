@@ -22,12 +22,22 @@ public class PlayerController : MonoBehaviour ,IDamage
     [SerializeField] float crouchHeight;
     [SerializeField] int slideSpeed;
 
+    [SerializeField] private float meleeRange;
+    [SerializeField] private int meleeDamage;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private Transform meleeAttackPoint;
+    [SerializeField] private float attackRate;
+
+    private float nextAttackTime;
+
     float origHeight;
     float origCameraHeight = 1;
     int origSpeed;
+
     bool isSprinting = false;
     bool isCrouching = false;
     bool isProne = false;
+
     bool isShooting;
     int jumpCount;
     int HPorig;
@@ -53,6 +63,14 @@ public class PlayerController : MonoBehaviour ,IDamage
         crouch();
         if (Input.GetButton("Fire1") && isShooting == false)
             StartCoroutine(shoot());
+        if (Time.time >= nextAttackTime)
+        {
+            if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
+            {
+                StartCoroutine(MeleeAttack());
+                nextAttackTime = Time.time + attackRate;
+            }
+        }
     }
     void movement()
     {
@@ -136,19 +154,21 @@ public class PlayerController : MonoBehaviour ,IDamage
     {
         isShooting = true;
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position + new Vector3(0, 0, 1), Camera.main.transform.forward, out hit, shootDistance))
+        Vector3 rayOrigin = Camera.main.transform.position;
+        Vector3 rayDirection = Camera.main.transform.forward;
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance))
         {
-            Debug.Log(hit.transform.name);
+            Debug.Log("Hit: " + hit.transform.name);
 
             IDamage damage = hit.collider.GetComponent<IDamage>();
 
             if (hit.transform != transform && damage != null)
             {
+                Debug.Log("Applying damage to: " + hit.transform.name);
                 damage.takeDamage(shootDamage);
             }
         }
-
-
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
@@ -166,5 +186,32 @@ public class PlayerController : MonoBehaviour ,IDamage
     void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+    }
+
+    IEnumerator MeleeAttack()
+    {
+        // Detect enemies in range
+        Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
+
+        // Apply damage to enemies
+        foreach (Collider enemy in hitEnemies)
+        {
+            IDamage damageable = enemy.GetComponent<IDamage>();
+            if (damageable != null)
+            {
+                damageable.takeDamage(meleeDamage);
+            }
+        }
+
+        yield return new WaitForSeconds(attackRate);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (meleeAttackPoint == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
 }
