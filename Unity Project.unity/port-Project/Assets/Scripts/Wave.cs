@@ -62,7 +62,7 @@ public class Wave : MonoBehaviour
             for (int i = 0; i < waves[waveIndex].enemies.Length; i++)
             {
                 int rand = Random.Range(0, spawnPoint.Count);
-                enemyAI enemy = Instantiate(waves[waveIndex].enemies[i], spawnPoint[rand].transform.position, spawnPoint[rand].transform.rotation);
+                EnemyAI enemy = Instantiate(waves[waveIndex].enemies[i], spawnPoint[rand].transform.position, spawnPoint[rand].transform.rotation);
                 yield return new WaitForSeconds(waves[waveIndex].waitingSpawnTime);
             }
         }
@@ -72,7 +72,7 @@ public class Wave : MonoBehaviour
     [System.Serializable]
     public class moreWaves
     {
-        public enemyAI[] enemies;
+        public EnemyAI[] enemies;
         public float waitingSpawnTime;
         public float waitingNextWave;
 

@@ -764,43 +764,6 @@ MonoBehaviour:
   HP: 10
   lvl: 1
   damage: 3
---- !u!114 &4192162789876254613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4199786821894191058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c413a1773016048aa49209dc45ce87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charController: {fileID: 5962031438298019613}
-  cameraController: {fileID: 7730312562750848385}
-  HP: 10
-  speed: 3
-  sprintMod: 1
-  jumpMax: 2
-  jumpSpeed: 3
-  gravity: 5
-  shootDamage: 1
-  shootRate: 0.5
-  shootDistance: 15
-  crouchHeight: 0.5
-  slideSpeed: 15
-  meleeRange: 3
-  meleeDamage: 1
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  meleeAttackPoint: {fileID: 0}
-  attackRate: 0.5
-  bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
-  shootPos: {fileID: 0}
-  currentAmmo: 30
-  magazineSize: 10
-  stockAmmo: 30
 --- !u!1 &4199786821894191058
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +776,7 @@ GameObject:
   - component: {fileID: 6755209363016618449}
   - component: {fileID: 2477385115744535687}
   - component: {fileID: 1545082140182137040}
-  - component: {fileID: 4192162789876254613}
+  - component: {fileID: 7885215037423163731}
   - component: {fileID: 5962031438298019613}
   m_Layer: 0
   m_Name: Player
@@ -1004,6 +967,46 @@ Transform:
   - {fileID: 2538677795092538141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7885215037423163731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199786821894191058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40a802d8f1790e4b8f28ef464f46b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charController: {fileID: 5962031438298019613}
+  cameraController: {fileID: 7730312562750848385}
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  HP: 10
+  speed: 3
+  sprintMod: 1
+  jumpMax: 2
+  jumpSpeed: 3
+  gravity: 5
+  shootDamage: 1
+  shootRate: 0.5
+  shootDistance: 15
+  crouchHeight: 0.5
+  slideSpeed: 15
+  meleeRange: 3
+  meleeDamage: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  meleeAttackPoint: {fileID: 0}
+  attackRate: 0.5
+  bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
+  shootPos: {fileID: 0}
+  currentAmmo: 30
+  magazineSize: 10
+  stockAmmo: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
