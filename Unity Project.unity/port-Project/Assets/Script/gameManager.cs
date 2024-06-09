@@ -106,6 +106,7 @@ public class gameManager : MonoBehaviour
             }
             else
             {
+
                 statePause();
                 menuActive = menuWin;
                 menuActive.SetActive(isPaused);
