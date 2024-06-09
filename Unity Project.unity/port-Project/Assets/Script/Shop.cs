@@ -18,6 +18,9 @@ public class Shop : MonoBehaviour
     [SerializeField] int rouletteCost;
     [SerializeField] PlayerController playerController;
     int Zombucks;
+    int health =2;
+    int speed = 3;
+    int strength = 4;
     // Start is called before the first frame update
     void Start()
     {
