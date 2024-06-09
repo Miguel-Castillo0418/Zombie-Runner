@@ -68,6 +68,7 @@ public class Wave : MonoBehaviour
         }
     }
 
+
     [System.Serializable]
     public class moreWaves
     {
