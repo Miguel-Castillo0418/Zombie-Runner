@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour ,IDamage
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform shootPos;
 
     private float nextAttackTime;
 
@@ -37,10 +39,15 @@ public class PlayerController : MonoBehaviour ,IDamage
     bool isSprinting = false;
     bool isCrouching = false;
     bool isProne = false;
+    bool isReloading = false;
 
     bool isShooting;
     int jumpCount;
     int HPorig;
+
+    public int currentAmmo;
+    public int magazineSize = 10;
+    public int stockAmmo = 30;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -51,6 +58,7 @@ public class PlayerController : MonoBehaviour ,IDamage
         HPorig = HP;
         origHeight = charController.height;
         origSpeed = speed;
+        currentAmmo = magazineSize;
         updatePlayerUI();
     }
 
@@ -61,8 +69,17 @@ public class PlayerController : MonoBehaviour ,IDamage
         movement();
         sprint();
         crouch();
-        if (Input.GetButton("Fire1") && isShooting == false)
+        if (isReloading)
+            return;
+        if (currentAmmo <= 0 && stockAmmo > 0)
+        {
+            StartCoroutine(reload());
+            return;
+        }
+        if (Input.GetButton("Fire1") && isShooting == false && !gameManager.instance.isPaused)
+        {
             StartCoroutine(shoot());
+        }
         if (Time.time >= nextAttackTime)
         {
             if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
@@ -70,6 +87,10 @@ public class PlayerController : MonoBehaviour ,IDamage
                 StartCoroutine(MeleeAttack());
                 nextAttackTime = Time.time + attackRate;
             }
+        }
+        if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
+        {
+            StartCoroutine(reload());
         }
     }
     void movement()
@@ -119,14 +140,15 @@ public class PlayerController : MonoBehaviour ,IDamage
             {
                 isCrouching = true;
                 isProne = false;
-                cameraController.AdjustHeight(0.5f);
+                charController.height = crouchHeight;
+                cameraController.AdjustHeight(1);
             }
             else if (isCrouching)
             {
                 isCrouching = false;
                 isProne = true;
-                charController.height = crouchHeight;
-                cameraController.AdjustHeight(0);
+               
+                cameraController.AdjustHeight(0.1f);
             }
             else if (isProne)
             {
@@ -152,25 +174,39 @@ public class PlayerController : MonoBehaviour ,IDamage
     }
     IEnumerator shoot()
     {
-        isShooting = true;
-        RaycastHit hit;
-        Vector3 rayOrigin = Camera.main.transform.position;
-        Vector3 rayDirection = Camera.main.transform.forward;
-
-        if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance))
+        if (currentAmmo > 0)
         {
-            Debug.Log("Hit: " + hit.transform.name);
+            currentAmmo--;
+            isShooting = true;
 
-            IDamage damage = hit.collider.GetComponent<IDamage>();
+            Instantiate(bullet, shootPos.position, shootPos.rotation);
 
-            if (hit.transform != transform && damage != null)
+            // Perform the raycast
+            RaycastHit hit;
+            Vector3 rayOrigin = Camera.main.transform.position;
+            Vector3 rayDirection = Camera.main.transform.forward;
+
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance))
             {
-                Debug.Log("Applying damage to: " + hit.transform.name);
-                damage.takeDamage(shootDamage);
+
+                Debug.Log("Hit: " + hit.transform.name);
+
+                IDamage damage = hit.collider.GetComponent<IDamage>();
+
+                if (hit.transform != transform && damage != null)
+                {
+                    Debug.Log("Applying damage to: " + hit.transform.name);
+                    damage.takeDamage(shootDamage);
+                }
             }
+            else
+            {
+                Debug.Log("Out of Ammo!");
+            }
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
         }
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
     }
 
     public void takeDamage(int amount)
@@ -214,4 +250,27 @@ public class PlayerController : MonoBehaviour ,IDamage
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
+    IEnumerator reload()
+    {
+        isReloading = true;
+        Debug.Log("Reloading");
+        yield return new WaitForSeconds(2);
+        int ammoToReload = Mathf.Min(magazineSize, stockAmmo);
+        int neededAmmo = magazineSize - currentAmmo;
+
+        if (stockAmmo >= neededAmmo)
+        {
+            currentAmmo = magazineSize;
+            stockAmmo -= neededAmmo;
+        }
+        else
+        {
+            currentAmmo += stockAmmo;
+            stockAmmo = 0;
+        }
+
+        isReloading = false;
+
+    }
 }
+
