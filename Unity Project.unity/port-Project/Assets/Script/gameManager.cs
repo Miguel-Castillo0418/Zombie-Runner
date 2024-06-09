@@ -57,19 +57,21 @@ public class gameManager : MonoBehaviour
         }
         showHints();
         updateAmmo();
-    }
-        if(Input.GetButtonDown("Shop"))
-            {
-            if(menuActive == null)
+
+        if (Input.GetButtonDown("Shop"))
+        {
+            if (menuActive == null)
             {
                 shop();
             }
-            else if(menuActive == menuShop)
+            else if (menuActive == menuShop)
             {
                 stateUnpause();
             }
         }
     }
+
+      
 
     public void statePause()
     {
