@@ -36,5 +36,5 @@ public class Wave : MonoBehaviour
 
 public class moreWaves
 {
-    public enemyAI[] enemies;
+    public EnemyAI[] enemies;
 }

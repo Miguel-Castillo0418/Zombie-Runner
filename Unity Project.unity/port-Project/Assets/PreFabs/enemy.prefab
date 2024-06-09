@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3027046577229131039}
   - component: {fileID: 4638701184208983523}
   - component: {fileID: 1035010071805329366}
+  - component: {fileID: 1804618261487943780}
   m_Layer: 3
   m_Name: enemy
   m_TagString: Untagged
@@ -33,8 +34,7 @@ Transform:
   m_LocalPosition: {x: 1.1796641, y: 1, z: -10.5311165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 691361611469421970}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3746801385072911128
@@ -46,15 +46,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828527729946470034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71af70515ae2f94e894d690df92e48c, type: 3}
+  m_Script: {fileID: 11500000, guid: ecfac370a97618f48b81fcdbb6cee50f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 3
+  rb: {fileID: 1804618261487943780}
   model: {fileID: 3027046577229131039}
   agent: {fileID: 1035010071805329366}
-  shootPos: {fileID: 691361611469421970}
-  shootRate: 0.5
-  bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
+  HP: 10
+  lvl: 1
+  damage: 3
 --- !u!33 &7289886720186831612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -142,7 +142,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 5
+  m_StoppingDistance: 1.25
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -150,34 +150,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!1 &9069763708055634953
-GameObject:
+--- !u!54 &1804618261487943780
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 691361611469421970}
-  m_Layer: 3
-  m_Name: shootpos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &691361611469421970
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9069763708055634953}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.48}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7233397305959384027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1828527729946470034}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
