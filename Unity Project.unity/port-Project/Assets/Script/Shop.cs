@@ -11,7 +11,6 @@ public class Shop : MonoBehaviour
     [SerializeField] TMP_Text SpeedCostText;
     [SerializeField] TMP_Text StrengthCostText;
     [SerializeField] TMP_Text RouletteCostText;
-    [SerializeField] int zombuckAmount;
     [SerializeField] int healthCost;
     [SerializeField] int speedCost;
     [SerializeField] int strengthCost;
@@ -28,18 +27,18 @@ public class Shop : MonoBehaviour
         SpeedCostText.text = speedCost.ToString();
         StrengthCostText.text = strengthCost.ToString();
         RouletteCostText.text = rouletteCost.ToString();
-        updateZombucks(zombuckAmount);
-        Zombucks = zombuckAmount;
+        Zombucks = gameManager.instance.points;
+        updateZombucks();
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateZombucks(zombuckAmount);
+        Zombucks = gameManager.instance.points;
+        updateZombucks();
     }
-    public void updateZombucks(int amount)
+    public void updateZombucks()
     {
-        Zombucks = amount;
         zombucksText.text = Zombucks.ToString("F0");
     }
     public void healthButton()
@@ -73,9 +72,9 @@ public class Shop : MonoBehaviour
     }
     public void rouletteButton()
     {
-        if(zombuckAmount - rouletteCost >= 0)
+        if(Zombucks - rouletteCost >= 0)
         {
-            zombuckAmount -= rouletteCost;
+            Zombucks -= rouletteCost;
         }
     }
 }
