@@ -11,7 +11,6 @@ public class Shop : MonoBehaviour
     [SerializeField] TMP_Text SpeedCostText;
     [SerializeField] TMP_Text StrengthCostText;
     [SerializeField] TMP_Text RouletteCostText;
-    [SerializeField] int zombuckAmount;
     [SerializeField] int healthCost;
     [SerializeField] int speedCost;
     [SerializeField] int strengthCost;
@@ -27,25 +26,25 @@ public class Shop : MonoBehaviour
         SpeedCostText.text = speedCost.ToString();
         StrengthCostText.text = strengthCost.ToString();
         RouletteCostText.text = rouletteCost.ToString();
-        updateZombucks(zombuckAmount);
-        Zombucks = zombuckAmount;
+        Zombucks = gameManager.instance.points;
+        updateZombucks();
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateZombucks(zombuckAmount);
+        Zombucks = gameManager.instance.points;
+        updateZombucks();
     }
-    public void updateZombucks(int amount)
+    public void updateZombucks()
     {
-        Zombucks = amount;
         zombucksText.text = Zombucks.ToString("F0");
     }
     public void healthButton()
     {
-        if(zombuckAmount - healthCost >= 0) 
+        if(Zombucks - healthCost >= 0) 
         {
-            zombuckAmount -= healthCost;
+            Zombucks -= healthCost;
             health *= 2;
             
         }
@@ -53,27 +52,27 @@ public class Shop : MonoBehaviour
     }
     public void speedButton()
     {
-        if(zombuckAmount - speedCost >= 0)
+        if(Zombucks - speedCost >= 0)
         {
-            zombuckAmount -= speedCost;
+            Zombucks -= speedCost;
                 speed *= 2;
         }
         
     }
     public void strengthButton()
     {
-        if(zombuckAmount - strengthCost >= 0)
+        if(Zombucks - strengthCost >= 0)
         {
-            zombuckAmount -= strengthCost;
+            Zombucks -= strengthCost;
                 strength *= 2;
         }
         
     }
     public void rouletteButton()
     {
-        if(zombuckAmount - rouletteCost >= 0)
+        if(Zombucks - rouletteCost >= 0)
         {
-            zombuckAmount -= rouletteCost;
+            Zombucks -= rouletteCost;
         }
     }
 }

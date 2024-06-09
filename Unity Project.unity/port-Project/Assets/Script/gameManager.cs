@@ -27,7 +27,7 @@ public class gameManager : MonoBehaviour
     public bool isHint;
     public bool isPaused;
     int enemycount;
-    int points;
+    public int points;
     int round;
 
     // Start is called before the first frame update
