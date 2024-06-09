@@ -15,6 +15,7 @@ public class Shop : MonoBehaviour
     [SerializeField] int speedCost;
     [SerializeField] int strengthCost;
     [SerializeField] int rouletteCost;
+    [SerializeField] PlayerController playerController;
     int Zombucks;
     int health =2;
     int speed = 3;
@@ -42,31 +43,32 @@ public class Shop : MonoBehaviour
     }
     public void healthButton()
     {
-        if(Zombucks - healthCost >= 0) 
+        if (zombuckAmount - healthCost >= 0)
         {
-            Zombucks -= healthCost;
-            health *= 2;
-            
+            zombuckAmount -= healthCost;
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseHealth();
         }
-        
     }
+
     public void speedButton()
     {
-        if(Zombucks - speedCost >= 0)
+        if (zombuckAmount - speedCost >= 0)
         {
-            Zombucks -= speedCost;
-                speed *= 2;
+            zombuckAmount -= speedCost;
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseSpeed();
         }
-        
     }
+
     public void strengthButton()
     {
-        if(Zombucks - strengthCost >= 0)
+        if (zombuckAmount - strengthCost >= 0)
         {
-            Zombucks -= strengthCost;
-                strength *= 2;
+            zombuckAmount -= strengthCost;
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseStrength();
         }
-        
     }
     public void rouletteButton()
     {

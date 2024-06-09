@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour ,IDamage
 {
+
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
 
@@ -272,5 +273,22 @@ public class PlayerController : MonoBehaviour ,IDamage
         isReloading = false;
 
     }
+
+    public void IncreaseHealth()
+    {
+        HP += 20; // Increase health by 20, adjust as needed
+        updatePlayerUI();
+    }
+
+    public void IncreaseSpeed()
+    {
+        speed += 2; // Increase speed by 2, adjust as needed
+    }
+
+    public void IncreaseStrength()
+    {
+        shootDamage += 5; // Increase shooting damage by 5, adjust as needed
+    }
+
 }
 
