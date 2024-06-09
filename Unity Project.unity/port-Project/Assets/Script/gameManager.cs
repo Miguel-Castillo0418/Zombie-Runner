@@ -11,6 +11,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuShop;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
     [SerializeField] TMP_Text pointsCountText;
@@ -45,6 +46,17 @@ public class gameManager : MonoBehaviour
                 menuActive.SetActive(isPaused);
             }
             else if (menuActive == menuPause)
+            {
+                stateUnpause();
+            }
+        }
+        if(Input.GetButtonDown("Shop"))
+            {
+            if(menuActive == null)
+            {
+                shop();
+            }
+            else if(menuActive == menuShop)
             {
                 stateUnpause();
             }
@@ -99,5 +111,10 @@ public class gameManager : MonoBehaviour
         points -= amount;
         pointsCountText.text = points.ToString("F0");
     }
-
+    public void shop()
+    {
+        statePause();
+        menuActive = menuShop;
+        menuActive.SetActive(isPaused);
+    }
 }

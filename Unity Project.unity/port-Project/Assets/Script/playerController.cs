@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
     }
 
     IEnumerator MeleeAttack()
