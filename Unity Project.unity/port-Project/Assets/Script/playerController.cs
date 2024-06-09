@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
+    [SerializeField] LayerMask hitLayers;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -180,21 +181,18 @@ public class PlayerController : MonoBehaviour ,IDamage
             currentAmmo--;
             isShooting = true;
 
-            Instantiate(bullet, shootPos.position, shootPos.rotation);
-
             // Perform the raycast
             RaycastHit hit;
             Vector3 rayOrigin = Camera.main.transform.position;
             Vector3 rayDirection = Camera.main.transform.forward;
 
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance))
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance, hitLayers))
             {
-
                 Debug.Log("Hit: " + hit.transform.name);
 
                 IDamage damage = hit.collider.GetComponent<IDamage>();
 
-                if (hit.transform != transform && damage != null)
+                if (damage != null)
                 {
                     Debug.Log("Applying damage to: " + hit.transform.name);
                     damage.takeDamage(shootDamage);
@@ -202,11 +200,15 @@ public class PlayerController : MonoBehaviour ,IDamage
             }
             else
             {
-                Debug.Log("Out of Ammo!");
+                Debug.Log("Missed!");
             }
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
+        }
+        else
+        {
+            Debug.Log("Out of Ammo!");
         }
     }
 
@@ -222,7 +224,7 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     void updatePlayerUI()
     {
-        //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
     }
 
     IEnumerator MeleeAttack()
@@ -276,18 +278,18 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     public void IncreaseHealth()
     {
-        HP += 20; // Increase health by 20, adjust as needed
+        HP += 20;
         updatePlayerUI();
     }
 
     public void IncreaseSpeed()
     {
-        speed += 2; // Increase speed by 2, adjust as needed
+        speed += 2; 
     }
 
     public void IncreaseStrength()
     {
-        shootDamage += 5; // Increase shooting damage by 5, adjust as needed
+        shootDamage += 5; 
     }
 
 }
