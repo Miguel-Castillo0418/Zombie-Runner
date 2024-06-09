@@ -16,6 +16,7 @@ public class Shop : MonoBehaviour
     [SerializeField] int speedCost;
     [SerializeField] int strengthCost;
     [SerializeField] int rouletteCost;
+    [SerializeField] PlayerController playerController;
     int Zombucks;
     // Start is called before the first frame update
     void Start()
@@ -38,33 +39,34 @@ public class Shop : MonoBehaviour
         Zombucks = amount;
         zombucksText.text = Zombucks.ToString("F0");
     }
-    public void healthButton(int health)
+    public void healthButton()
     {
-        if(zombuckAmount - healthCost >= 0) 
+        if (zombuckAmount - healthCost >= 0)
         {
             zombuckAmount -= healthCost;
-            health *= 2;
-            
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseHealth();
         }
-        
     }
-    public void speedButton(int speed)
+
+    public void speedButton()
     {
-        if(zombuckAmount - speedCost >= 0)
+        if (zombuckAmount - speedCost >= 0)
         {
             zombuckAmount -= speedCost;
-                speed *= 2;
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseSpeed();
         }
-        
     }
-    public void strengthButton(int strength)
+
+    public void strengthButton()
     {
-        if(zombuckAmount - strengthCost >= 0)
+        if (zombuckAmount - strengthCost >= 0)
         {
             zombuckAmount -= strengthCost;
-                strength *= 2;
+            updateZombucks(zombuckAmount);
+            playerController.IncreaseStrength();
         }
-        
     }
     public void rouletteButton()
     {
