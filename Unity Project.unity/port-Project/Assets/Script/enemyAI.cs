@@ -14,6 +14,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] GameObject bullet;
     bool isShooting;
+
+    private Wave waveSpawn;
     // Start is called before the first frame update
     void Start()
     {
