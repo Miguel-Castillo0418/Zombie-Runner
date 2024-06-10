@@ -19,6 +19,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text ammoStockCountText;
     [SerializeField] GameObject testhintText;
     [SerializeField] GameObject hintobject;
+    [SerializeField] GameObject shopObj;
+   // [SerializeField] GameObject shopText;
     public Image playerHPBar;
 
     public GameObject player;
@@ -57,18 +59,7 @@ public class gameManager : MonoBehaviour
         }
         showHints();
         updateAmmo();
-
-        if (Input.GetButtonDown("Shop"))
-        {
-            if (menuActive == null)
-            {
-                shop();
-            }
-            else if (menuActive == menuShop)
-            {
-                stateUnpause();
-            }
-        }
+        showShop();
     }
 
       
@@ -161,5 +152,28 @@ public class gameManager : MonoBehaviour
         statePause();
         menuActive = menuShop;
         menuActive.SetActive(isPaused);
+    }
+    public void showShop() 
+    {
+        float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
+        if (shopDist < 3)
+        {
+           // shopText.SetActive(true);
+            if (Input.GetButtonDown("Shop"))
+            {
+                if (menuActive == null)
+                {
+                    shop();
+                }
+                else if (menuActive == menuShop)
+                {
+                    stateUnpause();
+                }
+            }
+        }
+        else
+        {
+           // shopText.SetActive(false);
+        }
     }
 }

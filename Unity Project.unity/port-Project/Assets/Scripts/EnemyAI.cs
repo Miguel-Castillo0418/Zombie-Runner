@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.TestTools.CodeCoverage;
+//using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,7 +20,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        TempgameManager.instance.updateGameGoal(1);
+        gameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
