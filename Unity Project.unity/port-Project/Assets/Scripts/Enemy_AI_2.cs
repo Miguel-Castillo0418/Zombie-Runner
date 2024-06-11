@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-
-//using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Temp_EnemyAI : MonoBehaviour, IDamage
+public class Enem_AI_2 : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] Renderer model;
@@ -14,7 +12,7 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
-    //[SerializeField] int force;
+    [SerializeField] int force;
 
 
 
@@ -22,13 +20,14 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        TempgameManager.instance.updateGameGoal(1);
+        gameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        agent.SetDestination(gameManager.instance.player.transform.position);
+
     }
 
 
@@ -39,7 +38,7 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            TempgameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
@@ -55,20 +54,16 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
         IDamage dmg = other.GetComponent<IDamage>();
         if (dmg != null)
         {
-            
+            force = lvl * damage;
+            float t=force*Time.deltaTime;
             Debug.Log(other.transform.name);
-            knockBack(other);
+            dmg.takeDamage(damage);
+            Vector3.Lerp(other.transform.position,other.transform.forward*force,t);
         }
     }
-    private void knockBack(Collider other)
-    {
-        float force = lvl * damage;
-        float t = force * Time.deltaTime;
-        agent.SetDestination(TempgameManager.instance.player.transform.position);
-        Vector3 start = other.transform.position;
-        Vector3 end = start + model.transform.forward;
+    //IEnumerator knockBack()
+    //{
 
-        Vector3 newPos = Vector3.Lerp(start, end, force);
-        other.transform.position = newPos;
-    }
+    //    yield return new WaitForSeconds(0.1f);
+    //}
 }

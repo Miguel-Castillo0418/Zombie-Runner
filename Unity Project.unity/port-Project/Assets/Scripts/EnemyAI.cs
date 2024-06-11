@@ -13,6 +13,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
+    [SerializeField] int force;
+
 
 
 
@@ -54,8 +56,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         IDamage dmg = other.GetComponent<IDamage>();
         if (dmg != null)
         {
+
+            force = lvl * damage;
+            float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
+            Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
         }
     }
 }
