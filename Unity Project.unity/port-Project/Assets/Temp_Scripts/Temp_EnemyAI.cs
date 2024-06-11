@@ -56,24 +56,18 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
         {
             
             Debug.Log(other.transform.name);
-            StartCoroutine(knockBack(other.transform,(float)lvl*damage));
+            knockBack(other);
         }
     }
-    IEnumerator knockBack(Transform target, float force)
+    private void knockBack(Collider other)
     {
-        force = lvl * damage;
+        float force = lvl * damage;
         float t = force * Time.deltaTime;
         agent.SetDestination(TempgameManager.instance.player.transform.position);
-        Vector3 start = target.position;
-        Vector3 end = start + model.transform.forward*force;
-        float startTime = 0f;
-        float duration = 1.0f;
-        while (startTime < duration) { 
-        target.position = Vector3.Lerp(start, end, t);
-            startTime += Time.deltaTime;
+        Vector3 start = other.transform.position;
+        Vector3 end = start + model.transform.forward;
 
-        }
-        yield return new WaitForSeconds(t);
-        target.position = end;
+        Vector3 newPos = Vector3.Lerp(start, end, force);
+        other.transform.position = newPos;
     }
 }
