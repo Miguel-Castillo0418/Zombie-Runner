@@ -13,9 +13,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
-    [SerializeField] Animator anim;
+    [SerializeField] int force;
 
 
+    public WaveSpawner whereISpawned;
 
 
     // Start is called before the first frame update
@@ -40,7 +41,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gameManager.instance.updateGameGoal(-1);
+
+            if (whereISpawned) 
+            { 
+                whereISpawned.updateEnemyNumber();
+            }
+
             Destroy(gameObject);
+
         }
     }
 
@@ -55,8 +63,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         IDamage dmg = other.GetComponent<IDamage>();
         if (dmg != null)
         {
+
+            force = lvl * damage;
+            float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
+            Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
         }
     }
 }
