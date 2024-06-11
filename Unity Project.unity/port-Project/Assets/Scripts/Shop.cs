@@ -42,7 +42,7 @@ public class Shop : MonoBehaviour
     {
         if (Zombucks - healthCost >= 0)
         {
-            Zombucks -= healthCost;
+            gameManager.instance.points -= healthCost;
             updateZombucks();
             playerController.IncreaseHealth();
         }
@@ -52,7 +52,7 @@ public class Shop : MonoBehaviour
     {
         if (Zombucks - speedCost >= 0)
         {
-            Zombucks -= speedCost;
+            gameManager.instance.points -= speedCost;
             updateZombucks();
             playerController.IncreaseSpeed();
         }
@@ -62,7 +62,7 @@ public class Shop : MonoBehaviour
     {
         if (Zombucks - strengthCost >= 0)
         {
-            Zombucks -= strengthCost;
+            gameManager.instance.points -= strengthCost;
             updateZombucks();
             playerController.IncreaseStrength();
         }

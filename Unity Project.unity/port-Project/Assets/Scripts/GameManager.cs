@@ -36,6 +36,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        points = 400;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
