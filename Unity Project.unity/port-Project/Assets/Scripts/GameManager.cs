@@ -90,7 +90,7 @@ public class gameManager : MonoBehaviour
     {
         enemycount += amount;
         enemyCountText.text = enemycount.ToString("F0");
-        if (enemycount <= 0)
+        if (enemycount <= 0 && WaveManager.instance.waveCurrent >= WaveManager.instance.spawners.Length)
         {
             round++;
             if (round != 100)
