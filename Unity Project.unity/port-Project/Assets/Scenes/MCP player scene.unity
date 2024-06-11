@@ -241,6 +241,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+--- !u!1 &584537883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 584537884}
+  m_Layer: 0
+  m_Name: spawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &584537884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584537883}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.6, y: 0, z: 0.89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2137940479}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &655017694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5010217418979879590, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
@@ -909,6 +940,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!1 &1327782585 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 492b1791c2223c345b92a1f9729894d1, type: 3}
@@ -1006,6 +1038,9 @@ CapsuleCollider:
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1389491355
+=======
+--- !u!1 &2137940477
+>>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1013,6 +1048,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< Updated upstream
   - component: {fileID: 1389491356}
   m_Layer: 0
   m_Name: spawnPoint
@@ -1120,6 +1156,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1987503514}
   - component: {fileID: 1987503513}
+=======
+  - component: {fileID: 2137940479}
+  - component: {fileID: 2137940478}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: WaveSpawner
   m_TagString: Untagged
@@ -1127,25 +1167,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< Updated upstream
 --- !u!114 &1987503513
+=======
+--- !u!114 &2137940478
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1987503512}
+=======
+  m_GameObject: {fileID: 2137940477}
+>>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0694e561215c9ef4a8c55176c1275c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   waveCountdown: 10
+=======
+  waveCountdown: 5
+>>>>>>> Stashed changes
   waves:
   - enemies:
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     waitingSpawnTime: 1
+<<<<<<< Updated upstream
     waitingNextWave: 10
+=======
+    waitingNextWave: 6.44
+>>>>>>> Stashed changes
     enemiesRemaining: 0
   - enemies:
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
@@ -1153,7 +1209,11 @@ MonoBehaviour:
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     waitingSpawnTime: 1
+<<<<<<< Updated upstream
     waitingNextWave: 10
+=======
+    waitingNextWave: 5
+>>>>>>> Stashed changes
     enemiesRemaining: 0
   - enemies:
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
@@ -1163,6 +1223,7 @@ MonoBehaviour:
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     - {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
     waitingSpawnTime: 1
+<<<<<<< Updated upstream
     waitingNextWave: 10
     enemiesRemaining: 0
   - enemies:
@@ -1194,11 +1255,19 @@ MonoBehaviour:
   spawnPoint:
   - {fileID: 1389491355}
 --- !u!4 &1987503514
+=======
+    waitingNextWave: 5
+    enemiesRemaining: 0
+  spawnPoint:
+  - {fileID: 584537883}
+--- !u!4 &2137940479
+>>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1987503512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1207,6 +1276,16 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1389491356}
+=======
+  m_GameObject: {fileID: 2137940477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 3.452963, z: 1.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 584537884}
+>>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
@@ -1217,5 +1296,9 @@ SceneRoots:
   - {fileID: 1164347644}
   - {fileID: 662415456}
   - {fileID: 423743003}
+<<<<<<< Updated upstream
   - {fileID: 1987503514}
   - {fileID: 855397403}
+=======
+  - {fileID: 2137940479}
+>>>>>>> Stashed changes
