@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour ,IDamage
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
 
     private float nextAttackTime;
 
