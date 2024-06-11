@@ -59,10 +59,17 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
+<<<<<<< Updated upstream
        // showHints();
         updateAmmo();
         showShop();
         pointsCountText.text = points.ToString("F0");
+=======
+        //showHints();
+        updateAmmo();
+        showShop();
+        pointsCountText.text = points.ToString();
+>>>>>>> Stashed changes
     }
 
       
@@ -136,12 +143,20 @@ public class gameManager : MonoBehaviour
         float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
         if (hint < 3)
         {
+<<<<<<< Updated upstream
           //  testhintText.SetActive(true);
+=======
+            //testhintText.SetActive(true);
+>>>>>>> Stashed changes
 
         }
         else
         {
+<<<<<<< Updated upstream
           //  testhintText.SetActive(false);
+=======
+           // testhintText.SetActive(false);
+>>>>>>> Stashed changes
         }
     }
     public void updateAmmo()
@@ -159,18 +174,22 @@ public class gameManager : MonoBehaviour
     public void showShop() 
     {
         float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
-        if (shopDist < 3)
+        if (shopDist < 3 )
         {
             shopText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
             {
+                shopText.SetActive(false);
                 if (menuActive == null)
                 {
+                    
                     shop();
+                    
                 }
                 else if (menuActive == menuShop)
                 {
                     stateUnpause();
+                    shopText.SetActive(true);
                 }
             }
         }

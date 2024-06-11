@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour ,IDamage
     public int currentAmmo;
     public int magazineSize = 10;
     public int stockAmmo = 30;
-
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -276,8 +275,16 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     public void IncreaseHealth()
     {
-        HP += 20;
-        updatePlayerUI();
+        if(HP + 20 > HPorig)
+        {
+            HP = HPorig;
+        }
+        else
+        {
+            HP += 20;
+            updatePlayerUI();
+        }
+        
     }
 
     public void IncreaseSpeed()
