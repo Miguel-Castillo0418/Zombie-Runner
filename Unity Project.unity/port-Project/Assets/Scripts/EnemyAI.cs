@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
+    [SerializeField] Animator anim;
 
 
 
