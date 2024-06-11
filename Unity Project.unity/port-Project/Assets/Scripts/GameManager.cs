@@ -17,10 +17,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text pointsCountText;
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
-    [SerializeField] GameObject testhintText;
+    //[SerializeField] GameObject testhintText;
     [SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
-   // [SerializeField] GameObject shopText;
+    [SerializeField] GameObject shopText;
     public Image playerHPBar;
 
     public GameObject player;
@@ -40,6 +40,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
+        pointsCountText.text = points.ToString("F0");
     }
 
     // Update is called once per frame
@@ -58,9 +59,10 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
-        showHints();
+       // showHints();
         updateAmmo();
         showShop();
+        pointsCountText.text = points.ToString("F0");
     }
 
       
@@ -134,12 +136,12 @@ public class gameManager : MonoBehaviour
         float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
         if (hint < 3)
         {
-            testhintText.SetActive(true);
+          //  testhintText.SetActive(true);
 
         }
         else
         {
-            testhintText.SetActive(false);
+          //  testhintText.SetActive(false);
         }
     }
     public void updateAmmo()
@@ -159,7 +161,7 @@ public class gameManager : MonoBehaviour
         float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
         if (shopDist < 3)
         {
-           // shopText.SetActive(true);
+            shopText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
             {
                 if (menuActive == null)
@@ -174,7 +176,7 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-           // shopText.SetActive(false);
+            shopText.SetActive(false);
         }
     }
 }
