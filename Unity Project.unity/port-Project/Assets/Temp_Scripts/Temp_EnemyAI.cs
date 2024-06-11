@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class Temp_EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] Renderer model;
@@ -20,13 +20,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.instance.updateGameGoal(1);
+        TempgameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        agent.SetDestination(TempgameManager.instance.player.transform.position);
 
     }
 
@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.updateGameGoal(-1);
+            TempgameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }

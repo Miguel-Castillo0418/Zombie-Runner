@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9121188502347565150}
-  - component: {fileID: 6168380817679033134}
+  - component: {fileID: 2459397509936008195}
   - component: {fileID: 5485068793834921956}
   m_Layer: 5
   m_Name: GameManager
@@ -439,7 +439,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6168380817679033134
+--- !u!114 &2459397509936008195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -448,22 +448,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 893771851149629736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a3d60ba3f86f644821d523350220f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bec9417c26af1c49b27204bc569ef65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuActive: {fileID: 0}
   menuPause: {fileID: 2591833643990463567}
   menuWin: {fileID: 6274315930604990485}
   menuLose: {fileID: 5566914117112890183}
-  enemyCountText: {fileID: 4248773756941812804}
-  roundCountText: {fileID: 3148870794971722094}
+  menuShop: {fileID: 2659971555298592114, guid: 02e7fee67323da54c8a06c56b1dd9a0f, type: 3}
+  enemyCountText: {fileID: 2982306988973012747}
+  roundCountText: {fileID: 8111034421548908937}
   pointsCountText: {fileID: 4931788388462023363}
   ammoMagCountText: {fileID: 564998358259704638}
   ammoStockCountText: {fileID: 5120275268418207323}
-  playerHPBar: {fileID: 6407523658652580201}
-  player: {fileID: 0}
-  playerScript: {fileID: 0}
+  testhintText: {fileID: 0}
+  hintobject: {fileID: 0}
+  shopObj: {fileID: 0}
+  playerHPBar: {fileID: 114302157531061361}
+  player: {fileID: 4199786821349407853, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
+  playerScript: {fileID: 4192162789329210410, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
+  isHint: 0
   isPaused: 0
+  points: 0
 --- !u!114 &5485068793834921956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,7 +3162,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6274315930604990485}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3244,8 +3250,8 @@ RectTransform:
   - {fileID: 6117606244231842928}
   - {fileID: 821663457970935976}
   - {fileID: 1776991108465221340}
-  - {fileID: 8284757386490042697}
   - {fileID: 242495124105883776}
+  - {fileID: 8284757386490042697}
   - {fileID: 114015540473411270}
   - {fileID: 1754304707381812093}
   - {fileID: 4952010768495031606}
