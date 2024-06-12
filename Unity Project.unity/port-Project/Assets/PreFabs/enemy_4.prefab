@@ -63,6 +63,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   whereISpawned: {fileID: 0}
+  playerInRange: 0
 --- !u!33 &5995021305353368636
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 100
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
