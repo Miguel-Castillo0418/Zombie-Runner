@@ -21,6 +21,9 @@ public class gameManager : MonoBehaviour
     //[SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
+    [SerializeField] GameObject doorObj1;
+    [SerializeField] GameObject doorText;
+    [SerializeField] GameObject doorText2;
     public Image playerHPBar;
 
     public GameObject player;
@@ -59,13 +62,14 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
-       // showHints();
+        // showHints();
         updateAmmo();
         showShop();
+        buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
 
-      
+
 
     public void statePause()
     {
@@ -131,6 +135,7 @@ public class gameManager : MonoBehaviour
         points -= amount;
         pointsCountText.text = points.ToString("F0");
     }
+<<<<<<< Updated upstream
     //public void showHints()
     //{
     //    float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
@@ -147,6 +152,21 @@ public class gameManager : MonoBehaviour
 
     //    }
     //}
+=======
+    public void showHints()
+    {
+        float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
+        if (hint < 3)
+        {
+            //  testhintText.SetActive(true);
+
+        }
+        else
+        {
+            //  testhintText.SetActive(false);
+        }
+    }
+>>>>>>> Stashed changes
     public void updateAmmo()
     {
         ammoMagCountText.text = playerScript.currentAmmo.ToString("F0");
@@ -159,7 +179,7 @@ public class gameManager : MonoBehaviour
         menuActive = menuShop;
         menuActive.SetActive(isPaused);
     }
-    public void showShop() 
+    public void showShop()
     {
         float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
         if (shopDist < 3 )
@@ -184,6 +204,39 @@ public class gameManager : MonoBehaviour
         else
         {
             shopText.SetActive(false);
+        }
+    }
+
+    public void buyDoor()
+
+    {
+        float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
+        Debug.Log("Door Distance: " + doorDistance);
+        if (doorDistance < 3)
+        {
+            Debug.Log("Near Door");
+            doorText.SetActive(true); 
+            if (Input.GetButtonDown("Door"))
+            {
+                if (points >= 2000)
+                {
+                    points -= 2000;
+                    pointsCountText.text = points.ToString("F0");
+
+                    Destroy(doorObj1);
+
+                    doorText2.SetActive(false);
+                }
+                else
+                {
+                    doorText2.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            doorText.SetActive(false);
+            doorText2.SetActive(false);
         }
     }
 }
