@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
-
+    [SerializeField] int animTransSpeed;
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
@@ -18,9 +18,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private float meleeRange;
     [SerializeField] private float atkRate;
     [SerializeField] private LayerMask enemyLayer;
-
-
+    [SerializeField] Animator anim;
     public WaveSpawner whereISpawned;
+    Vector3 playerDir;
 
 
     // Start is called before the first frame update
@@ -33,6 +33,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         agent.SetDestination(gameManager.instance.player.transform.position);
+        playerDir = gameManager.instance.player.transform.position - transform.position;
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransSpeed));
+
 
     }
 
