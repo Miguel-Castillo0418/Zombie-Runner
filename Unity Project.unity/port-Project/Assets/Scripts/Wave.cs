@@ -6,7 +6,7 @@ public class Wave : MonoBehaviour
 {
 
     [SerializeField] private float waveCountdown;
-    [SerializeField] moreWaves[] waves;
+    [SerializeField] private moreWaves[] waves;
     [SerializeField] private List<GameObject> spawnPoint;
 
 
@@ -31,9 +31,10 @@ public class Wave : MonoBehaviour
         if (waveIndex >= waves.Length)
         {
             gameManager.instance.updateGameGoal(1);
+            return;
         }
 
-        if (countdown == true)
+        if (countdown)
         {
             waveCountdown -= Time.deltaTime;
         }
@@ -46,10 +47,19 @@ public class Wave : MonoBehaviour
             StartCoroutine(spawnWave());
         }
 
-        if (waves[waveIndex].enemiesRemaining == 0)
+        if (waves[waveIndex].enemiesRemaining == 0 && !countdown)
         {
-            countdown = true;
-            waveIndex++;
+            StartNextWave();
+        }
+    }
+
+    private void StartNextWave()
+    {
+        countdown = true;
+        waveIndex++;
+        if (waveIndex < waves.Length)
+        {
+            waveCountdown = waves[waveIndex].waitingNextWave;
         }
     }
 
@@ -75,7 +85,6 @@ public class Wave : MonoBehaviour
         public EnemyAI[] enemies;
         public float waitingSpawnTime;
         public float waitingNextWave;
-
         [HideInInspector] public int enemiesRemaining;
 
     }
