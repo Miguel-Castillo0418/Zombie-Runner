@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 2fb54c4d705562a4a81ce70b29d9edde, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 5cd13c605ec109643a8f934adb3eaba5, type: 2}
 --- !u!1 &30404043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1164,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: buttonFunctions, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 978949285596800056, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -89.1001
+      objectReference: {fileID: 0}
     - target: {fileID: 1267375823027733485, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1431,7 +1435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1090373447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1467,7 +1471,7 @@ Transform:
   m_GameObject: {fileID: 1090373446}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.14}
+  m_LocalPosition: {x: 7.3, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1687,7 +1691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1355239814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,7 +1721,7 @@ Transform:
   m_GameObject: {fileID: 1355239813}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.77, y: 0, z: 2.81}
+  m_LocalPosition: {x: 8.79, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

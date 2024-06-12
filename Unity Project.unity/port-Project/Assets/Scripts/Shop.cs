@@ -17,6 +17,8 @@ public class Shop : MonoBehaviour
     [SerializeField] int rouletteCost;
     [SerializeField] PlayerController playerController;
     int Zombucks;
+    int HP;
+    int HPOrig;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,7 @@ public class Shop : MonoBehaviour
     {
         Zombucks = gameManager.instance.points;
         updateZombucks();
+        
     }
     public void updateZombucks()
     {
@@ -42,6 +45,7 @@ public class Shop : MonoBehaviour
     {
         if (Zombucks - healthCost >= 0)
         {
+            
             gameManager.instance.points -= healthCost;
             updateZombucks();
             playerController.IncreaseHealth();
