@@ -11,9 +11,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
     [SerializeField] int animTransSpeed;
-=======
-    [SerializeField] int animTransSpeed;
->>>>>>> Stashed changes
+    [SerializeField] int meleeRange;
+    [SerializeField] float atkRate;
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
@@ -22,7 +21,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private LayerMask enemyLayer;
 
 
-<<<<<<< Updated upstream
+
     public WaveSpawner whereISpawned;
     Vector3 playerDir;
 
