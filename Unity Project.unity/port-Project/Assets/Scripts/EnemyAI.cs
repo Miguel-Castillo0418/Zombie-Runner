@@ -10,17 +10,20 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
-
+    //[SerializeField] int animTransSpeed;
+    [SerializeField] int meleeRange;
+    [SerializeField] float atkRate;
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
-    [SerializeField] int force;
-    [SerializeField] private float meleeRange;
-    [SerializeField] private float atkRate;
+    //[SerializeField] int force;
+    //[SerializeField] Animator anim;
     [SerializeField] private LayerMask enemyLayer;
 
 
+
     public WaveSpawner whereISpawned;
+    Vector3 playerDir;
 
 
     // Start is called before the first frame update
@@ -69,12 +72,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (dmg != null)
         {
 
-            force = lvl * damage;
+            int force = lvl * damage;
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
 
             dmg.takeDamage(damage);
-            other.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
+            //gameManager.instance.player.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
         }
     }
     IEnumerator MeleeAttack()

@@ -64,7 +64,7 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
-        showHints();
+        // showHints();
         updateAmmo();
         showShop();
         buyDoor();
@@ -137,20 +137,24 @@ public class gameManager : MonoBehaviour
         points -= amount;
         pointsCountText.text = points.ToString("F0");
     }
+
     public void showHints()
     {
         float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
         if (hint < 3)
         {
+
               testhintText.SetActive(true);
+
 
         }
         else
         {
+
               testhintText.SetActive(false);
+
         }
     }
-
     public void updateAmmo()
     {
         ammoMagCountText.text = playerScript.currentAmmo.ToString("F0");
