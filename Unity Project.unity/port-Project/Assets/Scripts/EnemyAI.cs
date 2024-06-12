@@ -61,9 +61,10 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     IEnumerator flashDamange()
     {
+        Color _color=model.material.color;
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
+        model.material.color = _color;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -77,7 +78,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             Debug.Log(other.transform.name);
 
             dmg.takeDamage(damage);
-            //gameManager.instance.player.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
+            
         }
     }
     IEnumerator MeleeAttack()
@@ -96,5 +97,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
 
         yield return new WaitForSeconds(atkRate);
+    }
+
+    void knockback()
+    {
+        //gameManager.instance.player.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
+
     }
 }
