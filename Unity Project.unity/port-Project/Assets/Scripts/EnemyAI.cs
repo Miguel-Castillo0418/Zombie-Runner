@@ -11,14 +11,18 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
     [SerializeField] int animTransSpeed;
+=======
+    [SerializeField] int animTransSpeed;
+>>>>>>> Stashed changes
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
     [SerializeField] int force;
-    [SerializeField] private float meleeRange;
-    [SerializeField] private float atkRate;
-    [SerializeField] private LayerMask enemyLayer;
     [SerializeField] Animator anim;
+    [SerializeField] private LayerMask enemyLayer;
+
+
+<<<<<<< Updated upstream
     public WaveSpawner whereISpawned;
     Vector3 playerDir;
 
@@ -33,10 +37,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
         agent.SetDestination(gameManager.instance.player.transform.position);
-        playerDir = gameManager.instance.player.transform.position - transform.position;
-        float agentSpeed = agent.velocity.normalized.magnitude;
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animTransSpeed));
-
 
     }
 
