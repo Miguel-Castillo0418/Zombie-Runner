@@ -54,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199786821349407853}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -119,16 +119,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199786821349407853}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0c413a1773016048aa49209dc45ce87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charController: {fileID: 5962031438823799970}
   cameraController: {fileID: 7730312562192660030}
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
   HP: 10
   speed: 3
-  sprintMod: 1
+  sprintMod: 2
   jumpMax: 2
   jumpSpeed: 3
   gravity: 5
@@ -144,9 +147,7 @@ MonoBehaviour:
     m_Bits: 8
   meleeAttackPoint: {fileID: 5010217418979879590}
   attackRate: 0.5
-  bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
-  shootPos: {fileID: 8066795405034424926}
-  currentAmmo: 0
+  currentAmmo: 10
   magazineSize: 10
   stockAmmo: 30
 --- !u!143 &5962031438823799970
