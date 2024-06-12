@@ -17,8 +17,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text pointsCountText;
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
-    //[SerializeField] GameObject testhintText;
-    //[SerializeField] GameObject hintobject;
+    [SerializeField] GameObject testhintText;
+    [SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
     [SerializeField] GameObject doorObj1;
@@ -135,38 +135,20 @@ public class gameManager : MonoBehaviour
         points -= amount;
         pointsCountText.text = points.ToString("F0");
     }
-<<<<<<< Updated upstream
-    //public void showHints()
-    //{
-    //    float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
-    //    if (hint < 3)
-    //    {
 
-    //      //  testhintText.SetActive(true);
-
-
-    //    }
-    //    else
-    //    {
-    //      //  testhintText.SetActive(false);
-
-    //    }
-    //}
-=======
     public void showHints()
     {
         float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
         if (hint < 3)
         {
-            //  testhintText.SetActive(true);
+             testhintText.SetActive(true);
 
         }
         else
         {
-            //  testhintText.SetActive(false);
+             testhintText.SetActive(false);
         }
     }
->>>>>>> Stashed changes
     public void updateAmmo()
     {
         ammoMagCountText.text = playerScript.currentAmmo.ToString("F0");
