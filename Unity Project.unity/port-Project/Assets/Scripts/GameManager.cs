@@ -31,6 +31,7 @@ public class gameManager : MonoBehaviour
 
     public bool isHint;
     public bool isPaused;
+    bool doorPurchased;
     int enemycount;
     public int points;
     int round;
@@ -38,8 +39,9 @@ public class gameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        doorPurchased = false;
         instance = this;
-        points = 400;
+        points = 2100;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
@@ -141,12 +143,16 @@ public class gameManager : MonoBehaviour
         float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
         if (hint < 3)
         {
-             //testhintText.SetActive(true);
+
+              testhintText.SetActive(true);
+
 
         }
         else
         {
-            // testhintText.SetActive(false);
+
+              testhintText.SetActive(false);
+
         }
     }
     public void updateAmmo()
@@ -193,27 +199,40 @@ public class gameManager : MonoBehaviour
 
     {
         float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
-        Debug.Log("Door Distance: " + doorDistance);
         if (doorDistance < 3)
         {
-            Debug.Log("Near Door");
-            doorText.SetActive(true); 
-            if (Input.GetButtonDown("Door"))
-            {
-                if (points >= 2000)
+            if (!doorPurchased) {
+                doorText.SetActive(true);
+                if (Input.GetButtonDown("Door"))
                 {
+
+                    if (points >= 2000)
+                    {
+                        points -= 2000;
+                        pointsCountText.text = points.ToString("F0");
+                        doorPurchased = true;
+                        doorText.SetActive(false);
+                    }
+
                     points -= 2000;
                     pointsCountText.text = points.ToString("F0");
 
                     Destroy(doorObj1);
 
                     doorText2.SetActive(false);
+
+                    WaveManager.instance.OnDoorPurchased();
                 }
                 else
                 {
                     doorText2.SetActive(true);
                 }
             }
+            else
+            {
+                doorText2.SetActive(true);
+            }
+            
         }
         else
         {
