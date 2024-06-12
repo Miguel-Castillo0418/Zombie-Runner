@@ -58,7 +58,7 @@ public class Enem_AI_2 : MonoBehaviour
             float t=force*Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
-            Vector3.Lerp(other.transform.position,other.transform.forward*force,t);
+            other.transform.position=Vector3.Lerp(other.transform.position,other.transform.forward*force,t);
         }
     }
     //IEnumerator knockBack()
