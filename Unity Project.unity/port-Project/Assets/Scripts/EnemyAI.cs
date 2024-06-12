@@ -9,11 +9,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Rigidbody rb;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Transform meleeAttackPoint;
 
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
     [SerializeField] int force;
+    [SerializeField] private float meleeRange;
+    [SerializeField] private float atkRate;
+    [SerializeField] private LayerMask enemyLayer;
 
 
     public WaveSpawner whereISpawned;
@@ -60,6 +64,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     private void OnTriggerEnter(Collider other)
     {
+        
         IDamage dmg = other.GetComponent<IDamage>();
         if (dmg != null)
         {
@@ -67,8 +72,26 @@ public class EnemyAI : MonoBehaviour, IDamage
             force = lvl * damage;
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
+
             dmg.takeDamage(damage);
-            Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
+            other.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
         }
+    }
+    IEnumerator MeleeAttack()
+    {
+        // Detect player in range
+        Collider[] hitplayer = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
+
+        // Apply damage to player
+        foreach (Collider player in hitplayer)
+        {
+            IDamage damageable = player.GetComponent<IDamage>();
+            if (damageable != null)
+            {
+                damageable.takeDamage(damage);
+            }
+        }
+
+        yield return new WaitForSeconds(atkRate);
     }
 }
