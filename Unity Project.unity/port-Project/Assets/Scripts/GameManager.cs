@@ -18,7 +18,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
     //[SerializeField] GameObject testhintText;
-    [SerializeField] GameObject hintobject;
+    //[SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
     public Image playerHPBar;
@@ -59,17 +59,10 @@ public class gameManager : MonoBehaviour
                 stateUnpause();
             }
         }
-<<<<<<< Updated upstream
        // showHints();
         updateAmmo();
         showShop();
         pointsCountText.text = points.ToString("F0");
-=======
-        //showHints();
-        updateAmmo();
-        showShop();
-        pointsCountText.text = points.ToString();
->>>>>>> Stashed changes
     }
 
       
@@ -138,27 +131,22 @@ public class gameManager : MonoBehaviour
         points -= amount;
         pointsCountText.text = points.ToString("F0");
     }
-    public void showHints()
-    {
-        float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
-        if (hint < 3)
-        {
-<<<<<<< Updated upstream
-          //  testhintText.SetActive(true);
-=======
-            //testhintText.SetActive(true);
->>>>>>> Stashed changes
+    //public void showHints()
+    //{
+    //    float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
+    //    if (hint < 3)
+    //    {
 
-        }
-        else
-        {
-<<<<<<< Updated upstream
-          //  testhintText.SetActive(false);
-=======
-           // testhintText.SetActive(false);
->>>>>>> Stashed changes
-        }
-    }
+    //      //  testhintText.SetActive(true);
+
+
+    //    }
+    //    else
+    //    {
+    //      //  testhintText.SetActive(false);
+
+    //    }
+    //}
     public void updateAmmo()
     {
         ammoMagCountText.text = playerScript.currentAmmo.ToString("F0");

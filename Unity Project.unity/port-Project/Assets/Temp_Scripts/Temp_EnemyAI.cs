@@ -21,7 +21,7 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        TempgameManager.instance.updateGameGoal(1);
+        gameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            TempgameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
@@ -63,7 +63,7 @@ public class Temp_EnemyAI : MonoBehaviour, IDamage
     {
         float force = lvl * damage;
         float t = force * Time.deltaTime;
-        agent.SetDestination(TempgameManager.instance.player.transform.position);
+        agent.SetDestination(gameManager.instance.player.transform.position);
         Vector3 start = other.transform.position;
         Vector3 end = start + model.transform.forward;
 
