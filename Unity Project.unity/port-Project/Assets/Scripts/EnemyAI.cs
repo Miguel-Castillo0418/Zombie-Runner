@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
+    [SerializeField] int pointsRewarded;
     //[SerializeField] int force;
     //[SerializeField] Animator anim;
     [SerializeField] private LayerMask enemyLayer;
@@ -55,7 +56,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
 
             Destroy(gameObject);
-
+            rewardZombucks(); 
         }
     }
 
@@ -97,6 +98,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
 
         yield return new WaitForSeconds(atkRate);
+    }
+    void rewardZombucks()
+    {
+        gameManager.instance.addPoints(pointsRewarded);
     }
 
     void knockback()

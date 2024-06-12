@@ -217,15 +217,10 @@ public class gameManager : MonoBehaviour
                     points -= 2000;
                     pointsCountText.text = points.ToString("F0");
 
-                    Destroy(doorObj1);
-
-                    doorText2.SetActive(false);
+                    doorText.SetActive(false);
+                    
 
                     WaveManager.instance.OnDoorPurchased();
-                }
-                else
-                {
-                    doorText2.SetActive(true);
                 }
             }
             else
