@@ -17,8 +17,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text pointsCountText;
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
-    [SerializeField] GameObject testhintText;
-    [SerializeField] GameObject hintobject;
+    //[SerializeField] GameObject testhintText;
+    //[SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
     [SerializeField] GameObject doorObj1;
