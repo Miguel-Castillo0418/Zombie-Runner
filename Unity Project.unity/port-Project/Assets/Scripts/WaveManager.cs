@@ -8,6 +8,7 @@ public class WaveManager : MonoBehaviour
     public static WaveManager instance;
     public WaveSpawner[] spawners;
     [SerializeField] int timeBetweenWaves;
+    public bool purchasedDoor = false;
 
     public int waveCurrent;
 
@@ -29,4 +30,11 @@ public class WaveManager : MonoBehaviour
             spawners[waveCurrent - 1].startWave();
         }
     }
+
+    public void OnDoorPurchased()
+    {
+        purchasedDoor = true;
+        StartCoroutine(startWave());
+    }
+
 }
