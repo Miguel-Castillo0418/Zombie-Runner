@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour ,IDamage
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
     [SerializeField] LayerMask hitLayers;
-
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform ShootPos;
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     bool isSprinting = false;
     bool isCrouching = false;
-    bool isProne = false;
     bool isReloading = false;
 
     bool isShooting;
@@ -135,23 +135,15 @@ public class PlayerController : MonoBehaviour ,IDamage
             {
                 StartCoroutine(Slide());
             }
-            else if (!isCrouching && !isProne)
+            else if (!isCrouching)
             {
                 isCrouching = true;
-                isProne = false;
                 charController.height = crouchHeight;
                 cameraController.AdjustHeight(1);
             }
             else if (isCrouching)
             {
                 isCrouching = false;
-                isProne = true;
-               
-                cameraController.AdjustHeight(0.1f);
-            }
-            else if (isProne)
-            {
-                isProne = false;
                 charController.height = origHeight;
                 cameraController.AdjustHeight(origCameraHeight);
             }
@@ -178,27 +170,35 @@ public class PlayerController : MonoBehaviour ,IDamage
             currentAmmo--;
             isShooting = true;
 
+            GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
+            Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
+            rb.velocity = ShootPos.forward * shootDistance;
+
+            // Set the damage value of the bullet
+            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+            bulletScript.SetDamage(shootDamage);
+
             // Perform the raycast
-            RaycastHit hit;
-            Vector3 rayOrigin = Camera.main.transform.position;
-            Vector3 rayDirection = Camera.main.transform.forward;
+            // RaycastHit hit;
+            // Vector3 rayOrigin = Camera.main.transform.position;
+            // Vector3 rayDirection = Camera.main.transform.forward;
 
-            if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance, hitLayers))
-            {
-                Debug.Log("Hit: " + hit.transform.name);
+            //if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance, hitLayers))
+            //{
+            //    Debug.Log("Hit: " + hit.transform.name);
 
-                IDamage damage = hit.collider.GetComponent<IDamage>();
+            //    IDamage damage = hit.collider.GetComponent<IDamage>();
 
-                if (damage != null)
-                {
-                    Debug.Log("Applying damage to: " + hit.transform.name);
-                    damage.takeDamage(shootDamage);
-                }
-            }
-            else
-            {
-                Debug.Log("Missed!");
-            }
+            //    if (damage != null)
+            //    {
+            //        Debug.Log("Applying damage to: " + hit.transform.name);
+            //        damage.takeDamage(shootDamage);
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.Log("Missed!");
+            //}
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
