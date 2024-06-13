@@ -36,6 +36,8 @@ public class gameManager : MonoBehaviour
     public int points;
     int round;
 
+    private int enemyCount;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -94,26 +96,27 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal(int amount)
     {
-        enemycount += amount;
-        enemyCountText.text = enemycount.ToString("F0");
-        if (enemycount <= 0 && WaveManager.instance.waveCurrent >= WaveManager.instance.spawners.Length)
+        enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0");
+
+        if (enemyCount <= 0 && WaveManager.instance != null && WaveManager.instance.AllWavesCompleted())
         {
             round++;
-            if (round != 100)
+            updateRound(round);
+            if (round < 100)
             {
-                updateRound(round);
-                //startnext round or restart spawners
+                // Start the next round or restart spawners
+                WaveManager.instance.StartNextWave();
             }
             else
             {
-
                 statePause();
                 menuActive = menuWin;
                 menuActive.SetActive(isPaused);
             }
-
         }
     }
+
     public void updateRound(int amount)
     {
         round = amount;

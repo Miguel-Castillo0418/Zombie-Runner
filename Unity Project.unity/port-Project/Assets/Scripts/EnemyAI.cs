@@ -37,10 +37,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!playerInRange)
-        {
+      //  if (playerInRange)
+      //  {
             agent.SetDestination(gameManager.instance.player.transform.position);
-        }
+      //  }
     }
 
 
@@ -72,8 +72,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
-            playerInRange= true;
+       // if(other.CompareTag("Player"))
+           // playerInRange= true;
         IDamage dmg = other.GetComponent<IDamage>();
         if (other.name == "Player")
         {
@@ -86,11 +86,11 @@ public class EnemyAI : MonoBehaviour, IDamage
             
         }
     }
-    public void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Player"))
-            playerInRange= false;
-    }
+   // public void OnTriggerExit(Collider other)
+    //{
+     //   if(other.CompareTag("Player"))
+     //       playerInRange= false;
+   // }
     IEnumerator MeleeAttack()
     {
         // Detect player in range
