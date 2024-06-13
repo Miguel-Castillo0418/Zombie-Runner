@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
+    [SerializeField] int pointsRewarded;
     //[SerializeField] int force;
     //[SerializeField] Animator anim;
     [SerializeField] private LayerMask enemyLayer;
@@ -23,6 +24,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
 
     public WaveSpawner whereISpawned;
+    bool playerInRange;
     Vector3 playerDir;
 
 
@@ -35,8 +37,10 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(gameManager.instance.player.transform.position);
-
+      //  if (playerInRange)
+      //  {
+            agent.SetDestination(gameManager.instance.player.transform.position);
+      //  }
     }
 
 
@@ -55,21 +59,23 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
 
             Destroy(gameObject);
-
+            rewardZombucks(); 
         }
     }
 
     IEnumerator flashDamange()
     {
+        Color _color=model.material.color;
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
+        model.material.color = _color;
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+       // if(other.CompareTag("Player"))
+           // playerInRange= true;
         IDamage dmg = other.GetComponent<IDamage>();
-        if (dmg != null)
+        if (other.name == "Player")
         {
 
             int force = lvl * damage;
@@ -77,9 +83,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             Debug.Log(other.transform.name);
 
             dmg.takeDamage(damage);
-            //gameManager.instance.player.transform.position=Vector3.Lerp(other.transform.position, other.transform.forward * force, t);
+            
         }
     }
+   // public void OnTriggerExit(Collider other)
+    //{
+     //   if(other.CompareTag("Player"))
+     //       playerInRange= false;
+   // }
     IEnumerator MeleeAttack()
     {
         // Detect player in range
@@ -96,5 +107,19 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
 
         yield return new WaitForSeconds(atkRate);
+    }
+    void rewardZombucks()
+    {
+        gameManager.instance.addPoints(pointsRewarded);
+    }
+
+    void knockback()
+    {
+        //int force = lvl * damage;
+        //float t = force * Time.deltaTime;
+        //GameObject _player = gameManager.instance.player;
+        //gameManager.instance.player.transform.position += Vector3.Lerp(_player.transform.position, _player.transform.forward * force, t);
+
+
     }
 }
