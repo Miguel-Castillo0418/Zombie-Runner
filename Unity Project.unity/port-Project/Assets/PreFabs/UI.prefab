@@ -2755,8 +2755,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: quit
         m_Mode: 1
         m_Arguments:
@@ -2962,7 +2962,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4603605024551765206}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4525004928770143749}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: strengthButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4016522823267795124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3330,7 +3342,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1222818572674329282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4525004928770143749}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: healthButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4444488785329084957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4000,9 +4024,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Reset
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4343,8 +4367,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: resume
         m_Mode: 1
         m_Arguments:
@@ -4611,8 +4635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: quit
         m_Mode: 1
         m_Arguments:
@@ -4633,6 +4657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7230106791549640417}
   - component: {fileID: 7595784691268794256}
+  - component: {fileID: 7539031740500593393}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -4681,15 +4706,30 @@ MonoBehaviour:
   pointsCountText: {fileID: 2629263767601238606}
   ammoMagCountText: {fileID: 8763687463937741950}
   ammoStockCountText: {fileID: 62372050482349708}
+  testhintText: {fileID: 0}
   hintobject: {fileID: 0}
-  shopObj: {fileID: 0}
-  shopText: {fileID: 0}
+  shopObj: {fileID: 2888541596277762965, guid: e4e4521c422b5754691ba11feb5be91a, type: 3}
+  shopText: {fileID: 8367599443921959166, guid: 1bbe031474f0bcd40b981bfbdfc5b9b5, type: 3}
+  tempRound: {fileID: 8602177415612019026, guid: 25d6c9b9b55d6d34499222409be78f57, type: 3}
+  waveManager: {fileID: 3868572908839576932, guid: 626fc58549997404189fdf35faeac3ec, type: 3}
   playerHPBar: {fileID: 2380697353458968662}
   player: {fileID: 4199786821349407853, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
   playerScript: {fileID: 4192162789329210410, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
   isHint: 0
   isPaused: 0
   points: 0
+--- !u!114 &7539031740500593393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996990846192093976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cba3971d693df41a114b5a620a0310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6089556223978237421
 GameObject:
   m_ObjectHideFlags: 0
@@ -4944,7 +4984,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6954474826987009068}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4525004928770143749}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: rouletteButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6679317956878815938
 GameObject:
   m_ObjectHideFlags: 0
@@ -5354,8 +5406,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: quit
         m_Mode: 1
         m_Arguments:
@@ -5940,7 +5992,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -89.1, y: -47}
+  m_AnchoredPosition: {x: -89.1001, y: -47}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &28567084467888773
@@ -6353,9 +6405,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Reset
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6963,9 +7015,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Reset
+      - m_Target: {fileID: 7539031740500593393}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7382,4 +7434,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3688857522815721282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4525004928770143749}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: speedButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

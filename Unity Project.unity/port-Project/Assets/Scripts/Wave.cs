@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
+    static public Wave instance;
     [SerializeField] private float initialWaveCountdown;
     [SerializeField] private List<EnemyType> enemyTypes;
     [SerializeField] private List<GameObject> spawnPoints;
-    [SerializeField] private int totalRounds;
+    [SerializeField] public int totalRounds;
     [SerializeField] private float spawnRateMultiplier;
 
     public int currentWaveIndex = 0;
@@ -24,9 +25,10 @@ public class Wave : MonoBehaviour
 
     void Update()
     {
-        if (currentWaveIndex >= totalRounds)
+        if (currentWaveIndex == totalRounds)
         {
-            gameManager.instance.updateGameGoal(1);
+            Debug.Log("test5");
+            gameManager.instance.updateGameGoal(0);
             return;
         }
 
