@@ -21,6 +21,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
+    [SerializeField] Wave tempRound;
+    [SerializeField] WaveManager waveManager;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -69,7 +71,7 @@ public class gameManager : MonoBehaviour
         // showHints();
         updateAmmo();
         showShop();
-       // buyDoor();
+        // buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
 
@@ -99,14 +101,17 @@ public class gameManager : MonoBehaviour
         enemyCount += amount;
         enemyCountText.text = enemyCount.ToString("F0");
 
-        if (enemyCount <= 0 && WaveManager.instance != null && WaveManager.instance.AllWavesCompleted())
+        if (enemyCount <= 0 && round <= tempRound.totalRounds)
         {
+            Debug.Log("test");
             round++;
+            Debug.Log(round);
             updateRound(round);
-            if (round < 100)
+            if (round <= tempRound.totalRounds)
             {
+                Debug.Log(round);
                 // Start the next round or restart spawners
-                WaveManager.instance.StartNextWave();
+                waveManager.StartNextWave();
             }
             else
             {
@@ -147,14 +152,14 @@ public class gameManager : MonoBehaviour
         if (hint < 3)
         {
 
-              testhintText.SetActive(true);
+            testhintText.SetActive(true);
 
 
         }
         else
         {
 
-              testhintText.SetActive(false);
+            testhintText.SetActive(false);
 
         }
     }
@@ -173,7 +178,9 @@ public class gameManager : MonoBehaviour
     public void showShop()
     {
         float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
-        if (shopDist < 3 )
+
+        if (shopDist < 8.6)
+
         {
             shopText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
@@ -181,9 +188,9 @@ public class gameManager : MonoBehaviour
                 shopText.SetActive(false);
                 if (menuActive == null)
                 {
-                    
+
                     shop();
-                    
+
                 }
                 else if (menuActive == menuShop)
                 {
@@ -201,34 +208,34 @@ public class gameManager : MonoBehaviour
     //public void buyDoor()
 
     //{
-      //  float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
-       // if (doorDistance < 3)
-        //{
-            //if (!doorPurchased) {
-              //  doorText.SetActive(true);
-               // if (Input.GetButtonDown("Door"))
-               // {
+    //  float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
+    // if (doorDistance < 3)
+    //{
+    //if (!doorPurchased) {
+    //  doorText.SetActive(true);
+    // if (Input.GetButtonDown("Door"))
+    // {
 
-                   // if (points >= 2000)
-                   // {
-                      //  points -= 2000;
-                       // pointsCountText.text = points.ToString("F0");
-                      //  doorPurchased = true;
-                      //  doorText.SetActive(false);
-                      //  WaveManager.instance.OnDoorPurchased();
-              //      }
-            //    }
-          //  }
-       //     else
-        //    {
-          //      doorText2.SetActive(true);
-          //  }
-            
-     //   }
-      //  else
-     //   {
-       //     doorText.SetActive(false);
-       //     doorText2.SetActive(false);
-      //  }
-  //  }
+    // if (points >= 2000)
+    // {
+    //  points -= 2000;
+    // pointsCountText.text = points.ToString("F0");
+    //  doorPurchased = true;
+    //  doorText.SetActive(false);
+    //  WaveManager.instance.OnDoorPurchased();
+    //      }
+    //    }
+    //  }
+    //     else
+    //    {
+    //      doorText2.SetActive(true);
+    //  }
+
+    //   }
+    //  else
+    //   {
+    //     doorText.SetActive(false);
+    //     doorText2.SetActive(false);
+    //  }
+    //  }
 }
