@@ -163,7 +163,7 @@ MonoBehaviour:
   bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
   ShootPos: {fileID: 6107836234394334680}
   HP: 10
-  speed: 3
+  speed: 8
   sprintMod: 2
   jumpMax: 2
   jumpSpeed: 3
@@ -180,9 +180,9 @@ MonoBehaviour:
     m_Bits: 8
   meleeAttackPoint: {fileID: 5010217418979879590}
   attackRate: 0.5
-  currentAmmo: 10
-  magazineSize: 10
-  stockAmmo: 30
+  currentAmmo: 30
+  magazineSize: 30
+  stockAmmo: 360
 --- !u!143 &5962031438823799970
 CharacterController:
   m_ObjectHideFlags: 0

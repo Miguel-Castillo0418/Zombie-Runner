@@ -21,9 +21,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject hintobject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
-    [SerializeField] GameObject doorObj1;
-    [SerializeField] GameObject doorText;
-    [SerializeField] GameObject doorText2;
+    [SerializeField] Wave tempRound;
+    [SerializeField] WaveManager waveManager;
+    //[SerializeField] GameObject doorObj1;
+    //[SerializeField] GameObject doorText;
+    //[SerializeField] GameObject doorText2;
     public Image playerHPBar;
 
     public GameObject player;
@@ -31,15 +33,17 @@ public class gameManager : MonoBehaviour
 
     public bool isHint;
     public bool isPaused;
-    bool doorPurchased;
+    //bool doorPurchased;
     int enemycount;
     public int points;
     int round;
 
+    private int enemyCount;
+
     // Start is called before the first frame update
     void Awake()
     {
-        doorPurchased = false;
+        //doorPurchased = false;
         instance = this;
         points = 2100;
         player = GameObject.FindWithTag("Player");
@@ -67,7 +71,7 @@ public class gameManager : MonoBehaviour
         // showHints();
         updateAmmo();
         showShop();
-        buyDoor();
+        // buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
 
@@ -94,26 +98,30 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal(int amount)
     {
-        enemycount += amount;
-        enemyCountText.text = enemycount.ToString("F0");
-        if (enemycount <= 0 && WaveManager.instance.waveCurrent >= WaveManager.instance.spawners.Length)
+        enemyCount += amount;
+        enemyCountText.text = enemyCount.ToString("F0");
+
+        if (enemyCount <= 0 && round <= tempRound.totalRounds)
         {
+            Debug.Log("test");
             round++;
-            if (round != 100)
+            Debug.Log(round);
+            updateRound(round);
+            if (round <= tempRound.totalRounds)
             {
-                updateRound(round);
-                //startnext round or restart spawners
+                Debug.Log(round);
+                // Start the next round or restart spawners
+                waveManager.StartNextWave();
             }
             else
             {
-
                 statePause();
                 menuActive = menuWin;
                 menuActive.SetActive(isPaused);
             }
-
         }
     }
+
     public void updateRound(int amount)
     {
         round = amount;
@@ -144,14 +152,14 @@ public class gameManager : MonoBehaviour
         if (hint < 3)
         {
 
-              testhintText.SetActive(true);
+            testhintText.SetActive(true);
 
 
         }
         else
         {
 
-              testhintText.SetActive(false);
+            testhintText.SetActive(false);
 
         }
     }
@@ -170,7 +178,9 @@ public class gameManager : MonoBehaviour
     public void showShop()
     {
         float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
-        if (shopDist < 3 )
+
+        if (shopDist < 8.6)
+
         {
             shopText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
@@ -178,9 +188,9 @@ public class gameManager : MonoBehaviour
                 shopText.SetActive(false);
                 if (menuActive == null)
                 {
-                    
+
                     shop();
-                    
+
                 }
                 else if (menuActive == menuShop)
                 {
@@ -195,37 +205,37 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void buyDoor()
+    //public void buyDoor()
 
-    {
-        float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
-        if (doorDistance < 3)
-        {
-            if (!doorPurchased) {
-                doorText.SetActive(true);
-                if (Input.GetButtonDown("Door"))
-                {
+    //{
+    //  float doorDistance = Vector3.Distance(doorObj1.transform.position, gameManager.instance.player.transform.position);
+    // if (doorDistance < 3)
+    //{
+    //if (!doorPurchased) {
+    //  doorText.SetActive(true);
+    // if (Input.GetButtonDown("Door"))
+    // {
 
-                    if (points >= 2000)
-                    {
-                        points -= 2000;
-                        pointsCountText.text = points.ToString("F0");
-                        doorPurchased = true;
-                        doorText.SetActive(false);
-                        WaveManager.instance.OnDoorPurchased();
-                    }
-                }
-            }
-            else
-            {
-                doorText2.SetActive(true);
-            }
-            
-        }
-        else
-        {
-            doorText.SetActive(false);
-            doorText2.SetActive(false);
-        }
-    }
+    // if (points >= 2000)
+    // {
+    //  points -= 2000;
+    // pointsCountText.text = points.ToString("F0");
+    //  doorPurchased = true;
+    //  doorText.SetActive(false);
+    //  WaveManager.instance.OnDoorPurchased();
+    //      }
+    //    }
+    //  }
+    //     else
+    //    {
+    //      doorText2.SetActive(true);
+    //  }
+
+    //   }
+    //  else
+    //   {
+    //     doorText.SetActive(false);
+    //     doorText2.SetActive(false);
+    //  }
+    //  }
 }

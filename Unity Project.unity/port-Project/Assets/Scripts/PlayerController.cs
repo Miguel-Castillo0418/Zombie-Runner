@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour ,IDamage
     int jumpCount;
     int HPorig;
 
+    public int maxAmmo;
     public int currentAmmo;
     public int magazineSize = 10;
     public int stockAmmo = 30;
@@ -228,7 +229,7 @@ public class PlayerController : MonoBehaviour ,IDamage
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
-    IEnumerator reload()
+    public IEnumerator reload()
     {
         isReloading = true;
         Debug.Log("Reloading");

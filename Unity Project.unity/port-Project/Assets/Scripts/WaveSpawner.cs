@@ -56,7 +56,7 @@ public class WaveSpawner : MonoBehaviour
         if (numKilled >= numToSpawn) 
         {
             startSpawning = false;
-            StartCoroutine(WaveManager.instance.startWave());
+            StartCoroutine(WaveManager.instance.StartWave());
         }
     }
 }

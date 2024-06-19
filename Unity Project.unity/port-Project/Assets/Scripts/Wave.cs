@@ -4,50 +4,80 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
+    static public Wave instance;
+    [SerializeField] private float initialWaveCountdown;
+    [SerializeField] private List<EnemyType> enemyTypes;
+    [SerializeField] private List<GameObject> spawnPoints;
+    [SerializeField] public int totalRounds;
+    [SerializeField] private float spawnRateMultiplier;
 
-    [SerializeField] private float waveCountdown;
-    [SerializeField] private moreWaves[] waves;
-    [SerializeField] private List<GameObject> spawnPoint;
+    public int currentWaveIndex = 0;
+    private float waveCountdown;
+    private bool isCountingDown = true;
 
+    private List<EnemyAI> activeEnemies = new List<EnemyAI>();
 
-
-    private int waveIndex = 0;
-    private bool countdown;
-
-    // Start is called before the first frame update
     void Start()
     {
-        countdown = true;
-
-        for (int i = 0; i < waves.Length; i++)
-        {
-            waves[i].enemiesRemaining = waves[i].enemies.Length;
-        }
+        waveCountdown = initialWaveCountdown;
+        PrepareEnemyTypes();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (waveIndex >= waves.Length)
+        if (currentWaveIndex == totalRounds)
         {
-            gameManager.instance.updateGameGoal(1);
+            Debug.Log("test5");
+            gameManager.instance.updateGameGoal(0);
             return;
         }
 
-        if (countdown)
+        if (isCountingDown)
         {
             waveCountdown -= Time.deltaTime;
+            if (waveCountdown <= 0)
+            {
+                isCountingDown = false;
+                waveCountdown = enemyTypes[currentWaveIndex].waitingSpawnTime;
+                StartCoroutine(SpawnWave());
+            }
         }
 
-        if (waveCountdown <= 0)
+        CheckIfAllEnemiesDefeated();
+    }
+
+    private void PrepareEnemyTypes()
+    {
+        foreach (var enemyType in enemyTypes)
         {
-            countdown = false;
-
-            waveCountdown = waves[waveIndex].waitingSpawnTime;
-            StartCoroutine(spawnWave());
+            enemyType.currentSpawnCount = enemyType.initialSpawnCount;
         }
+    }
 
-        if (waves[waveIndex].enemiesRemaining == 0 && !countdown)
+    private IEnumerator SpawnWave()
+    {
+        if (currentWaveIndex < totalRounds)
+        {
+            for (int i = 0; i < enemyTypes.Count; i++)
+            {
+                for (int j = 0; j < enemyTypes[i].currentSpawnCount; j++)
+                {
+                    int spawnPointIndex = Random.Range(0, spawnPoints.Count);
+                    EnemyAI spawnedEnemy = Instantiate(enemyTypes[i].enemyPrefab, spawnPoints[spawnPointIndex].transform.position, spawnPoints[spawnPointIndex].transform.rotation);
+                    activeEnemies.Add(spawnedEnemy);
+                    yield return new WaitForSeconds(enemyTypes[i].spawnDelay);
+                }
+
+                // Multiply spawn count for the next round
+                enemyTypes[i].currentSpawnCount = Mathf.RoundToInt(enemyTypes[i].currentSpawnCount * spawnRateMultiplier);
+            }
+        }
+    }
+
+    private void CheckIfAllEnemiesDefeated()
+    {
+        activeEnemies.RemoveAll(enemy => enemy == null);
+        if (activeEnemies.Count == 0 && !isCountingDown)
         {
             StartNextWave();
         }
@@ -55,37 +85,21 @@ public class Wave : MonoBehaviour
 
     private void StartNextWave()
     {
-        countdown = true;
-        waveIndex++;
-        if (waveIndex < waves.Length)
+        isCountingDown = true;
+        currentWaveIndex++;
+        if (currentWaveIndex < totalRounds)
         {
-            waveCountdown = waves[waveIndex].waitingNextWave;
+            waveCountdown = initialWaveCountdown;
         }
     }
-
-    private IEnumerator spawnWave()
-    {
-        if (waveIndex < waves.Length)
-        {
-
-
-            for (int i = 0; i < waves[waveIndex].enemies.Length; i++)
-            {
-                int rand = Random.Range(0, spawnPoint.Count);
-                EnemyAI enemy = Instantiate(waves[waveIndex].enemies[i], spawnPoint[rand].transform.position, spawnPoint[rand].transform.rotation);
-                yield return new WaitForSeconds(waves[waveIndex].waitingSpawnTime);
-            }
-        }
-    }
-
 
     [System.Serializable]
-    public class moreWaves
+    public class EnemyType
     {
-        public EnemyAI[] enemies;
+        public EnemyAI enemyPrefab;
+        public int initialSpawnCount;
+        public float spawnDelay;
         public float waitingSpawnTime;
-        public float waitingNextWave;
-        [HideInInspector] public int enemiesRemaining;
-
+        [HideInInspector] public int currentSpawnCount;
     }
 }

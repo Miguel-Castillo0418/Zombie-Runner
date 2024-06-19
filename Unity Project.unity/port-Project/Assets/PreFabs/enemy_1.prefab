@@ -54,16 +54,16 @@ MonoBehaviour:
   model: {fileID: 3027046577229131039}
   agent: {fileID: 1035010071805329366}
   meleeAttackPoint: {fileID: 2580633883507643488}
-  meleeRange: 3
+  meleeRange: 4
   atkRate: 0.5
   HP: 10
   lvl: 1
   damage: 3
+  pointsRewarded: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1
   whereISpawned: {fileID: 0}
-  playerInRange: 0
 --- !u!33 &7289886720186831612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,11 +129,11 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 100
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -147,7 +147,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 600
