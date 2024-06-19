@@ -26,7 +26,14 @@ public class gameManager : MonoBehaviour
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
+    [SerializeField] private float attackRate;
+    [SerializeField] private float drainTime = 0.25f;
+    [SerializeField] private Gradient PlayerHPBarGradient;
+    public float hpTarget = 1f;
+    public Coroutine drainHealthBar;
+
     public Image playerHPBar;
+
 
     public GameObject player;
     public PlayerController playerScript;
@@ -50,6 +57,7 @@ public class gameManager : MonoBehaviour
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
+        CheckHealthBar();
     }
 
     // Update is called once per frame
@@ -238,4 +246,21 @@ public class gameManager : MonoBehaviour
     //     doorText2.SetActive(false);
     //  }
     //  }
+    public IEnumerator DrainHealthBar()
+    {
+        float fill = playerHPBar.fillAmount;
+        float timePassed = 0f;
+        while (timePassed < drainTime)
+        {
+            timePassed += Time.deltaTime;
+            playerHPBar.fillAmount = Mathf.Lerp(fill, hpTarget, (timePassed / drainTime));
+
+
+            yield return null;
+        }
+    }
+    public void CheckHealthBar()
+    {
+        playerHPBar.color = PlayerHPBarGradient.Evaluate(hpTarget);
+    }
 }
