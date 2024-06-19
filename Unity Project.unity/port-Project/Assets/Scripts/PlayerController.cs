@@ -178,28 +178,6 @@ public class PlayerController : MonoBehaviour ,IDamage
             Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
             bulletScript.SetDamage(shootDamage);
 
-            // Perform the raycast
-            // RaycastHit hit;
-            // Vector3 rayOrigin = Camera.main.transform.position;
-            // Vector3 rayDirection = Camera.main.transform.forward;
-
-            //if (Physics.Raycast(rayOrigin, rayDirection, out hit, shootDistance, hitLayers))
-            //{
-            //    Debug.Log("Hit: " + hit.transform.name);
-
-            //    IDamage damage = hit.collider.GetComponent<IDamage>();
-
-            //    if (damage != null)
-            //    {
-            //        Debug.Log("Applying damage to: " + hit.transform.name);
-            //        damage.takeDamage(shootDamage);
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.Log("Missed!");
-            //}
-
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
