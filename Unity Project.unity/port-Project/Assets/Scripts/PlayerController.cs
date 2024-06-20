@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     bool isShooting;
     int jumpCount;
-    int HPorig;
+    public int HPorig;
+    public int shopHP;
 
     public int maxAmmo;
     public int currentAmmo;
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour ,IDamage
     void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        shopHP = HP;
     }
 
     IEnumerator MeleeAttack()
@@ -261,9 +263,8 @@ public class PlayerController : MonoBehaviour ,IDamage
         else
         {
             HP += 20;
-            updatePlayerUI();
         }
-        
+        updatePlayerUI();
     }
 
     public void IncreaseSpeed()

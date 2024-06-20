@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
@@ -16,9 +17,8 @@ public class Shop : MonoBehaviour
     [SerializeField] int strengthCost;
     [SerializeField] int rouletteCost;
     [SerializeField] PlayerController playerController;
+    [SerializeField] Button healthbutton;
     int Zombucks;
-    int HP;
-    int HPOrig;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +27,7 @@ public class Shop : MonoBehaviour
         StrengthCostText.text = strengthCost.ToString();
         RouletteCostText.text = rouletteCost.ToString();
         Zombucks = gameManager.instance.points;
+        healthbutton.enabled = false;
         updateZombucks();
     }
 
@@ -34,8 +35,11 @@ public class Shop : MonoBehaviour
     void Update()
     {
         Zombucks = gameManager.instance.points;
+        if (playerController.shopHP < playerController.HPorig)
+        {
+            healthbutton.enabled = true;
+        }
         updateZombucks();
-        
     }
     public void updateZombucks()
     {
@@ -43,6 +47,10 @@ public class Shop : MonoBehaviour
     }
     public void healthButton()
     {
+        if (playerController.HPorig == playerController.shopHP)
+        {
+            healthbutton.enabled = false;
+        }
         if (Zombucks - healthCost >= 0)
         {
             
@@ -54,6 +62,7 @@ public class Shop : MonoBehaviour
 
     public void speedButton()
     {
+        
         if (Zombucks - speedCost >= 0)
         {
             gameManager.instance.points -= speedCost;
