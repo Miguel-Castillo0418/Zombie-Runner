@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour ,IDamage
+public class PlayerController : MonoBehaviour, IDamage
 {
 
     [SerializeField] CharacterController charController;
@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     bool isShooting;
     int jumpCount;
-    int HPorig;
+    public int HPorig;
+    public int shopHP;
 
     public int maxAmmo;
     public int currentAmmo;
@@ -117,12 +118,12 @@ public class PlayerController : MonoBehaviour ,IDamage
     void sprint()
     {
         if (Input.GetButtonDown("Sprint"))
-        { 
+        {
             isSprinting = true;
             speed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
-        {            
+        {
             isSprinting = false;
             speed /= sprintMod;
         }
@@ -194,7 +195,7 @@ public class PlayerController : MonoBehaviour ,IDamage
         updatePlayerUI();
         if (HP <= 0)
         {
-           gameManager.instance.youLose();
+            gameManager.instance.youLose();
         }
     }
 
@@ -203,6 +204,7 @@ public class PlayerController : MonoBehaviour ,IDamage
         gameManager.instance.hpTarget = (float)HP / HPorig;
         gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
         gameManager.instance.CheckHealthBar();
+        shopHP = HP;
     }
 
     IEnumerator MeleeAttack()
@@ -256,26 +258,25 @@ public class PlayerController : MonoBehaviour ,IDamage
 
     public void IncreaseHealth()
     {
-        if(HP + 20 > HPorig)
+        if (HP + 20 > HPorig)
         {
             HP = HPorig;
         }
         else
         {
             HP += 20;
-            updatePlayerUI();
         }
-        
+        updatePlayerUI();
     }
 
     public void IncreaseSpeed()
     {
-        speed += 2; 
+        speed += 2;
     }
 
     public void IncreaseStrength()
     {
-        shootDamage += 5; 
+        shootDamage += 5;
     }
 
 }
