@@ -83,6 +83,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             Debug.Log(other.transform.name);
 
             dmg.takeDamage(damage);
+            knockback();
             
         }
     }
@@ -115,11 +116,31 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void knockback()
     {
-        //int force = lvl * damage;
-        //float t = force * Time.deltaTime;
-        //GameObject _player = gameManager.instance.player;
-        //gameManager.instance.player.transform.position += Vector3.Lerp(_player.transform.position, _player.transform.forward * force, t);
+        int force = lvl * damage * 10; // Adjust this force value as needed
+        float knockbackDuration = 0.5f; // Adjust the duration of knockback
 
+        Vector3 knockbackDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
+        Vector3 targetPosition = gameManager.instance.player.transform.position + knockbackDirection * 3f; // Adjust the distance of knockback
+        StartCoroutine(ApplyKnockback(gameManager.instance.player.transform, targetPosition, knockbackDuration));
 
+    }
+    IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
+    {
+        Vector3 initialPosition = playerTransform.position;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            float progress = timer / duration;
+            playerTransform.position = Vector3.Lerp(initialPosition, targetPosition, progress);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the player reaches the exact target position
+        playerTransform.position = targetPosition;
+        Rigidbody playerRigidbody = gameManager.instance.player.GetComponent<Rigidbody>();
+        playerRigidbody.angularVelocity = Vector3.zero;
     }
 }
