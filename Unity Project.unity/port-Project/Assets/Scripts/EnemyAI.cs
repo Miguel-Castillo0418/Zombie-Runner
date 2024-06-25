@@ -117,7 +117,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     void knockback()
     {
         int force = lvl * damage * 10; // Adjust this force value as needed
-        float knockbackDuration = 0.5f; // Adjust the duration of knockback
+        float knockbackDuration = 0.3f; // Adjust the duration of knockback
 
         Vector3 knockbackDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
         Vector3 targetPosition = gameManager.instance.player.transform.position + knockbackDirection * 3f; // Adjust the distance of knockback
