@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df92cbc09479744468f1696b9293179d, type: 3}
+  m_Name: gun - CompactCharger
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 0}
+  shootDmg: 1
+  shootDist: 15
+  shootRate: 0.1
+  ammoCurr: 0
+  ammoMax: 0
+  gunMaterials: []
+  hitEffect: {fileID: 0}
+  shootSound: {fileID: 0}
+  shootVol: 0
