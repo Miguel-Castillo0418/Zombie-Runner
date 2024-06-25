@@ -32,12 +32,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
-        HalfHpSpeed = agent.speed*2;
+        HalfHpSpeed = agent.speed*3.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Speed",agent.velocity.normalized.magnitude);
         agent.SetDestination(gameManager.instance.player.transform.position);
         anim.SetTrigger("PlayerInRange");
         if (agent.remainingDistance<=agent.stoppingDistance&& agent.remainingDistance>0)
@@ -54,7 +55,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         HP -= amount;
         StartCoroutine(flashDamange());
 
-        if (HP / maxHp <= .5)
+        if (HP / maxHp <= 0.5f)
         {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
