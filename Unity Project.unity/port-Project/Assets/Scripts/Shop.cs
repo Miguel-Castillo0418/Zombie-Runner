@@ -84,7 +84,9 @@ public class Shop : MonoBehaviour
     {
         if(Zombucks - rouletteCost >= 0)
         {
-            Zombucks -= rouletteCost;
+            gameManager.instance.points -= rouletteCost;
+            updateZombucks();
+            playerController.spinRoulette();
         }
     }
 }
