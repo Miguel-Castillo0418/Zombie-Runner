@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(reload());
             }
         }
+        selectGun();
         sprint();
         crouch();
     }
@@ -346,10 +347,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void spinRoulette()
     {
        gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
-        if(wonGun != gunList[selectedGun])
             getGunStats(wonGun);
-        else
-            spinRoulette();
     }
     public void getGunStats(gunStats gun)
     {
