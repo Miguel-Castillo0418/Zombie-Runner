@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,15 +9,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
-    //[SerializeField] int animTransSpeed;
     [SerializeField] int meleeRange;
     [SerializeField] float atkRate;
     [SerializeField] int HP;
     [SerializeField] int lvl;
     [SerializeField] int damage;
     [SerializeField] int pointsRewarded;
-    //[SerializeField] int force;
-    //[SerializeField] Animator anim;
     [SerializeField] private LayerMask enemyLayer;
 
 
@@ -37,10 +33,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-      //  if (playerInRange)
-      //  {
             agent.SetDestination(gameManager.instance.player.transform.position);
-      //  }
     }
 
 
@@ -72,8 +65,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     private void OnTriggerEnter(Collider other)
     {
-       // if(other.CompareTag("Player"))
-           // playerInRange= true;
         IDamage dmg = other.GetComponent<IDamage>();
         if (other.name == "Player")
         {
@@ -87,11 +78,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             
         }
     }
-   // public void OnTriggerExit(Collider other)
-    //{
-     //   if(other.CompareTag("Player"))
-     //       playerInRange= false;
-   // }
     IEnumerator MeleeAttack()
     {
         // Detect player in range
