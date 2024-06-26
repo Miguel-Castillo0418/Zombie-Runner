@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df92cbc09479744468f1696b9293179d, type: 3}
   m_Name: gun - Bullpup
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 0}
-  shootDmg: 0
-  shootDist: 0
-  shootRate: 0
+  gunModel: {fileID: 6576053810601946475, guid: faf47b596475efc4c839fb44dd61adee, type: 3}
+  shootDmg: 1
+  shootDist: 15
+  shootRate: 0.1
+  aimSpeed: 0
   ammoCurr: 0
   ammoMax: 0
   gunMaterials: []
