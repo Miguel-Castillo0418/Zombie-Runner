@@ -14,6 +14,13 @@ public class Wave : MonoBehaviour
     public int currentWaveIndex = 0;
     private float waveCountdown;
     private bool isCountingDown = true;
+    //new code
+    private string playerName;
+<<<<<<< Updated upstream
+   // private HighScoreTable highScoreTable;
+=======
+    //private HighScoreTable highScoreTable;
+>>>>>>> Stashed changes
 
     private List<EnemyAI> activeEnemies = new List<EnemyAI>();
 
@@ -21,6 +28,9 @@ public class Wave : MonoBehaviour
     {
         waveCountdown = initialWaveCountdown;
         PrepareEnemyTypes();
+        //new code
+        playerName = PlayerPrefs.GetString("playerName", "Unknown");
+        //highScoreTable = FindObjectOfType<HighScoreTable>();
     }
 
     void Update()
