@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         charController.Move(moveDir * speed * Time.deltaTime);
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && charController.isGrounded)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;

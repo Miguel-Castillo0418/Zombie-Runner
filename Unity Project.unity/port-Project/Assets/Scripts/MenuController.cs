@@ -44,7 +44,7 @@ public class MenuController : MonoBehaviour
 
     public string _newGameLevel;
     private string levelToLoad;
-    [SerializeField] private GameObject noSavedGameDialog = null;
+   // [SerializeField] private GameObject noSavedGameDialog = null;
 
 
     private void Start()
@@ -79,26 +79,31 @@ public class MenuController : MonoBehaviour
     public void NewGameDialogYes()
     {
         SceneManager.LoadScene(_newGameLevel);
+        gameManager.instance.stateUnpause();
     }
 
-    public void LoadGameDialogYes()
-    {
-        if (PlayerPrefs.HasKey("SavedLeve1"))
-        {
-            levelToLoad = PlayerPrefs.GetString("SavedLeve1");
+   // public void LoadGameDialogYes()
+    //{
+       // if (PlayerPrefs.HasKey("SavedZombieRunner"))
+      //  {
+          //  levelToLoad = PlayerPrefs.GetString("SavedZombieRunner");
             //If you want to push your level into the SasvedLeve1 file code below:
             //PlayerPrefs.SetString("SavedLeve1", yourlevelis)
-            SceneManager.LoadScene(levelToLoad);
-        }
-        else
-        {
-            noSavedGameDialog.SetActive(true);
-        }
-    }
+         //   SceneManager.LoadScene(levelToLoad);
+      //  }
+       // else
+      //  {
+         //   noSavedGameDialog.SetActive(true);
+      //  }
+   // }
 
     public void ExitButton()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     public void SetVolume(float volume)
