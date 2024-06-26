@@ -9,7 +9,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Rigidbody rb;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform meleeAttackPoint;
+    [SerializeField] Transform[] meleeAttack;
+                     int meleeAttackIndex;
+    [SerializeField] Collider collider;
     [SerializeField] Animator anim;
     [SerializeField] int meleeRange;
     [SerializeField] float atkRate;
@@ -20,7 +22,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int pointsRewarded;
     [SerializeField] private LayerMask enemyLayer;
     float HalfHpSpeed;
-
+    float normSpeed;
 
     public WaveSpawner whereISpawned;
     bool playerInRange;
@@ -38,14 +40,20 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        anim.SetFloat("Speed",agent.velocity.normalized.magnitude);
+        if (agent.velocity.normalized.magnitude>0)
+            normSpeed = agent.velocity.normalized.magnitude;
+
+        anim.SetFloat("Speed", normSpeed);
         agent.SetDestination(gameManager.instance.player.transform.position);
-        anim.SetTrigger("PlayerInRange");
-        if (agent.remainingDistance<=agent.stoppingDistance&& agent.remainingDistance>0)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            
-            anim.SetTrigger("Atk");
+            anim.SetBool("PlayerInRange", true);
+            anim.SetFloat("Speed", normSpeed);
             StartCoroutine(MeleeAttack());
+        }
+        else
+        {
+            anim.SetBool("PlayerInRange", false);
         }
     }
 
@@ -54,28 +62,24 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
         StartCoroutine(flashDamange());
-
-        if (HP / maxHp <= 0.5f)
+        if (HP / (float)maxHp <= 0.5f)
         {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
+            anim.SetBool("HalfHp", true);
         }
-
-
         if (HP <= 0)
         {
+            anim.SetBool("IsDead", true);
             agent.speed = 0;
             if (whereISpawned)
             {
                 whereISpawned.updateEnemyNumber();
             }
-
+            EnemyColliderToggle();
             StartCoroutine(DeathAnimation());
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
-
-
-
         }
     }
 
@@ -104,7 +108,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         //Stop the enemy
         //agent.speed = 0;
         // Detect player in range
-        Collider[] hitplayer = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
+        Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
 
         // Apply damage to player
         foreach (Collider player in hitplayer)
@@ -149,10 +153,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     IEnumerator DeathAnimation()
     {
-        anim.SetTrigger("Dead");
 
         yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
 
+    }
+    void EnemyColliderToggle()
+    {
+        collider.enabled = !collider;
     }
 }

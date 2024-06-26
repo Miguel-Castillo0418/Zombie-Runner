@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour, IDamage
 {
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
 
+    [SerializeField] gunStats[] guns;
     private float nextAttackTime;
 
     float origHeight;
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(reload());
             }
         }
+        selectGun();
         sprint();
         crouch();
     }
@@ -341,7 +344,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         shootDamage += 5;
     }
-
+    public void spinRoulette()
+    {
+       gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
+            getGunStats(wonGun);
+    }
     public void getGunStats(gunStats gun)
     {
         // If the player already has 2 guns, remove the currently equipped one
