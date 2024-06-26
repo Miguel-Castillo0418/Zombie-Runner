@@ -16,10 +16,11 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.stateUnpause();
     }
 
-    //public void mainMenu()
-   // {
-       
-   // }
+    public void mainMenu()
+    {
+        SceneManager.LoadScene("Level1");
+        gameManager.instance.statePause();
+    }
 
     public void quit()
     {
