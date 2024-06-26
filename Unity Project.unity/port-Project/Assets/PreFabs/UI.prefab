@@ -302,7 +302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 218.15004, y: 0}
+  m_AnchoredPosition: {x: 202.3, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5857480400370163826
@@ -781,7 +781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.138672, y: -38}
+  m_AnchoredPosition: {x: 107, y: -38}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &9052269943300974381
@@ -939,7 +939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16, y: 9}
+  m_AnchoredPosition: {x: -15.999817, y: 9}
   m_SizeDelta: {x: -100, y: -146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6141905394352601875
@@ -4327,7 +4327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 247.5, y: 38}
+  m_AnchoredPosition: {x: 273, y: 38}
   m_SizeDelta: {x: 400, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5351957734926961962
@@ -4489,7 +4489,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3508942173772982625}
+      - m_Target: {fileID: 3077969423551552884}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: resume
         m_Mode: 1
@@ -4648,6 +4648,7 @@ GameObject:
   - component: {fileID: 7595784691268794256}
   - component: {fileID: 7539031740500593393}
   - component: {fileID: 3508942173772982625}
+  - component: {fileID: 3077969423551552884}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -4696,12 +4697,12 @@ MonoBehaviour:
   pointsCountText: {fileID: 2629263767601238606}
   ammoMagCountText: {fileID: 8763687463937741950}
   ammoStockCountText: {fileID: 62372050482349708}
-  testhintText: {fileID: 0}
-  hintobject: {fileID: 0}
-  shopObj: {fileID: 0}
-  shopText: {fileID: 0}
-  tempRound: {fileID: 8602177415612019026, guid: 25d6c9b9b55d6d34499222409be78f57, type: 3}
-  waveManager: {fileID: 3868572908839576932, guid: 626fc58549997404189fdf35faeac3ec, type: 3}
+  testhintText: {fileID: 2180997689707765332, guid: 7b9861105a3b91949a5816495fab594a, type: 3}
+  hintobject: {fileID: 2180997689707765332, guid: 7b9861105a3b91949a5816495fab594a, type: 3}
+  shopObj: {fileID: 2888541596277762965, guid: e4e4521c422b5754691ba11feb5be91a, type: 3}
+  shopText: {fileID: 7385620761111857795, guid: 93400e80cc19cf04a8365f3578baff0e, type: 3}
+  tempRound: {fileID: 0}
+  waveManager: {fileID: 0}
   attackRate: 0
   drainTime: 0.25
   PlayerHPBarGradient:
@@ -4754,6 +4755,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3508942173772982625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996990846192093976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cba3971d693df41a114b5a620a0310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3077969423551552884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5124,7 +5137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2321368991560244625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5412,7 +5425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6922602873515386092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5725,7 +5738,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3508942173772982625}
+      - m_Target: {fileID: 3077969423551552884}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: quit
         m_Mode: 1
@@ -6467,8 +6480,8 @@ MonoBehaviour:
   speedCost: 200
   strengthCost: 300
   rouletteCost: 500
-  playerController: {fileID: 0}
-  healthbutton: {fileID: 0}
+  playerController: {fileID: 4192162789329210410, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
+  healthbutton: {fileID: 43419570057163977}
 --- !u!1 &7946729661040220950
 GameObject:
   m_ObjectHideFlags: 0
@@ -6724,7 +6737,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3508942173772982625}
+      - m_Target: {fileID: 3077969423551552884}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: restart
         m_Mode: 1
@@ -7212,7 +7225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7224,7 +7237,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.13
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
