@@ -16,11 +16,8 @@ public class Wave : MonoBehaviour
     private bool isCountingDown = true;
     //new code
     private string playerName;
-<<<<<<< Updated upstream
    // private HighScoreTable highScoreTable;
-=======
     //private HighScoreTable highScoreTable;
->>>>>>> Stashed changes
 
     private List<EnemyAI> activeEnemies = new List<EnemyAI>();
 
