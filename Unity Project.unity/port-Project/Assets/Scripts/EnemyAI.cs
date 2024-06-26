@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform[] meleeAttack;
-                     int meleeAttackIndex;
+    int meleeAttackIndex;
     [SerializeField] Collider collider;
     [SerializeField] Animator anim;
     [SerializeField] int meleeRange;
@@ -34,13 +34,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
-        HalfHpSpeed = agent.speed*3.5f;
+        HalfHpSpeed = agent.speed * 3.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (agent.velocity.normalized.magnitude>0)
+        if (agent.velocity.normalized.magnitude > 0)
             normSpeed = agent.velocity.normalized.magnitude;
 
         anim.SetFloat("Speed", normSpeed);
