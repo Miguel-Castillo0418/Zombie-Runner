@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,16 +9,20 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] Rigidbody rb;
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform meleeAttackPoint;
+    [SerializeField] Transform[] meleeAttack;
+    int meleeAttackIndex;
+    [SerializeField] Collider collider;
+    [SerializeField] Animator anim;
     [SerializeField] int meleeRange;
     [SerializeField] float atkRate;
     [SerializeField] int HP;
+    int maxHp;
     [SerializeField] int lvl;
     [SerializeField] int damage;
     [SerializeField] int pointsRewarded;
     [SerializeField] private LayerMask enemyLayer;
-
-
+    float HalfHpSpeed;
+    float normSpeed;
 
     public WaveSpawner whereISpawned;
     bool playerInRange;
@@ -28,12 +33,28 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Start()
     {
         gameManager.instance.updateGameGoal(1);
+        maxHp = HP;
+        HalfHpSpeed = agent.speed * 3.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-            agent.SetDestination(gameManager.instance.player.transform.position);
+        if (agent.velocity.normalized.magnitude > 0)
+            normSpeed = agent.velocity.normalized.magnitude;
+
+        anim.SetFloat("Speed", normSpeed);
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            anim.SetBool("PlayerInRange", true);
+            anim.SetFloat("Speed", normSpeed);
+            StartCoroutine(MeleeAttack());
+        }
+        else
+        {
+            anim.SetBool("PlayerInRange", false);
+        }
     }
 
 
@@ -41,24 +62,30 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
         StartCoroutine(flashDamange());
-
+        if (HP / (float)maxHp <= 0.5f)
+        {
+            anim.SetTrigger("HalfHp");
+            agent.speed = HalfHpSpeed;
+            anim.SetBool("HalfHp", true);
+        }
         if (HP <= 0)
         {
-            gameManager.instance.updateGameGoal(-1);
-
-            if (whereISpawned) 
-            { 
+            anim.SetBool("IsDead", true);
+            agent.speed = 0;
+            if (whereISpawned)
+            {
                 whereISpawned.updateEnemyNumber();
             }
-
-            Destroy(gameObject);
-            rewardZombucks(); 
+            EnemyColliderToggle();
+            StartCoroutine(DeathAnimation());
+            rewardZombucks();
+            gameManager.instance.updateGameGoal(-1);
         }
     }
 
     IEnumerator flashDamange()
     {
-        Color _color=model.material.color;
+        Color _color = model.material.color;
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = _color;
@@ -68,20 +95,20 @@ public class EnemyAI : MonoBehaviour, IDamage
         IDamage dmg = other.GetComponent<IDamage>();
         if (other.name == "Player")
         {
-
             int force = lvl * damage;
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
-
             dmg.takeDamage(damage);
             knockback();
-            
+
         }
     }
     IEnumerator MeleeAttack()
     {
+        //Stop the enemy
+        //agent.speed = 0;
         // Detect player in range
-        Collider[] hitplayer = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
+        Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
 
         // Apply damage to player
         foreach (Collider player in hitplayer)
@@ -123,5 +150,16 @@ public class EnemyAI : MonoBehaviour, IDamage
             timer += Time.deltaTime;
             yield return null;
         }
+    }
+    IEnumerator DeathAnimation()
+    {
+
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
+
+    }
+    void EnemyColliderToggle()
+    {
+        collider.enabled = !collider;
     }
 }

@@ -3,27 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour, IDamage
 {
 
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
-    [SerializeField] LayerMask hitLayers;
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform ShootPos;
+
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
+    [SerializeField] float crouchHeight;
+    [SerializeField] int slideSpeed;
+
+    [SerializeField] LayerMask hitLayers;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform ShootPos;
     [SerializeField] GameObject gunModel;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
+    [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-    [SerializeField] float crouchHeight;
-    [SerializeField] int slideSpeed;
+    
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
@@ -31,6 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
 
+    [SerializeField] gunStats[] guns;
     private float nextAttackTime;
 
     float origHeight;
@@ -51,6 +57,9 @@ public class PlayerController : MonoBehaviour, IDamage
     public int magazineSize = 10;
     public int stockAmmo = 30;
     int selectedGun;
+    public float spreadAngle;
+    public int pelletsFired;
+
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -58,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        spreadAngle = 10;
+        pelletsFired = 8;
         HPorig = HP;
         origHeight = charController.height;
         origSpeed = speed;
@@ -79,7 +90,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(reload());
                 return;
             }
-            if (Input.GetButton("Fire1") && isShooting == false && !gameManager.instance.isPaused)
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
             {
                 StartCoroutine(shoot());
             }
@@ -96,6 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(reload());
             }
         }
+        selectGun();
         sprint();
         crouch();
     }
@@ -110,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         charController.Move(moveDir * speed * Time.deltaTime);
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && charController.isGrounded)
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
@@ -122,7 +134,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint") && charController.isGrounded)
         {
             isSprinting = true;
             speed *= sprintMod;
@@ -178,15 +190,21 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             currentAmmo--;
             isShooting = true;
+            StartCoroutine(flashMuzzle());
+            if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+            {
+                shootShotgun();
+            }
+            else
+            {
+                GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
+                Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
+                rb.velocity = ShootPos.forward * shootDistance;
 
-            GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
-            Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
-            rb.velocity = ShootPos.forward * shootDistance;
-
-            // Set the damage value of the bullet
-            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-            bulletScript.SetDamage(shootDamage);
-
+                // Set the damage value of the bullet
+                Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+                bulletScript.SetDamage(shootDamage);
+            }
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
@@ -194,6 +212,40 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Debug.Log("Out of Ammo!");
         }
+    }
+
+    void shootShotgun()
+    {
+        if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+        {
+            for (int i = 0; i < pelletsFired; ++i)
+            {
+                GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
+                Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
+
+                // Apply random spread to the bullet's direction using angles
+                float angleX = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+                float angleY = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+
+                // Calculate the spread direction
+                Vector3 spreadDirection = Quaternion.Euler(angleX, angleY, 0) * ShootPos.forward;
+
+                // Set the bullet's transform to apply the spread
+                bulletInstance.transform.position = ShootPos.position;
+                bulletInstance.transform.rotation = Quaternion.LookRotation(spreadDirection);
+
+                rb.velocity = spreadDirection * shootDistance;
+
+                Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+                bulletScript.SetDamage(shootDamage);
+            }
+        }
+    }
+    IEnumerator flashMuzzle()
+    {
+        muzzleFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        muzzleFlash.SetActive(false);
     }
 
     public void takeDamage(int amount)
@@ -292,7 +344,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         shootDamage += 5;
     }
-
+    public void spinRoulette()
+    {
+       gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
+            getGunStats(wonGun);
+    }
     public void getGunStats(gunStats gun)
     {
         // If the player already has 2 guns, remove the currently equipped one
@@ -314,6 +370,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDistance = gun.shootDist;
         shootRate = gun.shootRate;
 
+        gunModel.tag = gun.gunModel.tag;
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
@@ -340,7 +397,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gunList[selectedGun].shootRate;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
 }
 
