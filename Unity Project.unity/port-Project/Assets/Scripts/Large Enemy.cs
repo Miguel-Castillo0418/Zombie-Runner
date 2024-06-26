@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,6 +32,7 @@ public class LargeEnemy : MonoBehaviour, IDamage
     [SerializeField] Collider collider;
     private bool isCharging = false;
     private bool canCharge = true;
+    private bool attacking = false;
 
 
     //------------NEW-------------
@@ -56,7 +56,7 @@ public class LargeEnemy : MonoBehaviour, IDamage
     {
         agent.SetDestination(gameManager.instance.player.transform.position);
         //------------NEW-------------
-        if (!isCharging)
+        if (!isCharging || !attacking)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, gameManager.instance.player.transform.position);
 
@@ -65,8 +65,9 @@ public class LargeEnemy : MonoBehaviour, IDamage
 
                 if (Time.time >= lastAttackTime + atkRate)
                 {
-                    Debug.Log("attacking");
-                    MeleeAttack();
+                    //Debug.Log("attacking");
+
+                   attacking = true;
                 }
             }
             else if (distanceToPlayer <= chargeRadius && !(distanceToPlayer <= meleeRange) && canCharge)
@@ -79,6 +80,7 @@ public class LargeEnemy : MonoBehaviour, IDamage
             }
 
         }
+        
         //------------NEW-------------
     }
     //------------NEW-------------
@@ -115,11 +117,10 @@ public class LargeEnemy : MonoBehaviour, IDamage
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (isCharging)
+        if (isCharging && !attacking)
         {
             if (collision.collider.CompareTag("Player"))
             {
-                Debug.Log("Charged into player!");
                 IDamage dmg = collision.collider.GetComponent<IDamage>();
                 if (dmg != null)
                 {
@@ -157,21 +158,27 @@ public class LargeEnemy : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = _color;
     }
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    // if(other.CompareTag("Player"))
+    //    // playerInRange= true;
+    //    IDamage dmg = other.GetComponent<IDamage>();
+    //    if (other.name == "Player")
+    //    {
+    //        attacking = true;
+    //        int force = lvl * damage;
+    //        float t = force * Time.deltaTime;
+    //        Debug.Log(other.transform.name);
+    //        dmg.takeDamage(damage);
+    //        attacking = false;
+    //    }
+    //}
+    IEnumerator kick()
     {
-        // if(other.CompareTag("Player"))
-        // playerInRange= true;
-        IDamage dmg = other.GetComponent<IDamage>();
-        if (other.name == "Player")
-        {
+        anim.SetBool("Attacking", true);
+        yield return new WaitForSeconds(1);
+        anim.SetBool("Attacking", false);
 
-            int force = lvl * damage;
-            float t = force * Time.deltaTime;
-            Debug.Log(other.transform.name);
-
-            dmg.takeDamage(damage);
-
-        }
     }
     // public void OnTriggerExit(Collider other)
     //{
@@ -180,10 +187,8 @@ public class LargeEnemy : MonoBehaviour, IDamage
     // }
     IEnumerator MeleeAttack()
     {
-        // Detect player in range
         Collider[] hitplayer = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
 
-        // Apply damage to player
         foreach (Collider player in hitplayer)
         {
             IDamage damageable = player.GetComponent<IDamage>();
@@ -192,7 +197,6 @@ public class LargeEnemy : MonoBehaviour, IDamage
                 damageable.takeDamage(damage);
             }
         }
-
         yield return new WaitForSeconds(atkRate);
     }
     void rewardZombucks()
