@@ -522,7 +522,10 @@ MonoBehaviour:
   rb: {fileID: 1804618261487943780}
   model: {fileID: 0}
   agent: {fileID: 1035010071805329366}
-  meleeAttackPoint: {fileID: 0}
+  meleeAttack:
+  - {fileID: 2580633883507643488}
+  - {fileID: 3437471646275990128}
+  collider: {fileID: 4638701184208983523}
   anim: {fileID: 2897734273628311978}
   meleeRange: 4
   atkRate: 2
@@ -565,7 +568,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1
+  m_Speed: 2
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 600
@@ -574,7 +577,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &4638701184208983523
