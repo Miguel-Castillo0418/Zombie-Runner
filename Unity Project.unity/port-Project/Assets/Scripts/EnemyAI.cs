@@ -47,7 +47,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.instance.player.transform.position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            //agent.speed = normSpeed;
             anim.SetBool("PlayerInRange", true);
             anim.SetFloat("Speed", normSpeed);
             StartCoroutine(MeleeAttack());
@@ -56,6 +55,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             anim.SetBool("PlayerInRange", false);
         }
+        AudioManager.instance.playZombie();
     }
 
 
@@ -70,6 +70,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
+            AudioManager.instance.stopSound();
+            AudioManager.instance.zombDeath("Zdead");
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
