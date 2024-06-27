@@ -17,6 +17,7 @@ public class Wave : MonoBehaviour
     //new code
     private string playerName;
    // private HighScoreTable highScoreTable;
+    //private HighScoreTable highScoreTable;
 
     private List<EnemyAI> activeEnemies = new List<EnemyAI>();
 
