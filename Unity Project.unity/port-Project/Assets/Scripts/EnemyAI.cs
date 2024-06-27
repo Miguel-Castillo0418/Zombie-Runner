@@ -62,7 +62,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
         StartCoroutine(flashDamange());
-        if (HP / (float)maxHp <= 0.5f)
+        if (HP / (float)maxHp <= 0.5f&& HP>0)
         {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
@@ -71,6 +71,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             anim.SetBool("IsDead", true);
+            anim.SetTrigger("Die");
             agent.speed = 0;
             if (whereISpawned)
             {
@@ -154,7 +155,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator DeathAnimation()
     {
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.25f);
         Destroy(gameObject);
 
     }
@@ -162,4 +163,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         collider.enabled = !collider;
     }
+
+
 }
