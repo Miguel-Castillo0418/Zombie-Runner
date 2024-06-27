@@ -60,9 +60,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        HP -= amount;
+        HP -= (int)amount;
         StartCoroutine(flashDamange());
         if (HP / (float)maxHp <= 0.5f&& HP>0)
         {
