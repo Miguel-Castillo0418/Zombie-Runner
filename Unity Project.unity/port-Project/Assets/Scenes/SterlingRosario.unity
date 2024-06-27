@@ -212,7 +212,6 @@ MonoBehaviour:
   guns: []
   HPorig: 0
   shopHP: 0
-  maxAmmo: 0
   currentAmmo: 10
   magazineSize: 10
   stockAmmo: 30
@@ -1349,10 +1348,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 422698597008868054, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
+      propertyPath: m_BaseOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 963215598491347838, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.28
+      objectReference: {fileID: 0}
     - target: {fileID: 1405712784865628135, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
       propertyPath: m_Name
       value: enemy_3
       objectReference: {fileID: 0}
+    - target: {fileID: 3677838813767252629, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 36ba80a7dc0ad384cbb710d6cab22576, type: 2}
     - target: {fileID: 6911520971986371291, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.55636406
@@ -1363,7 +1374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6911520971986371291, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30.825773
+      value: -39.73
       objectReference: {fileID: 0}
     - target: {fileID: 6911520971986371291, guid: 1178493e690c2b1429b05c31f254e520, type: 3}
       propertyPath: m_LocalRotation.w

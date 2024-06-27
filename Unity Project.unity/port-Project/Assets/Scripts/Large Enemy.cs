@@ -3,24 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LargeEnemy : MonoBehaviour, IDamage
+public class LargeEnemy : EnemyAI
 {
-    [SerializeField] Rigidbody rb;
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform meleeAttackPoint;
-    //[SerializeField] int animTransSpeed;
-    [SerializeField] int meleeRange;
-    [SerializeField] float atkRate;
-    [SerializeField] int HP;
-    [SerializeField] int lvl;
-    [SerializeField] int damage;
-    [SerializeField] int pointsRewarded;
-    //[SerializeField] int force;
-    //[SerializeField] Animator anim;
-    [SerializeField] private LayerMask enemyLayer;
-
     //------------NEW-------------
+    [SerializeField] EnemyAI enemyAI;
     [SerializeField] float chargeRadius = 10f;
     [SerializeField] int chargeDamage = 10;
     [SerializeField] float lastAttackTime = 0;
@@ -28,8 +15,6 @@ public class LargeEnemy : MonoBehaviour, IDamage
     [SerializeField] float normalSpeed = 3.5f;
     [SerializeField] float chargeDuration = 1f;
     [SerializeField] float chargeCooldown = 10f;
-    [SerializeField] Animator anim;
-    [SerializeField] new Collider collider;
     private bool isCharging = false;
     private bool canCharge = true;
     private bool attacking = false;
@@ -39,16 +24,13 @@ public class LargeEnemy : MonoBehaviour, IDamage
 
 
 
-    public WaveSpawner whereISpawned;
-    bool playerInRange;
-    Vector3 playerDir;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.instance.updateGameGoal(1);
         agent.speed = normalSpeed;
+        
     }
 
     // Update is called once per frame
@@ -133,35 +115,6 @@ public class LargeEnemy : MonoBehaviour, IDamage
 
     }
     //------------NEW-------------
-
-
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        StartCoroutine(flashDamange());
-
-        if (HP <= 0)
-        {
-            gameManager.instance.updateGameGoal(-1);
-
-            if (whereISpawned)
-            {
-                whereISpawned.updateEnemyNumber();
-            }
-
-            Destroy(gameObject);
-            rewardZombucks();
-        }
-    }
-
-    IEnumerator flashDamange()
-    {
-        Color _color = model.material.color;
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = _color;
- 
-    }
     private void OnTriggerEnter(Collider other)
     {
         IDamage dmg = other.GetComponent<IDamage>();
@@ -183,35 +136,6 @@ public class LargeEnemy : MonoBehaviour, IDamage
         agent.isStopped = false;
         anim.SetBool("Attacking", false);
 
-    }
-    void rewardZombucks()
-    {
-        gameManager.instance.addPoints(pointsRewarded);
-    }
-
-    void knockback()
-    {
-        int force = lvl * damage * 10; // Adjust this force value as needed
-        float knockbackDuration = 0.5f; // Adjust the duration of knockback
-
-        Vector3 knockbackDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
-        Vector3 targetPosition = gameManager.instance.player.transform.position + knockbackDirection * 3f; // Adjust the distance of knockback
-        StartCoroutine(ApplyKnockback(gameManager.instance.player.transform, targetPosition, knockbackDuration));
-
-    }
-    IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
-    {
-        Vector3 initialPosition = playerTransform.position;
-        float timer = 0f;
-
-        while (timer < duration)
-        {
-            float progress = timer / duration;
-            playerTransform.position = Vector3.Lerp(initialPosition, targetPosition, progress);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
     }
 
 }
