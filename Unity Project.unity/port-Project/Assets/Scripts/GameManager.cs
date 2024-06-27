@@ -58,6 +58,7 @@ public class gameManager : MonoBehaviour
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
+        AudioManager.instance.playMusic("Song");
     }
 
     // Update is called once per frame

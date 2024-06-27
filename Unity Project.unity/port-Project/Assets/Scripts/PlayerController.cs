@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
+    [SerializeField] AudioSource gunAud;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isSprinting = false;
     bool isCrouching = false;
     bool isReloading = false;
+    bool isPlayingSteps;
 
     bool isShooting;
     int jumpCount;
@@ -121,14 +123,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         charController.Move(moveDir * speed * Time.deltaTime);
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && charController.isGrounded)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
 
         playerVel.y -= gravity * Time.deltaTime;
         charController.Move(playerVel * Time.deltaTime);
+        if(charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
+          StartCoroutine(walkCycle());
     }
 
     void sprint()
@@ -189,6 +194,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             currentAmmo--;
             isShooting = true;
+            gunAud.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootVol);
             StartCoroutine(flashMuzzle());
 
             RaycastHit hit;
@@ -280,6 +286,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
         {
@@ -433,6 +440,20 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+    }
+    IEnumerator walkCycle()
+    {
+        isPlayingSteps = true;
+        AudioManager.instance.walkSound();
+        if(!isSprinting)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.25f);
+        }
+        isPlayingSteps=false;
     }
 }
 
