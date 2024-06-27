@@ -7,19 +7,19 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Rigidbody rb;
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] public Renderer model;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform[] meleeAttack;
     int meleeAttackIndex;
-    [SerializeField] Collider collider;
-    [SerializeField] Animator anim;
-    [SerializeField] int meleeRange;
-    [SerializeField] float atkRate;
-    [SerializeField] int HP;
+    [SerializeField] new Collider collider;
+    [SerializeField] public Animator anim;
+    [SerializeField] public int meleeRange;
+    [SerializeField] public float atkRate;
+    [SerializeField] public int HP;
     int maxHp;
-    [SerializeField] int lvl;
-    [SerializeField] int damage;
-    [SerializeField] int pointsRewarded;
+    [SerializeField] public int lvl;
+    [SerializeField] public int damage;
+    [SerializeField] public int pointsRewarded;
     [SerializeField] private LayerMask enemyLayer;
     float HalfHpSpeed;
     float normSpeed;
@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         HP -= amount;
         StartCoroutine(flashDamange());
-        if (HP / (float)maxHp <= 0.5f)
+        if (HP / (float)maxHp <= 0.5f&& HP>0)
         {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
@@ -72,13 +72,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
+            EnemyColliderToggle();
             anim.SetBool("IsDead", true);
+            anim.SetTrigger("Die");
             agent.speed = 0;
             if (whereISpawned)
             {
                 whereISpawned.updateEnemyNumber();
             }
-            EnemyColliderToggle();
             StartCoroutine(DeathAnimation());
             AudioManager.instance.stopSound();
             AudioManager.instance.zombDeath("Zdead");
@@ -87,7 +88,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator flashDamange()
+    public IEnumerator flashDamange()
     {
         Color _color = model.material.color;
         model.material.color = Color.red;
@@ -126,12 +127,12 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(atkRate);
     }
-    void rewardZombucks()
+    public void rewardZombucks()
     {
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    void knockback()
+    public void knockback()
     {
         int force = lvl * damage * 10; // Adjust this force value as needed
         float knockbackDuration = 0.5f; // Adjust the duration of knockback
@@ -141,7 +142,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         StartCoroutine(ApplyKnockback(gameManager.instance.player.transform, targetPosition, knockbackDuration));
 
     }
-    IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
+    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
     {
         Vector3 initialPosition = playerTransform.position;
         float timer = 0f;
@@ -158,12 +159,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     IEnumerator DeathAnimation()
     {
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.25f);
         Destroy(gameObject);
 
     }
     void EnemyColliderToggle()
     {
-        collider.enabled = !collider;
+        collider.enabled = false;
     }
+
+
 }

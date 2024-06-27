@@ -11,7 +11,6 @@ public class gunPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gun.ammoCurr = gun.ammoMax;
             gameManager.instance.playerScript.getGunStats(gun);
             Destroy(gameObject);
         }

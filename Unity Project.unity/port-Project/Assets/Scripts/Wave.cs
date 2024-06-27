@@ -26,7 +26,7 @@ public class Wave : MonoBehaviour
         PrepareEnemyTypes();
         //new code
         playerName = PlayerPrefs.GetString("playerName", "Unknown");
-       // highScoreTable = FindObjectOfType<HighScoreTable>();
+        //highScoreTable = FindObjectOfType<HighScoreTable>();
     }
 
     void Update()

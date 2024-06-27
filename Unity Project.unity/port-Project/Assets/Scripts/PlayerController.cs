@@ -53,10 +53,9 @@ public class PlayerController : MonoBehaviour, IDamage
     public int HPorig;
     public int shopHP;
 
-    public int maxAmmo;
     public int currentAmmo;
-    public int magazineSize = 10;
-    public int stockAmmo = 30;
+    public int magazineSize;
+    public int stockAmmo;
     int selectedGun;
     public float spreadAngle;
     public int pelletsFired;
@@ -195,12 +194,34 @@ public class PlayerController : MonoBehaviour, IDamage
             currentAmmo--;
             isShooting = true;
             StartCoroutine(flashMuzzle());
-            if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position + new Vector3(0, 0, 1), Camera.main.transform.forward, out hit, shootDistance))
             {
-                shootShotgun();
+                if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+                {
+                    shootShotgun();
+                }
+                else
+                {
+                    GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
+                    Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
+                    rb.velocity = ShootPos.forward * shootDistance;
+
+                    // Set the damage value of the bullet
+                    Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+                    bulletScript.SetDamage(shootDamage);
+
+                    // Instantiate effects based on what was hit
+                    if (hit.collider.CompareTag("Enemy"))
+                        Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
+                    else
+                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                }
             }
             else
             {
+                // If nothing is hit, still instantiate the bullet
                 GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
                 Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
                 rb.velocity = ShootPos.forward * shootDistance;
@@ -209,6 +230,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.SetDamage(shootDamage);
             }
+
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
@@ -224,6 +246,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             for (int i = 0; i < pelletsFired; ++i)
             {
+
                 GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
                 Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
 
@@ -234,14 +257,20 @@ public class PlayerController : MonoBehaviour, IDamage
                 // Calculate the spread direction
                 Vector3 spreadDirection = Quaternion.Euler(angleX, angleY, 0) * ShootPos.forward;
 
-                // Set the bullet's transform to apply the spread
                 bulletInstance.transform.position = ShootPos.position;
                 bulletInstance.transform.rotation = Quaternion.LookRotation(spreadDirection);
+                Ray ray = new Ray(ShootPos.position, spreadDirection);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, shootDistance))
+                {
+                    // Set the bullet's transform to apply the spread
+                    rb.velocity = spreadDirection * shootDistance;
 
-                rb.velocity = spreadDirection * shootDistance;
-
-                Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-                bulletScript.SetDamage(shootDamage);
+                    Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+                    bulletScript.SetDamage(shootDamage);
+                    if(hit.collider.CompareTag("Enemy"))
+                        Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
+                }
             }
         }
     }
@@ -374,6 +403,9 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDamage = gun.shootDmg;
         shootDistance = gun.shootDist;
         shootRate = gun.shootRate;
+        currentAmmo = gun.ammoCurr;
+        stockAmmo = gun.ammoMax;
+        magazineSize = gun.magazineSize;
 
         gunModel.tag = gun.gunModel.tag;
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
@@ -400,6 +432,9 @@ public class PlayerController : MonoBehaviour, IDamage
         shootDamage = gunList[selectedGun].shootDmg;
         shootDistance = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
+        currentAmmo = gunList[selectedGun].ammoCurr;
+        stockAmmo = gunList[selectedGun].ammoMax;
+        magazineSize = gunList[selectedGun].magazineSize;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
