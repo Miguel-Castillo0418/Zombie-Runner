@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: gun - Hangun
   m_EditorClassIdentifier: 
   gunModel: {fileID: 2899133014912199094, guid: 1dbbc510fbebeef43b0028b929a6a8f2, type: 3}
-  shootDmg: 1
-  shootDist: 15
-  shootRate: 0.1
-  ammoCurr: 5
-  ammoMax: 5
-  magazineSize: 5
+  shootDmg: 3
+  shootDist: 75
+  shootRate: 0.3
+  ammoCurr: 15
+  ammoMax: 75
+  magazineSize: 15
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}
   enemyHitEffect: {fileID: 2618032244679568243, guid: 5a62e2fffa188a74cbc72db78f2b6b5f, type: 3}

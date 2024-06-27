@@ -146,7 +146,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.15, y: 3, z: -10.02}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 1, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2538677795602753698}
@@ -242,7 +242,7 @@ MonoBehaviour:
   cameraController: {fileID: 7730312562192660030}
   gunAud: {fileID: 3721774869156161977}
   HP: 100
-  speed: 54
+  speed: 8
   sprintMod: 2
   jumpMax: 2
   jumpSpeed: 3

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: gun - shotgun
   m_EditorClassIdentifier: 
   gunModel: {fileID: 7231607086362138604, guid: aa75f722cc7a593418047c62dc8a12f3, type: 3}
-  shootDmg: 10
-  shootDist: 15
+  shootDmg: 2
+  shootDist: 50
   shootRate: 0.8
-  ammoCurr: 5
-  ammoMax: 5
-  magazineSize: 5
+  ammoCurr: 6
+  ammoMax: 90
+  magazineSize: 6
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}
   enemyHitEffect: {fileID: 2618032244679568243, guid: 5a62e2fffa188a74cbc72db78f2b6b5f, type: 3}

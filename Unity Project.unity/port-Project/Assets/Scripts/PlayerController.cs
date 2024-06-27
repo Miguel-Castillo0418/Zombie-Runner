@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     Vector3 moveDir;
     Vector3 playerVel;
+    Vector3 pushBack;
 
     // Start is called before the first frame update
     void Start()
@@ -131,9 +132,10 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         playerVel.y -= gravity * Time.deltaTime;
-        charController.Move(playerVel * Time.deltaTime);
+        charController.Move((playerVel) * Time.deltaTime);
         if(charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
           StartCoroutine(walkCycle());
+
     }
 
     void sprint()
