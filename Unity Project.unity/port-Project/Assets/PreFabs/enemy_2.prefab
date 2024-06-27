@@ -1859,7 +1859,7 @@ GameObject:
   - component: {fileID: 5053447257890495147}
   - component: {fileID: 1213539899774097501}
   - component: {fileID: 4012123593325626988}
-  - component: {fileID: 1591926944423370263}
+  - component: {fileID: 5590949022974777255}
   - component: {fileID: 6851769186333706337}
   - component: {fileID: 6545970631928684256}
   m_Layer: 0
@@ -1934,7 +1934,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1591926944423370263
+--- !u!114 &5590949022974777255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1943,23 +1943,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 6585829775478146487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 577cb2413c42696409c7bee5743c459f, type: 3}
+  m_Script: {fileID: 11500000, guid: ecfac370a97618f48b81fcdbb6cee50f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4012123593325626988}
   model: {fileID: 0}
   agent: {fileID: 6545970631928684256}
-  meleeAttack:
-  - {fileID: 0}
-  - {fileID: 0}
+  meleeAttack: []
   collider: {fileID: 6851769186333706337}
   anim: {fileID: 1213539899774097501}
-  meleeRange: 4
-  atkRate: 2
-  HP: 10
-  lvl: 1
-  damage: 1
-  pointsRewarded: 100
+  meleeRange: 0
+  atkRate: 0
+  HP: 0
+  lvl: 0
+  damage: 0
+  pointsRewarded: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
