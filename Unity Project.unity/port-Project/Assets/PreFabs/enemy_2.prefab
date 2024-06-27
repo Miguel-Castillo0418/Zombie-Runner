@@ -1859,8 +1859,8 @@ GameObject:
   - component: {fileID: 5053447257890495147}
   - component: {fileID: 1213539899774097501}
   - component: {fileID: 4012123593325626988}
+  - component: {fileID: 1591926944423370263}
   - component: {fileID: 6851769186333706337}
-  - component: {fileID: 756406648000642259}
   - component: {fileID: 6545970631928684256}
   m_Layer: 0
   m_Name: enemy_2
@@ -1934,6 +1934,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1591926944423370263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585829775478146487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577cb2413c42696409c7bee5743c459f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 4012123593325626988}
+  model: {fileID: 0}
+  agent: {fileID: 6545970631928684256}
+  meleeAttack:
+  - {fileID: 0}
+  - {fileID: 0}
+  collider: {fileID: 6851769186333706337}
+  anim: {fileID: 1213539899774097501}
+  meleeRange: 4
+  atkRate: 2
+  HP: 10
+  lvl: 1
+  damage: 1
+  pointsRewarded: 100
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  whereISpawned: {fileID: 0}
 --- !u!136 &6851769186333706337
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1957,36 +1987,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &756406648000642259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6585829775478146487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecfac370a97618f48b81fcdbb6cee50f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 4012123593325626988}
-  model: {fileID: 0}
-  agent: {fileID: 6545970631928684256}
-  meleeAttack:
-  - {fileID: 0}
-  - {fileID: 0}
-  collider: {fileID: 6851769186333706337}
-  anim: {fileID: 1213539899774097501}
-  meleeRange: 4
-  atkRate: 2
-  HP: 10
-  lvl: 1
-  damage: 1
-  pointsRewarded: 100
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  whereISpawned: {fileID: 0}
 --- !u!195 &6545970631928684256
 NavMeshAgent:
   m_ObjectHideFlags: 0
