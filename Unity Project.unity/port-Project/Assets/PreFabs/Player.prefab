@@ -242,7 +242,7 @@ MonoBehaviour:
   cameraController: {fileID: 7730312562192660030}
   gunAud: {fileID: 3721774869156161977}
   HP: 100
-  speed: 8
+  speed: 54
   sprintMod: 2
   jumpMax: 2
   jumpSpeed: 3
@@ -256,10 +256,12 @@ MonoBehaviour:
   ShootPos: {fileID: 6107836234394334680}
   gunModel: {fileID: 9027558375115623006}
   shootDamage: 2
-  shootRate: 0.1
-  shootDistance: 120
+  shootRate: 0.3
+  shootDistance: 175
   muzzleFlash: {fileID: 791996260104937642}
-  gunList: []
+  gunList:
+  - {fileID: 11400000, guid: 9a4770012d1ab5d4eb37cce6f6434c78, type: 2}
+  - {fileID: 11400000, guid: 11cc0354b3f1f284a8c66f82fef925c0, type: 2}
   meleeRange: 3
   meleeDamage: 1
   enemyLayer:
@@ -285,9 +287,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3416715b7585ac14a831de1ffda432e6, type: 2}
   - {fileID: 11400000, guid: 6ce505acfce828a4c976019d038b5476, type: 2}
   HPorig: 0
-  shopHP: 0
-  currentAmmo: 30
-  magazineSize: 30
+  shopHP: 100
+  currentAmmo: 25
+  magazineSize: 5
   stockAmmo: 360
   spreadAngle: 0
   pelletsFired: 0
@@ -596,7 +598,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9027558375115623006}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 2643706879199333972, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
 --- !u!23 &2886023438897831133
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -617,10 +619,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -276384546389811597, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 8611543253660827902, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: -7848952084472943420, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 3768801495714455433, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
