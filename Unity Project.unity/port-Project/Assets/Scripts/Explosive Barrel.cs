@@ -33,9 +33,9 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
         //sources.Play();
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        HP -= amount;
+        HP -= (int)amount;
         if (HP <= 0)
         {
             Explode();
