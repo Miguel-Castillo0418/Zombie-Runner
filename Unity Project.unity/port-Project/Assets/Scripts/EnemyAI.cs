@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Rigidbody rb;
-    
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform[] meleeAttack;
     int meleeAttackIndex;
@@ -60,7 +59,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
+    public void takeDamage(float amount)
     {
+        HP -= (int)amount;
         if (HP / (float)maxHp <= 0.5f&& HP>0)
         {
             anim.SetTrigger("HalfHp");
@@ -83,7 +84,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-  
     private void OnTriggerEnter(Collider other)
     {
         IDamage dmg = other.GetComponent<IDamage>();
