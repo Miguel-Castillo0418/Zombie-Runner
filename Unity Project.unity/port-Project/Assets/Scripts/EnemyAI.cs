@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public WaveSpawner whereISpawned;
     bool playerInRange;
+    static public bool isSound;
     Vector3 playerDir;
 
 
@@ -55,6 +56,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             anim.SetBool("PlayerInRange", false);
         }
+        AudioManager.instance.playZombie();
     }
 
 
@@ -78,6 +80,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
             EnemyColliderToggle();
             StartCoroutine(DeathAnimation());
+            AudioManager.instance.stopSound();
+            AudioManager.instance.zombDeath("Zdead");
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
         }
