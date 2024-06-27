@@ -25,8 +25,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     float normSpeed;
 
     public WaveSpawner whereISpawned;
+    public static bool isSound;
     bool playerInRange;
-    static public bool isSound;
     Vector3 playerDir;
 
 
@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.instance.player.transform.position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            agent.speed = normSpeed;
+            //agent.speed = normSpeed;
             anim.SetBool("PlayerInRange", true);
             anim.SetFloat("Speed", normSpeed);
             StartCoroutine(MeleeAttack());
@@ -57,7 +57,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             anim.SetBool("PlayerInRange", false);
         }
-        AudioManager.instance.playZombie();
     }
 
 
@@ -82,8 +81,6 @@ public class EnemyAI : MonoBehaviour, IDamage
                 whereISpawned.updateEnemyNumber();
             }
             StartCoroutine(DeathAnimation());
-            AudioManager.instance.stopSound();
-            AudioManager.instance.zombDeath("Zdead");
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
         }
