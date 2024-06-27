@@ -47,6 +47,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         agent.SetDestination(gameManager.instance.player.transform.position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
+            agent.speed = normSpeed;
             anim.SetBool("PlayerInRange", true);
             anim.SetFloat("Speed", normSpeed);
             StartCoroutine(MeleeAttack());
