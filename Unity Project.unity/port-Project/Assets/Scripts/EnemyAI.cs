@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Rigidbody rb;
-    [SerializeField] public Renderer model;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform[] meleeAttack;
     int meleeAttackIndex;
@@ -60,10 +59,9 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        HP -= amount;
-        StartCoroutine(flashDamange());
+        HP -= (int)amount;
         if (HP / (float)maxHp <= 0.5f&& HP>0)
         {
             anim.SetTrigger("HalfHp");
@@ -86,13 +84,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    public IEnumerator flashDamange()
-    {
-        Color _color = model.material.color;
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = _color;
-    }
     private void OnTriggerEnter(Collider other)
     {
         IDamage dmg = other.GetComponent<IDamage>();
