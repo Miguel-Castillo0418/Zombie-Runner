@@ -81,13 +81,13 @@ public class MenuController : MonoBehaviour
     public void GameLevel()
     {
         SceneManager.LoadScene(_newGameLevel);
-        gameManager.instance.stateUnpause();
+        //gameManager.instance.stateUnpause();
     }
 
     public void GameLevel2()
     {
         SceneManager.LoadScene(_newGameLevel2);
-        gameManager.instance.stateUnpause();
+        //gameManager.instance.stateUnpause();
     }
 
    // public void LoadGameDialogYes()
