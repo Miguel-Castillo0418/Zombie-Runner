@@ -69,7 +69,7 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        AudioManager.instance.playMusic("Song");
+        AudioManager.instance.playMusic("Theme");
     }
 
     public void SetResolution(int resolutionIndex)

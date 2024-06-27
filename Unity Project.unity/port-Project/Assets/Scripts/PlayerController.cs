@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
+    [SerializeField] AudioSource gunAud;
 
     [SerializeField] int HP;
     [SerializeField] int speed;
@@ -193,6 +194,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             currentAmmo--;
             isShooting = true;
+            gunAud.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootVol);
             StartCoroutine(flashMuzzle());
 
             RaycastHit hit;
@@ -449,7 +451,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.25f);
         }
         isPlayingSteps=false;
     }
