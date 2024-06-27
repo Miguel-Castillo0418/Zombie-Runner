@@ -70,6 +70,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
         if (HP <= 0)
         {
+            EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
             agent.speed = 0;
@@ -77,7 +78,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 whereISpawned.updateEnemyNumber();
             }
-            EnemyColliderToggle();
             StartCoroutine(DeathAnimation());
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
@@ -161,7 +161,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
     void EnemyColliderToggle()
     {
-        collider.enabled = !collider;
+        collider.enabled = false;
     }
 
 
