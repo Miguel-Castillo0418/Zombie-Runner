@@ -43,6 +43,7 @@ public class MenuController : MonoBehaviour
 
 
     public string _newGameLevel;
+    public string _newGameLevel2;
     private string levelToLoad;
    // [SerializeField] private GameObject noSavedGameDialog = null;
 
@@ -77,9 +78,15 @@ public class MenuController : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
-    public void NewGameDialogYes()
+    public void GameLevel()
     {
         SceneManager.LoadScene(_newGameLevel);
+        gameManager.instance.stateUnpause();
+    }
+
+    public void GameLevel2()
+    {
+        SceneManager.LoadScene(_newGameLevel2);
         gameManager.instance.stateUnpause();
     }
 
