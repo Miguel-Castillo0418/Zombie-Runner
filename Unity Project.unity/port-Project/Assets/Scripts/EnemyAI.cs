@@ -57,22 +57,18 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             anim.SetBool("PlayerInRange", false);
         }
-        AudioManager.instance.playZombie();
     }
 
 
-    public void takeDamage(float amount)
     {
-        HP -=  (int)amount;
         if (HP / (float)maxHp <= 0.5f&& HP>0)
-        {  
+        {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
             anim.SetBool("HalfHp", true);
         }
         if (HP <= 0)
         {
-            AudioManager.instance.zombDeath("Zdead");
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
