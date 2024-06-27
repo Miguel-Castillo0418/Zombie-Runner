@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform[] meleeAttack;
     int meleeAttackIndex;
-    [SerializeField] Collider collider;
+    [SerializeField] new Collider collider;
     [SerializeField] Animator anim;
     [SerializeField] int meleeRange;
     [SerializeField] float atkRate;
