@@ -81,7 +81,8 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 whereISpawned.updateEnemyNumber();
             }
-            StartCoroutine(DeathAnimation());
+            //StartCoroutine(DeathAnimation());
+            Destroy(gameObject);
             AudioManager.instance.stopSound();
             AudioManager.instance.zombDeath("Zdead");
             rewardZombucks();
