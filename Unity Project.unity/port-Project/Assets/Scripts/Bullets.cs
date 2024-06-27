@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
-    private int damage;
+    private float damage;
     [SerializeField] int speed;
     [SerializeField] float destroyTime;
     // Start is called before the first frame update
@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, destroyTime);
     }
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {
         this.damage = damage;
     }

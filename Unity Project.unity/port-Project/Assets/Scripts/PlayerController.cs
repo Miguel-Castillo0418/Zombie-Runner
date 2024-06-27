@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] Transform ShootPos;
     [SerializeField] GameObject gunModel;
-    [SerializeField] int shootDamage;
+    [SerializeField] float shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
@@ -283,9 +283,9 @@ public class PlayerController : MonoBehaviour, IDamage
         muzzleFlash.SetActive(false);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        HP -= amount;
+        HP -= (int)amount;
         AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
