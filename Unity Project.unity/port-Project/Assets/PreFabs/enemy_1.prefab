@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 1804618261487943780}
   m_Layer: 0
   m_Name: enemy_1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,7 +520,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1804618261487943780}
-  model: {fileID: 1425296630027306708}
   agent: {fileID: 1035010071805329366}
   meleeAttack:
   - {fileID: 2580633883507643488}

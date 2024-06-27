@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 2813565888691786513}
   m_Layer: 3
   m_Name: enemy_3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,9 +210,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1219830368237868438}
-  model: {fileID: 2656954240857551807}
   agent: {fileID: 422698597008868054}
-  meleeAttackPoint: {fileID: 2108099784635268686}
+  meleeAttack: []
+  collider: {fileID: 5806692066841405024}
+  anim: {fileID: 3677838813767252629}
   meleeRange: 4
   atkRate: 3
   HP: 1
@@ -222,6 +223,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  whereISpawned: {fileID: 0}
+  meleeAttackPoint: {fileID: 2108099784635268686}
+  enemyAI: {fileID: 0}
   chargeRadius: 25
   chargeDamage: 4
   lastAttackTime: 0
@@ -229,9 +233,6 @@ MonoBehaviour:
   normalSpeed: 5
   chargeDuration: 3
   chargeCooldown: 15
-  anim: {fileID: 3677838813767252629}
-  collider: {fileID: 5806692066841405024}
-  whereISpawned: {fileID: 0}
 --- !u!95 &3677838813767252629
 Animator:
   serializedVersion: 5
