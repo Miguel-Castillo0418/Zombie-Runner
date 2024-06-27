@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: gun - Bullpup
   m_EditorClassIdentifier: 
   gunModel: {fileID: 6576053810601946475, guid: faf47b596475efc4c839fb44dd61adee, type: 3}
-  shootDmg: 1
+  shootDmg: 10
   shootDist: 15
   shootRate: 0.1
-  ammoCurr: 0
-  ammoMax: 0
+  ammoCurr: 30
+  ammoMax: 360
+  magazineSize: 30
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}
   enemyHitEffect: {fileID: 2618032244679568243, guid: 5a62e2fffa188a74cbc72db78f2b6b5f, type: 3}

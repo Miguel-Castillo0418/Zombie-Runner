@@ -1299,10 +1299,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_1
       objectReference: {fileID: 0}
-    - target: {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
-      propertyPath: model
-      value: 
-      objectReference: {fileID: 1525725435}
     - target: {fileID: 7233397305959384027, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.554
@@ -1841,11 +1837,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!137 &1525725435 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1425296630027306708, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
-  m_PrefabInstance: {fileID: 787940866}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1612266864
 PrefabInstance:
   m_ObjectHideFlags: 0
