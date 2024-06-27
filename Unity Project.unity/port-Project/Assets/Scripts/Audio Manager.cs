@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     [Header("-----Sounds-----")]
     public Sound[] music, zDead;
-    public AudioClip[] zombieSFX, playerJump, playerHurt, playerWalk;
+    public AudioClip[] zombieSFX, playerJump, playerHurt, playerWalk, explosion;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
     [SerializeField] AudioSource zSFXSource;
@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] float jumpVol;
     [SerializeField] float hurtVol;
     [SerializeField] float walkVol;
+    [SerializeField] float exploVol;
 
     private void Awake()
     {
@@ -87,5 +88,9 @@ public class AudioManager : MonoBehaviour
     public void walkSound()
     {
         pSFXSource.PlayOneShot(playerWalk[UnityEngine.Random.Range(0, playerWalk.Length)], walkVol);
+    }
+    public void explosionSound()
+    {
+        pSFXSource.PlayOneShot(explosion[UnityEngine.Random.Range(0, explosion.Length)], exploVol);
     }
 }

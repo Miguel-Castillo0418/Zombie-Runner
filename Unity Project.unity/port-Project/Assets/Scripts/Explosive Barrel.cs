@@ -17,6 +17,7 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
 
     public void Explode()
     {
+        AudioManager.instance.explosionSound();
         Barrel.SetActive(false);
         Explosion.SetActive(true);
 
