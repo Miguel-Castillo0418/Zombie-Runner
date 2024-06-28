@@ -45,7 +45,7 @@ public class MenuController : MonoBehaviour
     public string _newGameLevel;
     public string _newGameLevel2;
     private string levelToLoad;
-   // [SerializeField] private GameObject noSavedGameDialog = null;
+    // [SerializeField] private GameObject noSavedGameDialog = null;
 
 
     private void Start()
@@ -56,15 +56,15 @@ public class MenuController : MonoBehaviour
         List<string> options = new List<string>();
         int currentResolutionIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++) 
-        { 
+        for (int i = 0; i < resolutions.Length; i++)
+        {
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
             {
                 currentResolutionIndex = i;
-            } 
+            }
         }
 
         resolutionDropdown.AddOptions(options);
@@ -75,35 +75,35 @@ public class MenuController : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        Resolution resolution = resolutions[resolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
     public void GameLevel()
     {
         SceneManager.LoadScene(_newGameLevel);
-        gameManager.instance.stateUnpause();
+        //gameManager.instance.stateUnpause();
     }
 
     public void GameLevel2()
     {
         SceneManager.LoadScene(_newGameLevel2);
-        gameManager.instance.stateUnpause();
+        //gameManager.instance.stateUnpause();
     }
 
-   // public void LoadGameDialogYes()
+    // public void LoadGameDialogYes()
     //{
-       // if (PlayerPrefs.HasKey("SavedZombieRunner"))
-      //  {
-          //  levelToLoad = PlayerPrefs.GetString("SavedZombieRunner");
-            //If you want to push your level into the SasvedLeve1 file code below:
-            //PlayerPrefs.SetString("SavedLeve1", yourlevelis)
-         //   SceneManager.LoadScene(levelToLoad);
-      //  }
-       // else
-      //  {
-         //   noSavedGameDialog.SetActive(true);
-      //  }
-   // }
+    // if (PlayerPrefs.HasKey("SavedZombieRunner"))
+    //  {
+    //  levelToLoad = PlayerPrefs.GetString("SavedZombieRunner");
+    //If you want to push your level into the SasvedLeve1 file code below:
+    //PlayerPrefs.SetString("SavedLeve1", yourlevelis)
+    //   SceneManager.LoadScene(levelToLoad);
+    //  }
+    // else
+    //  {
+    //   noSavedGameDialog.SetActive(true);
+    //  }
+    // }
 
     public void ExitButton()
     {
@@ -196,7 +196,7 @@ public class MenuController : MonoBehaviour
             GraphicsApply();
         }
 
-        if(MenuType == "Audio")
+        if (MenuType == "Audio")
         {
             AudioListener.volume = defaultVolume;
             volumeSlider.value = defaultVolume;
