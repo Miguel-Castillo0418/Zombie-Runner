@@ -190,7 +190,8 @@ void InitializeExpressions()
 	Material.PreshaderBuffer[5] = float4(0.590619,0.438364,0.232252,1.000000);//(Unknown)
 	Material.PreshaderBuffer[6] = float4(0.590619,0.438364,0.232252,0.500000);//(Unknown)
 	Material.PreshaderBuffer[7] = float4(0.000000,0.000000,0.000000,0.000000);//(Unknown)
-}void CalcPixelMaterialInputs(in out FMaterialPixelParameters Parameters, in out FPixelMaterialInputs PixelMaterialInputs)
+}
+void CalcPixelMaterialInputs(in out FMaterialPixelParameters Parameters, in out FPixelMaterialInputs PixelMaterialInputs)
 {
 	//WorldAligned texturing & others use normals & stuff that think Z is up
 	Parameters.TangentToWorld[0] = Parameters.TangentToWorld[0].xzy;

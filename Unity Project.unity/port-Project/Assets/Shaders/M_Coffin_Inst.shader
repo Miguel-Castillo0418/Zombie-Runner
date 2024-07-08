@@ -1,4 +1,5 @@
-﻿Shader "Unreal/M_Coffin_Inst"
+﻿
+Shader "Unreal/M_Coffin_Inst"
 {
 	Properties
 	{

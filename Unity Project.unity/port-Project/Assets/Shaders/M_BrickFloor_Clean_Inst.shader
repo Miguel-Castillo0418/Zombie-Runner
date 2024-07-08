@@ -192,40 +192,73 @@ void InitializeExpressions()
 }
 MaterialFloat4 CustomExpression0(FMaterialPixelParameters Parameters,Texture2D Tex, SamplerState TexSampler ,MaterialFloat2 UV,MaterialFloat MaxSteps,MaterialFloat stepsize,MaterialFloat2 UVDist,MaterialFloat2 InDDX,MaterialFloat2 InDDY,MaterialFloat4 HeightMapChannel)
 {
-float rayheight=1;
-float oldray=1;
-float2 offset=0;
-float oldtex=1;
-float texatray;
-float yintersect;
-int i=0;
-
+float rayheight=1;
+
+float oldray=1;
+
+float2 offset=0;
+
+float oldtex=1;
+
+float texatray;
+
+float yintersect;
+
+int i=0;
+
+
+
 LOOP
-while (i<MaxSteps+2)
-{
-texatray=dot(HeightMapChannel, Texture2DSampleGrad( Tex, TexSampler,UV+offset,InDDX, InDDY));
-
-if (rayheight < texatray)
-{
-float xintersect = (oldray-oldtex)+(texatray-rayheight);
-xintersect=(texatray-rayheight)/xintersect;
-yintersect=(oldray*(xintersect))+(rayheight*(1-xintersect));
-offset-=(xintersect*UVDist);
-break;
-}
-
-oldray=rayheight;
-rayheight-=stepsize;
-offset+=UVDist;
-oldtex=texatray;
-
-
-i++;
-}
-
-float4 output;
-output.xy=offset;
-output.z=yintersect; output.w=1;
+while (i<MaxSteps+2)
+
+{
+
+texatray=dot(HeightMapChannel, Texture2DSampleGrad( Tex, TexSampler,UV+offset,InDDX, InDDY));
+
+
+
+if (rayheight < texatray)
+
+{
+
+float xintersect = (oldray-oldtex)+(texatray-rayheight);
+
+xintersect=(texatray-rayheight)/xintersect;
+
+yintersect=(oldray*(xintersect))+(rayheight*(1-xintersect));
+
+offset-=(xintersect*UVDist);
+
+break;
+
+}
+
+
+
+oldray=rayheight;
+
+rayheight-=stepsize;
+
+offset+=UVDist;
+
+oldtex=texatray;
+
+
+
+
+
+i++;
+
+}
+
+
+
+float4 output;
+
+output.xy=offset;
+
+output.z=yintersect; output.w=1;
+
 return output; 
 }
 void CalcPixelMaterialInputs(in out FMaterialPixelParameters Parameters, in out FPixelMaterialInputs PixelMaterialInputs)
