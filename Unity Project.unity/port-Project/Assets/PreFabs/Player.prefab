@@ -146,7 +146,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.15, y: 3, z: -10.02}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 1, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2538677795602753698}
@@ -255,11 +255,13 @@ MonoBehaviour:
   bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
   ShootPos: {fileID: 6107836234394334680}
   gunModel: {fileID: 9027558375115623006}
-  shootDamage: 0
-  shootRate: 0
-  shootDistance: 0
+  shootDamage: 2
+  shootRate: 0.3
+  shootDistance: 175
   muzzleFlash: {fileID: 791996260104937642}
-  gunList: []
+  gunList:
+  - {fileID: 11400000, guid: 9a4770012d1ab5d4eb37cce6f6434c78, type: 2}
+  - {fileID: 11400000, guid: 11cc0354b3f1f284a8c66f82fef925c0, type: 2}
   meleeRange: 3
   meleeDamage: 1
   enemyLayer:
@@ -680,7 +682,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9027558375115623006}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 2643706879199333972, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
 --- !u!23 &2886023438897831133
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -701,10 +703,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -276384546389811597, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 8611543253660827902, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: -7848952084472943420, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 3768801495714455433, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

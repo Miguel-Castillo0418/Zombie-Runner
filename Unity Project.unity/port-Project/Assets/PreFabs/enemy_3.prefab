@@ -211,12 +211,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1219830368237868438}
   agent: {fileID: 422698597008868054}
-  meleeAttack: []
+  meleeAttack:
+  - {fileID: 0}
   collider: {fileID: 5806692066841405024}
   anim: {fileID: 3677838813767252629}
   meleeRange: 4
   atkRate: 3
-  HP: 1
+  HP: 30
   lvl: 1
   damage: 1
   pointsRewarded: 0

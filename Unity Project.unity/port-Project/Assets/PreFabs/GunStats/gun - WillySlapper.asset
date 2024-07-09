@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: gun - WillySlapper
   m_EditorClassIdentifier: 
   gunModel: {fileID: 7215634121710454053, guid: f65b6e5406bb09245b73d1a843f55a8a, type: 3}
-  shootDmg: 1
-  shootDist: 15
-  shootRate: 0.1
-  ammoCurr: 5
-  ammoMax: 5
-  magazineSize: 5
+  shootDmg: 3
+  shootDist: 150
+  shootRate: 0.3
+  ammoCurr: 20
+  ammoMax: 360
+  magazineSize: 20
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}
   enemyHitEffect: {fileID: 2618032244679568243, guid: 5a62e2fffa188a74cbc72db78f2b6b5f, type: 3}

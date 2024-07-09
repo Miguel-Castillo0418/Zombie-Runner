@@ -58,6 +58,10 @@ public class gameManager : MonoBehaviour
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
+        
+    }
+    private void Start()
+    {
         AudioManager.instance.playMusic("Song");
     }
 
