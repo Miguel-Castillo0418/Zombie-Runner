@@ -80,7 +80,14 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 whereISpawned.updateEnemyNumber();
             }
-            StartCoroutine(DeathAnimation());
+            if (this.name == "enemy_1(Clone)"|| this.name == "enemy_2(Clone)")
+            {
+                StartCoroutine(DeathAnimation());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
         }

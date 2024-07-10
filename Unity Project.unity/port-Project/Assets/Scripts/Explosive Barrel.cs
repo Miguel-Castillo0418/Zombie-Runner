@@ -42,10 +42,6 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
         }
     }
 
-    private void Update()
-    {
-       
-    }
 
     private void OnDrawGizmos()
     {

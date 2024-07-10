@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: gun - SnubRevolver
   m_EditorClassIdentifier: 
   gunModel: {fileID: 8599329204305753199, guid: 7d6a484502d5cf741b01b587ce4f2576, type: 3}
-  shootDmg: 1
-  shootDist: 15
-  shootRate: 0.1
-  ammoCurr: 5
-  ammoMax: 5
-  magazineSize: 5
+  shootDmg: 5
+  shootDist: 50
+  shootRate: 0.4
+  ammoCurr: 6
+  ammoMax: 120
+  magazineSize: 6
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}
   enemyHitEffect: {fileID: 2618032244679568243, guid: 5a62e2fffa188a74cbc72db78f2b6b5f, type: 3}

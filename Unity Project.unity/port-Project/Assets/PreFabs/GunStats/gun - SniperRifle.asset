@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: gun - SniperRifle
   m_EditorClassIdentifier: 
   gunModel: {fileID: 4778028950523106755, guid: 3b5f74343d9e2324a8b9192c82cae688, type: 3}
-  shootDmg: 1
-  shootDist: 15
-  shootRate: 0.1
+  shootDmg: 10
+  shootDist: 1000
+  shootRate: 1.5
   ammoCurr: 5
-  ammoMax: 5
+  ammoMax: 50
   magazineSize: 5
   gunMaterials: []
   hitEffect: {fileID: 3787883669079084488, guid: 07453ca3f5909fb4f9301cf0cd58004f, type: 3}

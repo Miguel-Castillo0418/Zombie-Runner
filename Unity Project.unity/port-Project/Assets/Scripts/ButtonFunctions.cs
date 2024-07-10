@@ -18,7 +18,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void mainMenu()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("MainMenu Scene");
         gameManager.instance.statePause();
     }
 

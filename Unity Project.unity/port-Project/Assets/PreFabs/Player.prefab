@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4830835127068048508}
   - component: {fileID: 7108692541904499130}
   - component: {fileID: 442791242358128045}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Muzzle Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.15, y: 3, z: -10.02}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 1, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2538677795602753698}
@@ -256,10 +256,12 @@ MonoBehaviour:
   ShootPos: {fileID: 6107836234394334680}
   gunModel: {fileID: 9027558375115623006}
   shootDamage: 2
-  shootRate: 0.1
-  shootDistance: 120
+  shootRate: 0.3
+  shootDistance: 175
   muzzleFlash: {fileID: 791996260104937642}
-  gunList: []
+  gunList:
+  - {fileID: 11400000, guid: 9a4770012d1ab5d4eb37cce6f6434c78, type: 2}
+  - {fileID: 11400000, guid: 11cc0354b3f1f284a8c66f82fef925c0, type: 2}
   meleeRange: 3
   meleeDamage: 1
   enemyLayer:
@@ -286,9 +288,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ce505acfce828a4c976019d038b5476, type: 2}
   HPorig: 0
   shopHP: 0
-  currentAmmo: 30
-  magazineSize: 30
-  stockAmmo: 360
+  currentAmmo: 0
+  magazineSize: 0
+  stockAmmo: 0
   spreadAngle: 0
   pelletsFired: 0
 --- !u!143 &5962031438823799970
@@ -447,6 +449,7 @@ Transform:
   m_Children:
   - {fileID: 4217894165981820677}
   - {fileID: 6107836234394334680}
+  - {fileID: 8717754007619334288}
   m_Father: {fileID: 7885215037950153453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6746833463674032829
@@ -482,13 +485,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -555,6 +558,89 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7885215037950153453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7945518533558881904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8717754007619334288}
+  - component: {fileID: 58584492880924909}
+  m_Layer: 0
+  m_Name: WeaponCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8717754007619334288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7945518533558881904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2538677795602753698}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &58584492880924909
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7945518533558881904}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.01
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &9027558375115623006
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +652,7 @@ GameObject:
   - component: {fileID: 4217894165981820677}
   - component: {fileID: 4096665133361378820}
   - component: {fileID: 2886023438897831133}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: gun - pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +682,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9027558375115623006}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 2643706879199333972, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
 --- !u!23 &2886023438897831133
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -617,10 +703,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: -276384546389811597, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 8611543253660827902, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: -7848952084472943420, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
+  - {fileID: 3768801495714455433, guid: 73c3591826c644043af96fb2e38fa572, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
