@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private float attackRate;
 
     [SerializeField] gunStats[] guns;
+    Transform muzzleFlashPoint;
     private float nextAttackTime;
 
     float origHeight;
@@ -76,39 +77,40 @@ public class PlayerController : MonoBehaviour, IDamage
         origSpeed = speed;
         currentAmmo = magazineSize;
         updatePlayerUI();
+        muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (!gameManager.instance.isPaused)
-        //{
-            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
+        if (!gameManager.instance.isPaused)
+        {
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            //if (isReloading)
-            //    return;
-            //if (currentAmmo <= 0 && stockAmmo > 0)
-            //{
-            //    StartCoroutine(reload());
-            //    return;
-            //}
-            //if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
-            //{
-            //    StartCoroutine(shoot());
-            //}
-            //if (Time.time >= nextAttackTime)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
-            //    {
-            //        StartCoroutine(MeleeAttack());
-            //        nextAttackTime = Time.time + attackRate;
-            //    }
-            //}
-            //if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
-            //{
-            //    StartCoroutine(reload());
-            //}
-        //}
+            if (isReloading)
+                return;
+            if (currentAmmo <= 0 && stockAmmo > 0)
+            {
+                StartCoroutine(reload());
+                return;
+            }
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
+            {
+                StartCoroutine(shoot());
+            }
+            if (Time.time >= nextAttackTime)
+            {
+                if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
+                {
+                    StartCoroutine(MeleeAttack());
+                    nextAttackTime = Time.time + attackRate;
+                }
+            }
+            if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
+            {
+                StartCoroutine(reload());
+            }
+        }
         selectGun();
         sprint();
         crouch();
@@ -197,6 +199,7 @@ public class PlayerController : MonoBehaviour, IDamage
             currentAmmo--;
             isShooting = true;
             gunAud.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootVol);
+
             StartCoroutine(flashMuzzle());
 
             RaycastHit hit;
@@ -280,6 +283,8 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     IEnumerator flashMuzzle()
     {
+       // muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
+       // muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
         muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         muzzleFlash.SetActive(false);
@@ -414,6 +419,10 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.tag = gun.gunModel.tag;
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+
+        // Adjust muzzle flash position and rotation based on the new weapon
+        muzzleFlash.transform.localPosition = gun.muzzleFlashPositionOffset;
+        muzzleFlash.transform.localRotation = Quaternion.Euler(gun.muzzleFlashRotationOffset);
     }
 
     void selectGun()
@@ -442,6 +451,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+
+        // Adjust muzzle flash position and rotation based on the new weapon
+        muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
+        muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
     }
     IEnumerator walkCycle()
     {
