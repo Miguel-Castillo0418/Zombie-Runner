@@ -12,17 +12,17 @@ public class SaveSystem : MonoBehaviour
         PlayerPrefs.Save();
         Debug.Log(hp);
     }
-    public int LoadData()
-    {
-        if (PlayerPrefs.HasKey("playerHP"))
-        {
-            return PlayerPrefs.GetInt("playerHP"); ;
-        }
-        else
-        {
-            return PlayerController.instance.HP;
-        }
-    }
+    //public int LoadData()
+    //{
+    //    if (PlayerPrefs.HasKey("playerHP"))
+    //    {
+    //        return PlayerPrefs.GetInt("playerHP"); ;
+    //    }
+    //    else
+    //    {
+    //        return PlayerController.instance.HP;
+    //    }
+    //}
     public void delete()
     {
         PlayerPrefs.DeleteAll();

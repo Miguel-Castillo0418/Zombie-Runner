@@ -81,34 +81,34 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        //if (!gameManager.instance.isPaused)
-        //{
-            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
+        if (!gameManager.instance.isPaused)
+        {
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            //if (isReloading)
-            //    return;
-            //if (currentAmmo <= 0 && stockAmmo > 0)
-            //{
-            //    StartCoroutine(reload());
-            //    return;
-            //}
-            //if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
-            //{
-            //    StartCoroutine(shoot());
-            //}
-            //if (Time.time >= nextAttackTime)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
-            //    {
-            //        StartCoroutine(MeleeAttack());
-            //        nextAttackTime = Time.time + attackRate;
-            //    }
-            //}
-            //if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
-            //{
-            //    StartCoroutine(reload());
-            //}
-        //}
+            if (isReloading)
+                return;
+            if (currentAmmo <= 0 && stockAmmo > 0)
+            {
+                StartCoroutine(reload());
+                return;
+            }
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
+            {
+                StartCoroutine(shoot());
+            }
+            if (Time.time >= nextAttackTime)
+            {
+                if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
+                {
+                    StartCoroutine(MeleeAttack());
+                    nextAttackTime = Time.time + attackRate;
+                }
+            }
+            if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
+            {
+                StartCoroutine(reload());
+            }
+        }
         selectGun();
         sprint();
         crouch();
@@ -302,17 +302,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void updatePlayerUI()
     {
-       // gameManager.instance.hpTarget = (float)HP / HPorig;
-        //if (HP > 0)
-        //{
-        //    gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
-        //}
-        //else
-        //{
-        //    gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
-        //}
-        //gameManager.instance.CheckHealthBar();
-        //shopHP = HP;
+        gameManager.instance.hpTarget = (float)HP / HPorig;
+        if (HP > 0)
+        {
+            gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
+        }
+        else
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        }
+        gameManager.instance.CheckHealthBar();
+        shopHP = HP;
     }
 
     IEnumerator MeleeAttack()
@@ -335,11 +335,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void OnDrawGizmosSelected()
     {
-        //if (meleeAttackPoint == null)
-        //    return;
+        if (meleeAttackPoint == null)
+            return;
 
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
     public IEnumerator reload()
     {

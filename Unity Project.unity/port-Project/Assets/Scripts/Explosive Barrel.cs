@@ -26,7 +26,7 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
         {
             if (enemy.GetComponent<EnemyAI>() != null)
             {
-                enemy.GetComponent<EnemyAI>().takeDamage(explosionDamage); 
+                enemy.GetComponent<EnemyAI>().takeFireDamage(explosionDamage); 
             }
         }
 

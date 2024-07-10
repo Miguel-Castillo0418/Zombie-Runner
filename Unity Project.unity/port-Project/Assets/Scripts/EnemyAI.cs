@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] public NavMeshAgent agent;
@@ -14,8 +14,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] public Animator anim;
     [SerializeField] public int meleeRange;
     [SerializeField] public float atkRate;
-    [SerializeField] public int HP;
-    int maxHp;
+    [SerializeField] public float HP;
+    float maxHp;
     [SerializeField] public int lvl;
     [SerializeField] public int damage;
     [SerializeField] public int pointsRewarded;
@@ -61,8 +61,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public void takeDamage(float amount)
     {
-        HP -= (int)amount;
-        if (HP / (float)maxHp <= 0.5f&& HP>0)
+        HP -= amount;
+        if (HP / maxHp <= 0.5f && HP > 0)
         {
             anim.SetTrigger("HalfHp");
             agent.speed = HalfHpSpeed;
@@ -80,7 +80,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 whereISpawned.updateEnemyNumber();
             }
-            if (this.name == "enemy_1(Clone)"|| this.name == "enemy_2(Clone)")
+            if (this.name == "enemy_1(Clone)" || this.name == "enemy_2(Clone)")
             {
                 StartCoroutine(DeathAnimation());
             }
@@ -92,20 +92,45 @@ public class EnemyAI : MonoBehaviour, IDamage
             gameManager.instance.updateGameGoal(-1);
         }
     }
-    public void takeFireDamage(float amount) { }
-    public void takePoisonDamage(float amount) { }
-    public void takeElectricDamage(float amount) { }
-    public void takeExplosiveDamage(float amount) { }
+    public void takeFireDamage(float amount)
+    {
+        StartCoroutine(applyDamageOverTime(amount,5.0f));
+    }
+    public void takePoisonDamage(float amount) 
+    {
+        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+    }
+    public void takeElectricDamage(float amount)
+    {
+        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+    }
+    public void takeExplosiveDamage(float amount) 
+    {
+        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+    }
+    IEnumerator applyDamageOverTime(float amount, float duration) //the total damage over time in seconds
+    {
+        float timer = 0f;
+        float damagePerSec = amount / duration;
+        while (timer < duration)
+        {
+            float damagePerFrame = damagePerSec * Time.deltaTime;
+            takeDamage(damagePerFrame);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         IDamage dmg = other.GetComponent<IDamage>();
+        IKnockbackable _knock=other.GetComponent<IKnockbackable>();
         if (other.name == "Player")
         {
             int force = lvl * damage;
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
-            knockback();
+            _knock.Knockback();
 
         }
     }
@@ -133,7 +158,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    public void knockback()
+    public void Knockback()
     {
         int force = lvl * damage * 10; // Adjust this force value as needed
         float knockbackDuration = 0.5f; // Adjust the duration of knockback
