@@ -41,6 +41,10 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
             Explode();
         }
     }
+    public void takeFireDamage(float amount) { }
+    public void takePoisonDamage(float amount) { }
+    public void takeElectricDamage(float amount) { }
+    public void takeExplosiveDamage(float amount) { }
 
 
     private void OnDrawGizmos()

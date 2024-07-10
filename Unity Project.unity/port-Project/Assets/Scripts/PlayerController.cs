@@ -295,6 +295,10 @@ public class PlayerController : MonoBehaviour, IDamage
             gameManager.instance.youLose();
         }
     }
+    public void takeFireDamage(float amount) { }
+    public void takePoisonDamage(float amount) { }
+    public void takeElectricDamage(float amount) { }
+    public void takeExplosiveDamage(float amount) { }
 
     void updatePlayerUI()
     {
