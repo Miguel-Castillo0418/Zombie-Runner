@@ -283,8 +283,6 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     IEnumerator flashMuzzle()
     {
-       // muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
-       // muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
         muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         muzzleFlash.SetActive(false);
