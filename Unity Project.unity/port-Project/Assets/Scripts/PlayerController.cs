@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private float attackRate;
 
     [SerializeField] gunStats[] guns;
+    Transform muzzleFlashPoint;
     private float nextAttackTime;
 
     float origHeight;
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamage
         origSpeed = speed;
         currentAmmo = magazineSize;
         updatePlayerUI();
+        muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
     }
 
     // Update is called once per frame
@@ -197,10 +199,11 @@ public class PlayerController : MonoBehaviour, IDamage
             currentAmmo--;
             isShooting = true;
             gunAud.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootVol);
+
             StartCoroutine(flashMuzzle());
 
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position + new Vector3(0, 0, 1), Camera.main.transform.forward, out hit, shootDistance))
+            if (Physics.Raycast(Camera.main.transform.position + Vector3.forward, Camera.main.transform.forward, out hit, shootDistance))
             {
                 if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
                 {
@@ -418,6 +421,10 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.tag = gun.gunModel.tag;
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+
+        // Adjust muzzle flash position and rotation based on the new weapon
+        muzzleFlash.transform.localPosition = gun.muzzleFlashPositionOffset;
+        muzzleFlash.transform.localRotation = Quaternion.Euler(gun.muzzleFlashRotationOffset);
     }
 
     void selectGun()
@@ -446,6 +453,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
+
+        // Adjust muzzle flash position and rotation based on the new weapon
+        muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
+        muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
     }
     IEnumerator walkCycle()
     {
