@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(flashMuzzle());
 
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position + new Vector3(0, 0, 1), Camera.main.transform.forward, out hit, shootDistance))
+            if (Physics.Raycast(Camera.main.transform.position + Vector3.forward, Camera.main.transform.forward, out hit, shootDistance))
             {
                 if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
                 {

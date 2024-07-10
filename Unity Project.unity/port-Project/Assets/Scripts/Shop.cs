@@ -55,6 +55,7 @@ public class Shop : MonoBehaviour
         {
             
             gameManager.instance.points -= healthCost;
+            AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.IncreaseHealth();
         }
@@ -66,6 +67,7 @@ public class Shop : MonoBehaviour
         if (Zombucks - speedCost >= 0)
         {
             gameManager.instance.points -= speedCost;
+            AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.IncreaseSpeed();
         }
@@ -76,6 +78,7 @@ public class Shop : MonoBehaviour
         if (Zombucks - strengthCost >= 0)
         {
             gameManager.instance.points -= strengthCost;
+            AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.IncreaseStrength();
         }
@@ -85,6 +88,7 @@ public class Shop : MonoBehaviour
         if(Zombucks - rouletteCost >= 0)
         {
             gameManager.instance.points -= rouletteCost;
+            AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.spinRoulette();
         }

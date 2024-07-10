@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     [Header("-----Sounds-----")]
-    public Sound[] music, zDead;
+    public Sound[] music, zDead, click, purchase;
     public AudioClip[] zombieSFX, playerJump, playerHurt, playerWalk, explosion;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
@@ -68,6 +68,32 @@ public class AudioManager : MonoBehaviour
         {
             zSFXSource.clip = dead.clip;
             zSFXSource.Play();
+        }
+    }
+    public void clickSound(string name)
+    {
+        Sound Click = Array.Find(click, x => x.Name == name);
+        if(Click == null)
+        {
+            Debug.Log("Sound Not Found(2)");
+        }
+        else
+        {
+            pSFXSource.clip = Click.clip;
+            pSFXSource.Play();
+        }
+    }
+    public void purchaseSound(string name)
+    {
+        Sound Purch = Array.Find(purchase, x => x.Name == name);
+        if(Purch == null)
+        {
+            Debug.Log("Sound Not Found(3)");
+        }
+        else
+        {
+            pSFXSource.clip = Purch.clip;
+            pSFXSource.Play();
         }
     }
     IEnumerator ZombieSound()
