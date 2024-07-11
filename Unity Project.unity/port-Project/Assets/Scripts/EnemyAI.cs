@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Timeline;
 
 public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
 {
@@ -22,12 +24,12 @@ public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
     [SerializeField] private LayerMask enemyLayer;
     float HalfHpSpeed;
     float normSpeed;
-
+    [SerializeField] GameObject onFire;
     public WaveSpawner whereISpawned;
     public static bool isSound;
     bool playerInRange;
     Vector3 playerDir;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
         HalfHpSpeed = agent.speed * 3.5f;
+        
     }
 
     // Update is called once per frame
@@ -94,21 +97,29 @@ public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
     }
     public void takeFireDamage(float amount)
     {
-        StartCoroutine(applyDamageOverTime(amount,5.0f));
+        GameObject fireVFX=Instantiate(onFire,transform.position, Quaternion.identity);
+        fireVFX.transform.parent = transform;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
     public void takePoisonDamage(float amount) 
     {
-        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
+        fireVFX.transform.parent = transform;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
     public void takeElectricDamage(float amount)
     {
-        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
+        fireVFX.transform.parent = transform;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
     public void takeExplosiveDamage(float amount) 
     {
-        StartCoroutine(applyDamageOverTime(amount, 5.0f));
+        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
+        fireVFX.transform.parent = transform;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
-    IEnumerator applyDamageOverTime(float amount, float duration) //the total damage over time in seconds
+    IEnumerator applyDamageOverTime(float amount, float duration,GameObject VFX) //the total damage over time in seconds
     {
         float timer = 0f;
         float damagePerSec = amount / duration;
@@ -119,6 +130,7 @@ public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
             timer += Time.deltaTime;
             yield return null;
         }
+        Destroy(VFX);
     }
     //private void OnTriggerEnter(Collider other)
     //{
