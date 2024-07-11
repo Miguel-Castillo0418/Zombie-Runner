@@ -519,5 +519,15 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         changeGun();
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SaveZone"))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns();
+            Debug.Log("Game Saved in SaveZone");
+        }
+    }
 }
 
