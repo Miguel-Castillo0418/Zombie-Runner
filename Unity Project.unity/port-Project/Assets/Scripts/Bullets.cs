@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
 
         if (dmg != null)
         {
-            dmg.takeDamage(damage);
+            dmg.takeElectricDamage(damage);
             Destroy(gameObject);
         }
     }

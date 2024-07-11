@@ -25,6 +25,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     float HalfHpSpeed;
     float normSpeed;
     [SerializeField] GameObject onFire;
+    [SerializeField] GameObject poisoned;
+    [SerializeField] GameObject electrified;
     public WaveSpawner whereISpawned;
     public static bool isSound;
     bool playerInRange;
@@ -101,17 +103,24 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         fireVFX.transform.parent = transform;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
-    public void takePoisonDamage(float amount) 
+    public void takePoisonDamage(float amount)
     {
-        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-        fireVFX.transform.parent = transform;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
+        Vector3 newPosition = Vector3.zero + Vector3.up * 1.5f;
+        GameObject poisonVFX = Instantiate(poisoned, newPosition, Quaternion.identity);
+        poisonVFX.transform.parent = transform;
+        poisonVFX.transform.localPosition = newPosition;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, poisonVFX));
     }
     public void takeElectricDamage(float amount)
     {
-        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-        fireVFX.transform.parent = transform;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
+        Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f+ Vector3.down * 0.002f;
+        GameObject ElecVFX = Instantiate(electrified, transform.position, Quaternion.identity);
+        ElecVFX.transform.parent = transform.Find("Z_Body");
+        ElecVFX.transform.localRotation = Quaternion.identity;
+        ElecVFX.transform.localPosition = newPosition;
+        Vector3 newScale = Vector3.one * 0.4f; 
+        ElecVFX.transform.localScale = newScale;
+        StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
     }
     public void takeExplosiveDamage(float amount) 
     {
@@ -123,6 +132,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     {
         float timer = 0f;
         float damagePerSec = amount / duration;
+        
         while (timer < duration)
         {
             float damagePerFrame = damagePerSec * Time.deltaTime;
