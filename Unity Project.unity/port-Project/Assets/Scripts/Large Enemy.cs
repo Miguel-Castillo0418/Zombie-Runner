@@ -98,38 +98,38 @@ public class LargeEnemy : EnemyAI
         yield return new WaitForSeconds(chargeCooldown);
         canCharge = true;
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isCharging && !attacking)
-        {
-            if (collision.collider.CompareTag("Player"))
-            {
-                Debug.Log("chargeDMG");
-                IDamage dmg = collision.collider.GetComponent<IDamage>();
-                IKnockbackable _knock = collision.collider.GetComponent<IKnockbackable>();
-                if (dmg != null)
-                {
-                    dmg.takeDamage(chargeDamage);
-                    _knock.Knockback();
-                }
-            }
-        }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (isCharging && !attacking)
+    //    {
+    //        if (collision.collider.CompareTag("Player"))
+    //        {
+    //            Debug.Log("chargeDMG");
+    //            IDamage dmg = collision.collider.GetComponent<IDamage>();
+    //            IKnockbackable _knock = collision.collider.GetComponent<IKnockbackable>();
+    //            if (dmg != null)
+    //            {
+    //                dmg.takeDamage(chargeDamage);
+    //                _knock.Knockback();
+    //            }
+    //        }
+    //    }
 
-    }
+    //}
     //------------NEW-------------
     private void OnTriggerEnter(Collider other)
     {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
-        {
-            int force = lvl * damage;
-            float t = force * Time.deltaTime;
-            Debug.Log(other.transform.name);
-            dmg.takeDamage(damage);
-            _knock.Knockback();
-            attacking = false;
-        }
+        //IDamage dmg = other.GetComponent<IDamage>();
+        //IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+        //if (other.name == "Player")
+        //{
+        //    int force = lvl * damage;
+        //    float t = force * Time.deltaTime;
+        //    Debug.Log(other.transform.name);
+        //    dmg.takeDamage(damage);
+        //    _knock.Knockback();
+        //    attacking = false;
+        //}
     }
     IEnumerator kick()
     {

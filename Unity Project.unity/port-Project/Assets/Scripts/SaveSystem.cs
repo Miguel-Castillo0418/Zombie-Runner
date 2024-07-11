@@ -5,27 +5,26 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
-    //public static SaveSystem instance;
-    public void SaveData(int hp)
-    //{
+    public static SaveSystem instance;
+    public void SaveData(float hp)
     {
-    //    PlayerPrefs.SetInt("playerHP", hp);
-    //    PlayerPrefs.Save();
-    //    Debug.Log(hp);
-    //}
-    //public int LoadData()
-    //{
-    //    if (PlayerPrefs.HasKey("playerHP"))
-    //    {
-    //        return PlayerPrefs.GetInt("playerHP"); ;
-    //    }
-    //    else
-    //    {
-    //        return PlayerController.instance.HP;
-    //    }
-    //}
-    //public void delete()
-    //{
-    //    PlayerPrefs.DeleteAll();
-    //}
+        PlayerPrefs.SetFloat("playerHP", hp);
+        PlayerPrefs.Save();
+        Debug.Log(hp);
+    }
+    public float LoadData()
+    {
+        if (PlayerPrefs.HasKey("playerHP"))
+        {
+            return PlayerPrefs.GetFloat("playerHP"); ;
+        }
+        else
+        {
+            return PlayerController.instance.HP;
+        }
+    }
+    public void delete()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
