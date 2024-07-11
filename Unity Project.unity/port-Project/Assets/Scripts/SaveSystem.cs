@@ -6,9 +6,9 @@ using UnityEngine;
 public class SaveSystem : MonoBehaviour
 {
     //public static SaveSystem instance;
-    public void SaveData(int hp)
+    //public void SaveData(int hp)
     //{
-    {
+    //{
     //    PlayerPrefs.SetInt("playerHP", hp);
     //    PlayerPrefs.Save();
     //    Debug.Log(hp);
