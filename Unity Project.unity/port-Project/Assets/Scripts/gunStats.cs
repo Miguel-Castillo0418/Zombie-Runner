@@ -7,6 +7,7 @@ using UnityEngine;
 public class gunStats : ScriptableObject
 {
     public GameObject gunModel;
+    public string gunID;
     [Range(1, 10)] public float shootDmg;
     [Range(15, 1000)] public int shootDist;
     [Range(0.1f, 3)] public float shootRate;

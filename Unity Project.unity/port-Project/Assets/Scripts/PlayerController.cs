@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
-
+    public static PlayerController instance;
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
     [SerializeField] AudioSource gunAud;
 
-    [SerializeField] int HP;
+    [SerializeField] public float HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
 
+    [SerializeField] public GameObject loadingIcon;
+
     [SerializeField] gunStats[] guns;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
@@ -52,8 +54,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     bool isShooting;
     int jumpCount;
-    public int HPorig;
-    public int shopHP;
+    public float HPorig;
+    public float shopHP;
 
     public int currentAmmo;
     public int magazineSize;
@@ -67,9 +69,15 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 playerVel;
     Vector3 pushBack;
 
+    private SaveSystem saveSystem;
+
     // Start is called before the first frame update
     void Start()
     {
+        saveSystem = new SaveSystem();
+        LoadGuns();
+        HP = saveSystem.LoadData();
+        Debug.Log("Player HP: " + HP);
         spreadAngle = 10;
         pelletsFired = 8;
         HPorig = HP;
@@ -114,6 +122,24 @@ public class PlayerController : MonoBehaviour, IDamage
         selectGun();
         sprint();
         crouch();
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns(); // Save guns
+            Debug.Log("Game Saved");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            saveSystem.delete();
+            Debug.Log("Save Deleted");
+        }
+    }
+    public IEnumerator loadIcon()
+    {
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(3);
+        loadingIcon.SetActive(false);
     }
     void movement()
     {
@@ -471,6 +497,27 @@ public class PlayerController : MonoBehaviour, IDamage
             yield return new WaitForSeconds(0.25f);
         }
         isPlayingSteps=false;
+    }
+    public void SaveGuns()
+    {
+        for (int i = 0; i < guns.Length; i++)
+        {
+            PlayerPrefs.SetInt(guns[i].gunID, gunList.Contains(guns[i]) ? 1 : 0);
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGuns()
+    {
+        
+        for (int i = 0; i < guns.Length; i++)
+        {
+            if (PlayerPrefs.GetInt(guns[i].gunID, 0) == 1)
+            {
+                gunList.Add(guns[i]);
+            }
+        }
+        changeGun();
     }
 }
 
