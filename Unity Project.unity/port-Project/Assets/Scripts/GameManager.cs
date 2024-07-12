@@ -54,13 +54,14 @@ public class gameManager : MonoBehaviour
         instance = this;
         points = 2100;
         player = GameObject.FindWithTag("Player");
+        shopObj = GameObject.FindWithTag("ShopObj");
+        shopText = GameObject.FindWithTag("ShopTxt");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
-        
     }
-    private void Start()
+    void Start()
     {
         AudioManager.instance.playMusic("Song");
     }

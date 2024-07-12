@@ -106,10 +106,11 @@ public class LargeEnemy : EnemyAI
             {
                 Debug.Log("chargeDMG");
                 IDamage dmg = collision.collider.GetComponent<IDamage>();
+                IKnockbackable _knock = collision.collider.GetComponent<IKnockbackable>();
                 if (dmg != null)
                 {
                     dmg.takeDamage(chargeDamage);
-                    knockback();
+                    _knock.Knockback();
                 }
             }
         }
@@ -119,13 +120,14 @@ public class LargeEnemy : EnemyAI
     private void OnTriggerEnter(Collider other)
     {
         IDamage dmg = other.GetComponent<IDamage>();
+        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
         if (other.name == "Player")
         {
             int force = lvl * damage;
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
-            knockback();
+            _knock.Knockback();
             attacking = false;
         }
     }
