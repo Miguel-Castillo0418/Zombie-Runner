@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IKnockbackable
 {
-    void Knockback();
+    void Knockback(int lvl=0,int damage=0);
     IEnumerator ApplyKnockback(Transform objectTransform, Vector3 targetPosition, float duration);
 
 }

@@ -152,7 +152,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             float t = force * Time.deltaTime;
             Debug.Log(other.transform.name);
             dmg.takeDamage(damage);
-            _knock.Knockback();
+            _knock.Knockback(lvl,damage);
 
         }
     }
@@ -180,7 +180,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    public void Knockback()
+    public void Knockback(int lvl,int damage)
     {
         int force = lvl * damage * 10; // Adjust this force value as needed
         float knockbackDuration = 0.5f; // Adjust the duration of knockback
