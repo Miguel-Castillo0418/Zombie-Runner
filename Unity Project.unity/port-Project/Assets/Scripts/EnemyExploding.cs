@@ -40,8 +40,9 @@ public class EnemyExploding : MonoBehaviour
             }
             else
             {
-                dmg.takeExplosiveDamage(_aiScript.damage);
+                dmg.takeExplosiveDamage(_aiScript.damage*10);
                 _knock.Knockback(_aiScript.lvl, _aiScript.damage);
+                _aiScript.Explode();
                 _aiScript.takeDamage(_aiScript.maxHp);
             }
         }

@@ -79,8 +79,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         }
         if (HP <= 0)
         {
-            //AudioManager.instance.stopSound();
-            //AudioManager.instance.zombDeath("Zdead");
+            AudioManager.instance.stopSound();
+            AudioManager.instance.zombDeath("Zdead");
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
@@ -232,17 +232,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     public void Explode()
     {
         AudioManager.instance.explosionSound();
-        explosion.SetActive(true);
-
-        Collider[] enemies = Physics.OverlapSphere(this.transform.position, range);
-        foreach (Collider enemy in enemies)
-        {
-            if (enemy.GetComponent<EnemyAI>() != null)
-            {
-                enemy.GetComponent<EnemyAI>().takeFireDamage(damage);
-            }
-        }
-
+        Instantiate(explosion, transform.position, Quaternion.identity);
         //sources.Play();
     }
 }
