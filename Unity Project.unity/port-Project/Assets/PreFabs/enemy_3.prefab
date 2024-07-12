@@ -218,13 +218,19 @@ MonoBehaviour:
   meleeRange: 4
   atkRate: 3
   HP: 30
-  lvl: 1
-  damage: 1
+  maxHp: 0
+  lvl: 3
+  damage: 5
   pointsRewarded: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  onFire: {fileID: 0}
+  poisoned: {fileID: 0}
+  electrified: {fileID: 0}
   whereISpawned: {fileID: 0}
+  gonExplode: 0
+  explosion: {fileID: 0}
   meleeAttackPoint: {fileID: 2108099784635268686}
   enemyAI: {fileID: 0}
   chargeRadius: 25

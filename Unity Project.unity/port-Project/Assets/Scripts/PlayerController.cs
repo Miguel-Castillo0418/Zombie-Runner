@@ -317,7 +317,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     public void takeDamage(float amount)
     {
         HP -= (int)amount;
-        AudioManager.instance.hurtSound();
+        //AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
         {
@@ -327,7 +327,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     public void takeFireDamage(float amount) { }
     public void takePoisonDamage(float amount) { }
     public void takeElectricDamage(float amount) { }
-    public void takeExplosiveDamage(float amount) { }
+    public void takeExplosiveDamage(float amount) 
+    {
+        HP-=amount;
+    }
 
     void updatePlayerUI()
     {
@@ -532,16 +535,15 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     //for the knockback to work with the player
     public void Knockback(int lvl, int damage)
     {
-        ;
-        int force = lvl * damage * 10; // Adjust this force value as needed
-        float knockbackDuration = 0.5f; // Adjust the duration of knockback
+        int force = lvl * damage * 10;
+        float knockbackDuration = 0.5f;
+        float knockbackDistance = 3f;
 
-        Vector3 knockbackDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
-        Vector3 targetPosition = gameManager.instance.player.transform.position + knockbackDirection * 3f; // Adjust the distance of knockback
-        StartCoroutine(ApplyKnockback(gameManager.instance.player.transform, targetPosition, knockbackDuration));
-
+        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance; 
+        Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
+        StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
     }
-    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
+    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration, float force)
     {
         Vector3 initialPosition = playerTransform.position;
         float timer = 0f;
@@ -549,11 +551,27 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         while (timer < duration)
         {
             float progress = timer / duration;
-            playerTransform.position = Vector3.Lerp(initialPosition, targetPosition, progress);
+            float currentSpeed = Mathf.Lerp(0, force, progress);
+
+            playerTransform.position += (targetPosition - initialPosition).normalized * currentSpeed * Time.deltaTime;
 
             timer += Time.deltaTime;
             yield return null;
         }
+    }
+    public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
+    {
+        float timer = 0f;
+        float damagePerSec = amount / duration;
+
+        while (timer < duration)
+        {
+            float damagePerFrame = damagePerSec * Time.deltaTime;
+            takeDamage(damagePerFrame);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(VFX);
     }
 }
 

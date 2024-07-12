@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -17,21 +18,24 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     [SerializeField] public int meleeRange;
     [SerializeField] public float atkRate;
     [SerializeField] public float HP;
-    float maxHp;
+    public float maxHp;
     [SerializeField] public int lvl;
     [SerializeField] public int damage;
     [SerializeField] public int pointsRewarded;
     [SerializeField] private LayerMask enemyLayer;
     float HalfHpSpeed;
     float normSpeed;
-    [SerializeField] GameObject onFire;
-    [SerializeField] GameObject poisoned;
-    [SerializeField] GameObject electrified;
+    [SerializeField] public GameObject onFire;
+    [SerializeField] public GameObject poisoned;
+    [SerializeField] public GameObject electrified;
     public WaveSpawner whereISpawned;
     public static bool isSound;
     bool playerInRange;
-    Vector3 playerDir;
     
+    public GameObject explosion;
+    float range = 5;
+    Vector3 playerDir;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +43,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
         HalfHpSpeed = agent.speed * 3.5f;
-        
+
     }
 
     // Update is called once per frame
@@ -75,8 +79,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         }
         if (HP <= 0)
         {
-            AudioManager.instance.stopSound();
-            AudioManager.instance.zombDeath("Zdead");
+            //AudioManager.instance.stopSound();
+            //AudioManager.instance.zombDeath("Zdead");
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
@@ -99,7 +103,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     }
     public void takeFireDamage(float amount)
     {
-        GameObject fireVFX=Instantiate(onFire,transform.position, Quaternion.identity);
+        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
         fireVFX.transform.parent = transform;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
@@ -113,26 +117,26 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     }
     public void takeElectricDamage(float amount)
     {
-        Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f+ Vector3.down * 0.002f;
+        Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f + Vector3.down * 0.002f;
         GameObject ElecVFX = Instantiate(electrified, transform.position, Quaternion.identity);
         ElecVFX.transform.parent = transform.Find("Z_Body");
         ElecVFX.transform.localRotation = Quaternion.identity;
         ElecVFX.transform.localPosition = newPosition;
-        Vector3 newScale = Vector3.one * 0.4f; 
+        Vector3 newScale = Vector3.one * 0.4f;
         ElecVFX.transform.localScale = newScale;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
     }
-    public void takeExplosiveDamage(float amount) 
+    public void takeExplosiveDamage(float amount)
     {
         GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
         fireVFX.transform.parent = transform;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
     }
-    IEnumerator applyDamageOverTime(float amount, float duration,GameObject VFX) //the total damage over time in seconds
+    public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
     {
         float timer = 0f;
         float damagePerSec = amount / duration;
-        
+
         while (timer < duration)
         {
             float damagePerFrame = damagePerSec * Time.deltaTime;
@@ -142,20 +146,27 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         }
         Destroy(VFX);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
-        {
-            int force = lvl * damage;
-            float t = force * Time.deltaTime;
-            Debug.Log(other.transform.name);
-            dmg.takeDamage(damage);
-            _knock.Knockback(lvl,damage);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    IDamage dmg = other.GetComponent<IDamage>();
+    //    IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+    //    if (other.name == "Player")
+    //    {
+    //        if (!gonExplode)
+    //        {
+    //            Debug.Log(other.transform.name);
+    //            dmg.takeDamage(damage);
+    //            _knock.Knockback(lvl, damage);
+    //        }
+    //        else
+    //        {
+    //            dmg.takeExplosiveDamage(damage);
+    //            _knock.Knockback(lvl, damage);
+    //            takeDamage(maxHp);
 
-        }
-    }
+    //        }
+    //    }
+    //}
     IEnumerator MeleeAttack()
     {
         //Stop the enemy
@@ -180,17 +191,18 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    public void Knockback(int lvl,int damage)
+    public void Knockback(int lvl, int damage)
     {
-        int force = lvl * damage * 10; // Adjust this force value as needed
-        float knockbackDuration = 0.5f; // Adjust the duration of knockback
+        int force = lvl * damage * 10;
+        float knockbackDuration = 0.5f;
+        float knockbackDistance = 3f;
 
-        Vector3 knockbackDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
-        Vector3 targetPosition = gameManager.instance.player.transform.position + knockbackDirection * 3f; // Adjust the distance of knockback
-        StartCoroutine(ApplyKnockback(gameManager.instance.player.transform, targetPosition, knockbackDuration));
+        Vector3 targetPosition = transform.position + transform.forward * knockbackDistance;
+        Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
+        StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
 
     }
-    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration)
+    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration, float force)
     {
         Vector3 initialPosition = playerTransform.position;
         float timer = 0f;
@@ -198,7 +210,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         while (timer < duration)
         {
             float progress = timer / duration;
-            playerTransform.position = Vector3.Lerp(initialPosition, targetPosition, progress);
+            float currentSpeed = Mathf.Lerp(0, force, progress);
+
+            playerTransform.position += (targetPosition - initialPosition).normalized * currentSpeed * Time.deltaTime;
 
             timer += Time.deltaTime;
             yield return null;
@@ -215,6 +229,20 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     {
         collider.enabled = false;
     }
+    public void Explode()
+    {
+        AudioManager.instance.explosionSound();
+        explosion.SetActive(true);
 
+        Collider[] enemies = Physics.OverlapSphere(this.transform.position, range);
+        foreach (Collider enemy in enemies)
+        {
+            if (enemy.GetComponent<EnemyAI>() != null)
+            {
+                enemy.GetComponent<EnemyAI>().takeFireDamage(damage);
+            }
+        }
 
+        //sources.Play();
+    }
 }

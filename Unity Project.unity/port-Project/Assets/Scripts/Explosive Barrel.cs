@@ -45,8 +45,20 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
     public void takePoisonDamage(float amount) { }
     public void takeElectricDamage(float amount) { }
     public void takeExplosiveDamage(float amount) { }
+    public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
+    {
+        float timer = 0f;
+        float damagePerSec = amount / duration;
 
-
+        while (timer < duration)
+        {
+            float damagePerFrame = damagePerSec * Time.deltaTime;
+            takeDamage(damagePerFrame);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(VFX);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, range);
