@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
-public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
+public class PlayerController : MonoBehaviour, IDamage, IKnockbackable
 {
     public static PlayerController instance;
     [SerializeField] CharacterController charController;
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
+
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
@@ -63,27 +64,25 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     public float spreadAngle;
     public int pelletsFired;
 
+
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushBack;
 
-    // New Input System
-    private PlayerControls playerControls;
-    private Vector2 moveInput;
-    private Vector2 lookInput;
-    private ButtonControl crouchInput;
-    private ButtonControl shootInput;
-    private ButtonControl reloadInput;
+    private SaveSystem saveSystem;
+    public PlayerControls playerControls;
 
-    private void Awake()
-    {
-        playerControls = new PlayerControls();
-    }
+
+    // Start is called before the first frame update
+    //void Start()
+    //{
+    //    playerControls = new PlayerControls();
+
+    //}
 
     private void OnEnable()
     {
         playerControls.Player.Enable();
-        playerControls.Player.Movement.performed += OnMovement;
         playerControls.Player.Jump.performed += OnJump;
         playerControls.Player.Crouch.performed += OnCrouch;
         playerControls.Player.Shoot.performed += OnShoot;
@@ -94,7 +93,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     private void OnDisable()
     {
         playerControls.Player.Disable();
-        playerControls.Player.Movement.performed -= OnMovement;
         playerControls.Player.Jump.performed -= OnJump;
         playerControls.Player.Crouch.performed -= OnCrouch;
         playerControls.Player.Shoot.performed -= OnShoot;
@@ -102,12 +100,13 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
 
     }
 
-    private void Start()
-    private SaveSystem saveSystem;
+    //private void Start()
+    //private SaveSystem saveSystem;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
         LoadGuns();
         HP = saveSystem.LoadData();
@@ -122,26 +121,27 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (!gameManager.instance.isPaused)
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
-            Movement();
+            movement();
             if (isReloading)
                 return;
             if (currentAmmo <= 0 && stockAmmo > 0)
             {
-                StartCoroutine(Reload());
+                StartCoroutine(reload());
                 return;
             }
             if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
             {
-                StartCoroutine(Shoot());
+                StartCoroutine(shoot());
             }
             if (Time.time >= nextAttackTime)
             {
-                if (Input.GetKeyDown(KeyCode.V))
+                if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
                 {
                     StartCoroutine(MeleeAttack());
                     nextAttackTime = Time.time + attackRate;
@@ -149,19 +149,14 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
             }
             if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
             {
-                StartCoroutine(Reload());
-            }
-        }
-        selectGun();
-        Sprint();
-        Crouch();
-
                 StartCoroutine(reload());
             }
         }
         selectGun();
         sprint();
         crouch();
+
+        StartCoroutine(reload());
         if (Input.GetKeyDown(KeyCode.L))
         {
             saveSystem.SaveData(HP);
@@ -175,38 +170,34 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
             Debug.Log("Save Deleted");
         }
     }
+
     public IEnumerator loadIcon()
     {
         loadingIcon.SetActive(true);
         yield return new WaitForSeconds(3);
         loadingIcon.SetActive(false);
     }
-    void OnMovement(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-    }
 
     void OnJump(InputAction.CallbackContext context)
     {
-        Jump();
+        jump();
     }
 
     void OnCrouch(InputAction.CallbackContext context)
     {
-        Crouch();
+        crouch();
     }
 
     void OnShoot(InputAction.CallbackContext context)
     {
-        StartCoroutine(Shoot());
+        StartCoroutine(shoot());
     }
 
     void OnReload(InputAction.CallbackContext context)
     {
-        StartCoroutine(Reload());
+        StartCoroutine(reload());
     }
-
-    void Movement()
+    void movement()
     {
         if (charController.isGrounded)
         {
@@ -214,13 +205,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
             playerVel = Vector3.zero;
         }
 
-        // Combined input system
-        float inputX = (Input.GetAxis("Horizontal") + moveInput.x) * speed * Time.deltaTime;
-        float inputZ = (Input.GetAxis("Vertical") + moveInput.y) * speed * Time.deltaTime;
 
-        moveDir = transform.right * inputX + transform.forward * inputZ;
-        charController.Move(moveDir);
-
+        moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        charController.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             AudioManager.instance.jumpSound();
@@ -232,19 +219,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         charController.Move((playerVel) * Time.deltaTime);
         if (charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
             StartCoroutine(walkCycle());
+
     }
 
-    void Jump()
-    {
-        if (charController.isGrounded && jumpCount < jumpMax)
-        {
-            AudioManager.instance.jumpSound();
-            jumpCount++;
-            playerVel.y = jumpSpeed;
-        }
-    }
-
-    void Sprint()
+    void sprint()
     {
         if (Input.GetButtonDown("Sprint") && charController.isGrounded)
         {
@@ -261,7 +239,16 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         }
     }
 
-    void Crouch()
+    void jump()
+    {
+        if (charController.isGrounded && jumpCount < jumpMax)
+        {
+            AudioManager.instance.jumpSound();
+            jumpCount++;
+            playerVel.y = jumpSpeed;
+        }
+    }
+    void crouch()
     {
         if (Input.GetButtonDown("Crouch"))
         {
@@ -297,8 +284,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         cameraController.AdjustHeight(origCameraHeight);
         speed = origSpeed;
     }
-
-    IEnumerator Shoot()
+    IEnumerator shoot()
     {
         if (currentAmmo > 0)
         {
@@ -387,7 +373,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
             }
         }
     }
-
     IEnumerator flashMuzzle()
     {
         muzzleFlash.SetActive(true);
@@ -408,9 +393,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     public void takeFireDamage(float amount) { }
     public void takePoisonDamage(float amount) { }
     public void takeElectricDamage(float amount) { }
-    public void takeExplosiveDamage(float amount) 
+    public void takeExplosiveDamage(float amount)
     {
-        HP-=amount;
+        HP -= amount;
     }
 
     void updatePlayerUI()
@@ -454,7 +439,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
-    public IEnumerator Reload()
+    public IEnumerator reload()
     {
         isReloading = true;
         Debug.Log("Reloading");
@@ -499,13 +484,11 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
     {
         shootDamage += 5;
     }
-
     public void spinRoulette()
     {
         gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
         getGunStats(wonGun);
     }
-
     public void getGunStats(gunStats gun)
     {
         // If the player already has 2 guns, remove the currently equipped one
@@ -570,7 +553,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
         muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
     }
-
     IEnumerator walkCycle()
     {
         isPlayingSteps = true;
@@ -586,6 +568,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         isPlayingSteps = false;
     }
 
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("MedKit"))
@@ -593,6 +576,14 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
             HP = Mathf.Clamp(HP + 20, 0, HPorig); // Adjust the amount of healing as needed
             updatePlayerUI();
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("SaveZone"))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns();
+            Debug.Log("Game Saved in SaveZone");
         }
     }
     public void SaveGuns()
@@ -606,7 +597,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
 
     public void LoadGuns()
     {
-        
+
         for (int i = 0; i < guns.Length; i++)
         {
             if (PlayerPrefs.GetInt(guns[i].gunID, 0) == 1)
@@ -616,16 +607,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         }
         changeGun();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("SaveZone"))
-        {
-            saveSystem.SaveData(HP);
-            StartCoroutine(loadIcon());
-            SaveGuns();
-            Debug.Log("Game Saved in SaveZone");
-        }
-    }
+
     //for the knockback to work with the player
     public void Knockback(int lvl, int damage)
     {
@@ -633,7 +615,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
 
-        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance; 
+        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance;
         Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
         StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
     }
@@ -668,3 +650,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable
         Destroy(VFX);
     }
 }
+
+
+
+
+
