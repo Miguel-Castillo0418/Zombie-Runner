@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Cameracontroller : MonoBehaviour
 {
@@ -11,7 +12,27 @@ public class Cameracontroller : MonoBehaviour
 
     float rotX;
     Vector3 originalLocalPosition;
+    private PlayerControls playerControls;
+    private Vector2 lookInput;
+
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Player.Look.performed += OnLookPerformed;
+        playerControls.Player.Look.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Look.Disable();
+    }
+
     void Start()
     {
         Cursor.visible = false;
@@ -24,23 +45,27 @@ public class Cameracontroller : MonoBehaviour
     {
 
         //get input
-        float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
-        float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
+        float mouseY = (Input.GetAxis("Mouse Y") + lookInput.y) * sens * Time.deltaTime;
+        float mouseX = (Input.GetAxis("Mouse X") + lookInput.x) * sens * Time.deltaTime;
 
         if (invertY)
             rotX += mouseY;
         else
             rotX -= mouseY;
 
-        // clamp the rotX on the X axis
+        // Clamp the rotX on the X axis
         rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-        //rotate the camera on the X axis
+        // Rotate the camera on the X axis
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        //rotate the player on the Y axis
+        // Rotate the player on the Y axis
         transform.parent.Rotate(Vector3.up * mouseX);
 
+    }
+    private void OnLookPerformed(InputAction.CallbackContext context)
+    {
+        lookInput = context.ReadValue<Vector2>();
     }
     public void AdjustHeight(float height)
     {
@@ -49,4 +74,3 @@ public class Cameracontroller : MonoBehaviour
         transform.localPosition = newPosition;
     }
 }
-

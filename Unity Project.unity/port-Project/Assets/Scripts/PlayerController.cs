@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
-
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
     [SerializeField] AudioSource gunAud;
@@ -29,7 +28,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-    
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
@@ -61,13 +59,46 @@ public class PlayerController : MonoBehaviour, IDamage
     public float spreadAngle;
     public int pelletsFired;
 
-
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushBack;
 
-    // Start is called before the first frame update
-    void Start()
+    // New Input System
+    private PlayerControls playerControls;
+    private Vector2 moveInput;
+    private Vector2 lookInput;
+    private ButtonControl crouchInput;
+    private ButtonControl shootInput;
+    private ButtonControl reloadInput;
+
+    private void Awake()
+    {
+        playerControls = new PlayerControls();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Player.Enable();
+        playerControls.Player.Movement.performed += OnMovement;
+        playerControls.Player.Jump.performed += OnJump;
+        playerControls.Player.Crouch.performed += OnCrouch;
+        playerControls.Player.Shoot.performed += OnShoot;
+        playerControls.Player.Reload.performed += OnReload;
+
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Disable();
+        playerControls.Player.Movement.performed -= OnMovement;
+        playerControls.Player.Jump.performed -= OnJump;
+        playerControls.Player.Crouch.performed -= OnCrouch;
+        playerControls.Player.Shoot.performed -= OnShoot;
+        playerControls.Player.Reload.performed -= OnReload;
+
+    }
+
+    private void Start()
     {
         spreadAngle = 10;
         pelletsFired = 8;
@@ -78,42 +109,67 @@ public class PlayerController : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //if (!gameManager.instance.isPaused)
-        //{
-            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
-            movement();
-            //if (isReloading)
-            //    return;
-            //if (currentAmmo <= 0 && stockAmmo > 0)
-            //{
-            //    StartCoroutine(reload());
-            //    return;
-            //}
-            //if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
-            //{
-            //    StartCoroutine(shoot());
-            //}
-            //if (Time.time >= nextAttackTime)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.V)) // Replace with your preferred key
-            //    {
-            //        StartCoroutine(MeleeAttack());
-            //        nextAttackTime = Time.time + attackRate;
-            //    }
-            //}
-            //if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
-            //{
-            //    StartCoroutine(reload());
-            //}
-        //}
+        if (!gameManager.instance.isPaused)
+        {
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
+            Movement();
+            if (isReloading)
+                return;
+            if (currentAmmo <= 0 && stockAmmo > 0)
+            {
+                StartCoroutine(Reload());
+                return;
+            }
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
+            {
+                StartCoroutine(Shoot());
+            }
+            if (Time.time >= nextAttackTime)
+            {
+                if (Input.GetKeyDown(KeyCode.V))
+                {
+                    StartCoroutine(MeleeAttack());
+                    nextAttackTime = Time.time + attackRate;
+                }
+            }
+            if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
+            {
+                StartCoroutine(Reload());
+            }
+        }
         selectGun();
-        sprint();
-        crouch();
+        Sprint();
+        Crouch();
+
     }
-    void movement()
+    void OnMovement(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+
+    void OnJump(InputAction.CallbackContext context)
+    {
+        Jump();
+    }
+
+    void OnCrouch(InputAction.CallbackContext context)
+    {
+        Crouch();
+    }
+
+    void OnShoot(InputAction.CallbackContext context)
+    {
+        StartCoroutine(Shoot());
+    }
+
+    void OnReload(InputAction.CallbackContext context)
+    {
+        StartCoroutine(Reload());
+    }
+
+    void Movement()
     {
         if (charController.isGrounded)
         {
@@ -121,9 +177,13 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVel = Vector3.zero;
         }
 
+        // Combined input system
+        float inputX = (Input.GetAxis("Horizontal") + moveInput.x) * speed * Time.deltaTime;
+        float inputZ = (Input.GetAxis("Vertical") + moveInput.y) * speed * Time.deltaTime;
 
-        moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        charController.Move(moveDir * speed * Time.deltaTime);
+        moveDir = transform.right * inputX + transform.forward * inputZ;
+        charController.Move(moveDir);
+
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             AudioManager.instance.jumpSound();
@@ -133,12 +193,21 @@ public class PlayerController : MonoBehaviour, IDamage
 
         playerVel.y -= gravity * Time.deltaTime;
         charController.Move((playerVel) * Time.deltaTime);
-        if(charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
-          StartCoroutine(walkCycle());
-
+        if (charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
+            StartCoroutine(walkCycle());
     }
 
-    void sprint()
+    void Jump()
+    {
+        if (charController.isGrounded && jumpCount < jumpMax)
+        {
+            AudioManager.instance.jumpSound();
+            jumpCount++;
+            playerVel.y = jumpSpeed;
+        }
+    }
+
+    void Sprint()
     {
         if (Input.GetButtonDown("Sprint") && charController.isGrounded)
         {
@@ -147,14 +216,15 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            if (isSprinting && speed != origSpeed) {
+            if (isSprinting && speed != origSpeed)
+            {
                 isSprinting = false;
                 speed /= sprintMod;
             }
         }
     }
 
-    void crouch()
+    void Crouch()
     {
         if (Input.GetButtonDown("Crouch"))
         {
@@ -190,7 +260,8 @@ public class PlayerController : MonoBehaviour, IDamage
         cameraController.AdjustHeight(origCameraHeight);
         speed = origSpeed;
     }
-    IEnumerator shoot()
+
+    IEnumerator Shoot()
     {
         if (currentAmmo > 0)
         {
@@ -272,12 +343,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
                     Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                     bulletScript.SetDamage(shootDamage);
-                    if(hit.collider.CompareTag("Enemy"))
+                    if (hit.collider.CompareTag("Enemy"))
                         Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
                 }
             }
         }
     }
+
     IEnumerator flashMuzzle()
     {
         muzzleFlash.SetActive(true);
@@ -298,17 +370,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void updatePlayerUI()
     {
-       // gameManager.instance.hpTarget = (float)HP / HPorig;
-        //if (HP > 0)
-        //{
-        //    gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
-        //}
-        //else
-        //{
-        //    gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
-        //}
-        //gameManager.instance.CheckHealthBar();
-        //shopHP = HP;
+        gameManager.instance.hpTarget = (float)HP / HPorig;
+        if (HP > 0)
+        {
+            gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
+        }
+        else
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        }
+        gameManager.instance.CheckHealthBar();
+        shopHP = HP;
     }
 
     IEnumerator MeleeAttack()
@@ -337,7 +409,7 @@ public class PlayerController : MonoBehaviour, IDamage
         //Gizmos.color = Color.red;
         //Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
-    public IEnumerator reload()
+    public IEnumerator Reload()
     {
         isReloading = true;
         Debug.Log("Reloading");
@@ -382,11 +454,13 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         shootDamage += 5;
     }
+
     public void spinRoulette()
     {
-       gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
-            getGunStats(wonGun);
+        gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
+        getGunStats(wonGun);
     }
+
     public void getGunStats(gunStats gun)
     {
         // If the player already has 2 guns, remove the currently equipped one
@@ -443,11 +517,12 @@ public class PlayerController : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
+
     IEnumerator walkCycle()
     {
         isPlayingSteps = true;
         AudioManager.instance.walkSound();
-        if(!isSprinting)
+        if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
         }
@@ -455,7 +530,16 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             yield return new WaitForSeconds(0.25f);
         }
-        isPlayingSteps=false;
+        isPlayingSteps = false;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("MedKit"))
+        {
+            HP = Mathf.Clamp(HP + 20, 0, HPorig); // Adjust the amount of healing as needed
+            updatePlayerUI();
+            Destroy(other.gameObject);
+        }
     }
 }
-
