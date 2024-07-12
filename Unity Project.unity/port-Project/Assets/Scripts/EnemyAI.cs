@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Timeline;
 
-public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
+public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] public NavMeshAgent agent;
@@ -142,20 +142,20 @@ public class EnemyAI : MonoBehaviour, IDamage//, IKnockbackable
         }
         Destroy(VFX);
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    IDamage dmg = other.GetComponent<IDamage>();
-    //    IKnockbackable _knock=other.GetComponent<IKnockbackable>();
-    //    if (other.name == "Player")
-    //    {
-    //        int force = lvl * damage;
-    //        float t = force * Time.deltaTime;
-    //        Debug.Log(other.transform.name);
-    //        dmg.takeDamage(damage);
-    //        _knock.Knockback();
+    private void OnTriggerEnter(Collider other)
+    {
+        IDamage dmg = other.GetComponent<IDamage>();
+        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+        if (other.name == "Player")
+        {
+            int force = lvl * damage;
+            float t = force * Time.deltaTime;
+            Debug.Log(other.transform.name);
+            dmg.takeDamage(damage);
+            _knock.Knockback();
 
-    //    }
-    //}
+        }
+    }
     IEnumerator MeleeAttack()
     {
         //Stop the enemy
