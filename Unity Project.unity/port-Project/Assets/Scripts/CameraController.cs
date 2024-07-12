@@ -11,6 +11,7 @@ public class Cameracontroller : MonoBehaviour
 
     float rotX;
     Vector3 originalLocalPosition;
+
     // Start is called before the first frame update
     void Start()
     {
