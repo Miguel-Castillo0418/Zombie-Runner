@@ -53,7 +53,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             normSpeed = agent.velocity.normalized.magnitude;
 
         anim.SetFloat("Speed", normSpeed);
-        agent.SetDestination(gameManager.instance.player.transform.position);
+
+        if (!anim.GetBool("PlayerInRange"))
+            agent.SetDestination(gameManager.instance.player.transform.position);
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             anim.SetBool("PlayerInRange", true);
@@ -242,7 +244,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
 
     private IEnumerator WaitForAnimationThenDestroy(GameObject explosion)
     {
-            yield return new WaitForSeconds(5.0f);  // Adjust the time as needed
-            Destroy(explosion);
+        yield return new WaitForSeconds(5.0f);  // Adjust the time as needed
+        Destroy(explosion);
     }
 }

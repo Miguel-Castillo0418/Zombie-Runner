@@ -36,21 +36,18 @@ public class EnemyDefault : MonoBehaviour, IElementalDamage
     }
     public void takePoisonDamage(float amount)
     {
-        Vector3 newPosition = Vector3.zero + Vector3.up * 1.5f;
-        GameObject poisonVFX = Instantiate(_aiScript.poisoned, newPosition, Quaternion.identity);
+        Vector3 newPosition = Vector3.zero + Vector3.up * 1.4f;
+        GameObject poisonVFX = Instantiate(_aiScript.poisoned, transform.position, Quaternion.identity);
         poisonVFX.transform.parent = transform;
         poisonVFX.transform.localPosition = newPosition;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, poisonVFX));
     }
     public void takeElectricDamage(float amount)
     {
-        Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f + Vector3.down * 0.002f;
+        Vector3 newPosition = Vector3.zero + Vector3.up * 1.4f;
         GameObject ElecVFX = Instantiate(_aiScript.electrified, transform.position, Quaternion.identity);
-        ElecVFX.transform.parent = transform.Find("Z_Body");
-        ElecVFX.transform.localRotation = Quaternion.identity;
+        ElecVFX.transform.parent = transform;
         ElecVFX.transform.localPosition = newPosition;
-        Vector3 newScale = Vector3.one * 0.4f;
-        ElecVFX.transform.localScale = newScale;
         StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
     }
     public void takeExplosiveDamage(float amount)

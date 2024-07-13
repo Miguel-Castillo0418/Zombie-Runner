@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-<<<<<<< HEAD
+
 
 public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementalDamage
-=======
-public class PlayerController : MonoBehaviour, IDamage, IKnockbackable
->>>>>>> bf885417f73e27c98ab447bd6ed7cc79a9454d7f
 {
     public static PlayerController instance;
     [SerializeField] CharacterController charController;
