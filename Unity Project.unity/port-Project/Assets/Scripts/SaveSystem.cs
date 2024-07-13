@@ -6,13 +6,13 @@ using UnityEngine;
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem instance;
-    public void SaveData(float hp)
+    public void SaveHP(float hp)
     {
         PlayerPrefs.SetFloat("playerHP", hp);
         PlayerPrefs.Save();
         Debug.Log(hp);
     }
-    public float LoadData()
+    public float LoadHP()
     {
         if (PlayerPrefs.HasKey("playerHP"))
         {
@@ -21,6 +21,23 @@ public class SaveSystem : MonoBehaviour
         else
         {
             return PlayerController.instance.HP;
+        }
+    }
+    public void SavePoints(int coins)
+    {
+        PlayerPrefs.SetInt("playerPoints", coins);
+        PlayerPrefs.Save();
+        Debug.Log(coins);
+    }
+    public int LoadPoints()
+    {
+        if (PlayerPrefs.HasKey("playerPoints"))
+        {
+            return PlayerPrefs.GetInt("playerPoints"); ;
+        }
+        else
+        {
+            return gameManager.instance.points;
         }
     }
     public void delete()

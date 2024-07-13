@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -13,6 +12,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuShop;
+    [SerializeField] GameObject gameComputer;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
     [SerializeField] TMP_Text pointsCountText;
@@ -24,12 +24,16 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
+    [SerializeField] GameObject computer;
+    [SerializeField] GameObject key;
+    [SerializeField] Animator keyAnim;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
     [SerializeField] private float attackRate;
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
+    [SerializeField] GameObject puzzleTxt;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -38,13 +42,19 @@ public class gameManager : MonoBehaviour
 
     public GameObject player;
     public PlayerController playerScript;
+    private SaveSystem saveSystem;
 
     public bool isHint;
     public bool isPaused;
     //bool doorPurchased;
     int enemycount;
-    public int points;
+    [SerializeField] public int points;
     int round;
+
+    public GameObject PipeHolder;
+    public GameObject[] Pipes;
+    public int totalPipes = 0;
+    private int correctPipes = 0;
 
     private int enemyCount;
 
@@ -53,18 +63,28 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-        points = 2100;
+        saveSystem = new SaveSystem();
+        points = saveSystem.LoadPoints();
+        pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
+        computer = GameObject.FindWithTag("Computer");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
-        pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
+        keyAnim = key.GetComponent<Animator>();
     }
     void Start()
     {
         AudioManager.instance.playMusic("Song");
+        totalPipes = PipeHolder.transform.childCount;
+
+        Pipes = new GameObject[totalPipes];
+        for (int i = 0; i < Pipes.Length; i++)
+        {
+            Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -86,6 +106,7 @@ public class gameManager : MonoBehaviour
         // showHints();
         updateAmmo();
         showShop();
+        ComputerGame();
         // buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
@@ -192,32 +213,32 @@ public class gameManager : MonoBehaviour
     }
     public void showShop()
     {
-        float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
+        //float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
 
-        if (shopDist < 8.6)
+        //if (shopDist < 8.6)
 
-        {
-            shopText.SetActive(true);
-            if (Input.GetButtonDown("Shop"))
-            {
-                shopText.SetActive(false);
-                if (menuActive == null)
-                {
+        //{
+        //    shopText.SetActive(true);
+        //    if (Input.GetButtonDown("Shop"))
+        //    {
+        //        shopText.SetActive(false);
+        //        if (menuActive == null)
+        //        {
 
-                    shop();
+        //            shop();
 
-                }
-                else if (menuActive == menuShop)
-                {
-                    stateUnpause();
-                    shopText.SetActive(true);
-                }
-            }
-        }
-        else
-        {
-            shopText.SetActive(false);
-        }
+        //        }
+        //        else if (menuActive == menuShop)
+        //        {
+        //            stateUnpause();
+        //            shopText.SetActive(true);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    shopText.SetActive(false);
+        //}
     }
 
     //public void buyDoor()
@@ -269,5 +290,49 @@ public class gameManager : MonoBehaviour
     public void CheckHealthBar()
     {
         playerHPBar.color = PlayerHPBarGradient.Evaluate(hpTarget);
+    }
+    public void game()
+    {
+        statePause();
+        menuActive = gameComputer;
+        menuActive.SetActive(isPaused);
+    }
+    public void ComputerGame()
+    {
+        float computerDist = Vector3.Distance(computer.transform.position, gameManager.instance.player.transform.position);
+        if(computerDist < 3.2)
+        {
+            if (Input.GetButtonDown("Shop"))
+            {
+                if(menuActive == null)
+                {
+                    game();
+                }
+                else if (menuActive == gameComputer)
+                {
+                    stateUnpause();
+
+                }
+            }
+        }
+    }
+    public void goodMove()
+    {
+        correctPipes += 1;
+        if(correctPipes == totalPipes)
+        {
+            puzzleTxt.SetActive(true);
+            Instantiate(key, computer.transform);
+            keyAnimation();
+        }
+    }
+    public void badMove()
+    {
+        correctPipes -= 1;
+    }
+    IEnumerator keyAnimation()
+    {
+        yield return new WaitForSeconds(.4F);
+        keyAnim.Play("KeyMove");
     }
 }

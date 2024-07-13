@@ -7,18 +7,14 @@ public class ObjectiveComplete : MonoBehaviour
     public bool Complete;
     public string TextComplete;
     public TextMeshProUGUI Text;
-    [SerializeField] private GameObject key;
-    [SerializeField] private Transform keyPos;
-    private bool hasSpawnKey = false;
     // Start is called before the first frame update
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            if (this.name == "ObjectiveComplete (Puzzle)" && !hasSpawnKey)
+            if (this.name == "ObjectiveComplete (Puzzle)")
             {
-                Instantiate(key, keyPos.position, Quaternion.identity);
-                hasSpawnKey = true;
+
             }
             Complete = true;
             Text.text = TextComplete.ToString();
