@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     bool isSprinting = false;
     bool isCrouching = false;
     bool isReloading = false;
+    bool isAiming;
     bool isPlayingSteps;
 
     bool isShooting;
@@ -72,7 +73,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
+ //   private SpawnIndicator spawnIndicator;
     public PlayerControls playerControls;
+    private Camera mainCamera; 
+    private Camera weaponCamera;
 
 
     // Start is called before the first frame update
@@ -110,8 +114,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
+       // spawnIndicator = new SpawnIndicator();
         LoadGuns();
-        HP = saveSystem.LoadData();
+        HP = saveSystem.LoadHP();
         Debug.Log("Player HP: " + HP);
         spreadAngle = 10;
         pelletsFired = 8;
@@ -121,6 +126,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         currentAmmo = magazineSize;
         updatePlayerUI();
         muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
+        mainCamera = Camera.main;
+        weaponCamera = transform.Find("WeaponCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -153,17 +160,21 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             {
                 StartCoroutine(reload());
             }
+            if (Input.GetButtonDown("Aim") || Input.GetButtonUp("Aim"))
+            {
+                StartCoroutine(ADS());
+            }
         }
         selectGun();
         sprint();
         crouch();
 
-        StartCoroutine(reload());
         if (Input.GetKeyDown(KeyCode.L))
         {
-            saveSystem.SaveData(HP);
+            saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns(); // Save guns
+            saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved");
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -331,8 +342,27 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.SetDamage(shootDamage);
             }
-
-            yield return new WaitForSeconds(shootRate);
+            if (isAiming == true && isShooting == true)
+            {
+                if(gunModel.CompareTag("Sniper"))
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS Sniper Recoil");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
+                }
+                else
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS Shoot");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS Idle");
+                }               
+            }
+            else
+            {
+                gunModel.GetComponent<Animator>().Play("Weapon Recoil");
+                yield return new WaitForSeconds(shootRate);
+                gunModel.GetComponent<Animator>().Play("New State");
+            }
             isShooting = false;
         }
         else
@@ -381,11 +411,42 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         yield return new WaitForSeconds(0.1f);
         muzzleFlash.SetActive(false);
     }
+    IEnumerator ADS()
+    {
+        isAiming = true;
+        if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Sniper"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Sniper");          
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
+            if (cameraController != null)
+            {
+                Camera.main.fieldOfView = 20;
+            }
+        }
+        else if (Input.GetButtonDown("Aim") && !gunModel.CompareTag("Sniper"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Idle");
+        }
+        else if(Input.GetButtonUp("Aim"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Disable");
+            if (cameraController != null)
+            {
+                Camera.main.fieldOfView = 60;
+            }
+            isAiming = false;
+        }
+        
+    }
 
     public void takeDamage(float amount)
     {
         HP -= (int)amount;
         //AudioManager.instance.hurtSound();
+        //spawnIndicator.Register();
         updatePlayerUI();
         if (HP <= 0)
         {
@@ -445,7 +506,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         isReloading = true;
         Debug.Log("Reloading");
+        gunModel.GetComponent<Animator>().Play("Reload");
         yield return new WaitForSeconds(2);
+        gunModel.GetComponent<Animator>().Play("New State");
         int ammoToReload = Mathf.Min(magazineSize, stockAmmo);
         int neededAmmo = magazineSize - currentAmmo;
 
@@ -582,9 +645,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
         if (other.CompareTag("SaveZone"))
         {
-            saveSystem.SaveData(HP);
+            saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns();
+            saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved in SaveZone");
         }
     }

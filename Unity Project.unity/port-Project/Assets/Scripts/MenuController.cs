@@ -7,7 +7,6 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
-
     [SerializeField] private TMP_Text volumeTextValue = null;
     [SerializeField] private Slider volumeSlider = null;
     [SerializeField] private float defaultVolume = 1.0f;
@@ -27,26 +26,18 @@ public class MenuController : MonoBehaviour
     [SerializeField] private TMP_Dropdown qualityDropdown;
     [SerializeField] private Toggle fullScreenToggle;
 
-
     private int _qualityLevel;
     private bool _isFullScreen;
     private float _brightnessLevel;
 
-
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
 
-
     [SerializeField] private GameObject confirmationPrompt = null;
-
-
 
     public Button[] lvlButtons;
     public string _newGameLevel;
     public string _newGameLevel2;
-    //private string levelToLoad;
-    // [SerializeField] private GameObject noSavedGameDialog = null;
-
 
     private void Start()
     {
@@ -72,12 +63,7 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
         AudioManager.instance.playMusic("Theme");
 
-        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
-        for (int i = 0; i < lvlButtons.Length; i++)
-        {
-            if (i + 2 > levelAt)
-                lvlButtons[i].interactable = false;
-        }
+        UpdateLevelButtons();
     }
 
     public void SetResolution(int resolutionIndex)
@@ -85,16 +71,15 @@ public class MenuController : MonoBehaviour
         Resolution resolution = resolutions[resolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
+
     public void GameLevel()
     {
         SceneManager.LoadScene(_newGameLevel);
-        //gameManager.instance.stateUnpause();
     }
 
     public void GameLevel2()
     {
         SceneManager.LoadScene(_newGameLevel2);
-        //gameManager.instance.stateUnpause();
     }
 
     public void UnlockLevel(int levelIndex)
@@ -106,27 +91,20 @@ public class MenuController : MonoBehaviour
             PlayerPrefs.Save();
         }
 
+        UpdateLevelButtons();
+    }
+
+    private void UpdateLevelButtons()
+    {
+        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
         for (int i = 0; i < lvlButtons.Length; i++)
         {
-            if (i + 2 <= levelIndex)
+            if (i + 2 < levelAt)
+                lvlButtons[i].interactable = false;
+            else
                 lvlButtons[i].interactable = true;
         }
     }
-
-    // public void LoadGameDialogYes()
-    //{
-    // if (PlayerPrefs.HasKey("SavedZombieRunner"))
-    //  {
-    //  levelToLoad = PlayerPrefs.GetString("SavedZombieRunner");
-    //If you want to push your level into the SasvedLeve1 file code below:
-    //PlayerPrefs.SetString("SavedLeve1", yourlevelis)
-    //   SceneManager.LoadScene(levelToLoad);
-    //  }
-    // else
-    //  {
-    //   noSavedGameDialog.SetActive(true);
-    //  }
-    // }
 
     public void ExitButton()
     {
@@ -146,7 +124,6 @@ public class MenuController : MonoBehaviour
     public void VolumeApply()
     {
         PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
-        //Show Prompt
         StartCoroutine(ConfirmationBox());
     }
 
@@ -161,18 +138,15 @@ public class MenuController : MonoBehaviour
         if (invertYToggle.isOn)
         {
             PlayerPrefs.SetInt("masterInvertY", 1);
-            //invert Y
         }
         else
         {
             PlayerPrefs.SetInt("masterInvertY", 0);
-            //not invert Y
         }
 
         PlayerPrefs.SetFloat("masterSens", mainMouseSens);
         StartCoroutine(ConfirmationBox());
     }
-
 
     public void SetBrightness(float brightness)
     {
@@ -200,9 +174,9 @@ public class MenuController : MonoBehaviour
 
         StartCoroutine(ConfirmationBox());
     }
+
     public void ResetButton(string MenuType)
     {
-
         if (MenuType == "Graphics")
         {
             brightnessSlider.value = defaultBrightness;

@@ -42,12 +42,13 @@ public class gameManager : MonoBehaviour
 
     public GameObject player;
     public PlayerController playerScript;
+    private SaveSystem saveSystem;
 
     public bool isHint;
     public bool isPaused;
     //bool doorPurchased;
     int enemycount;
-    public int points;
+    [SerializeField] public int points;
     int round;
 
     public GameObject PipeHolder;
@@ -62,14 +63,15 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-        points = 2100;
+        saveSystem = new SaveSystem();
+        points = saveSystem.LoadPoints();
+        pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
         computer = GameObject.FindWithTag("Computer");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
-        pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
         keyAnim = key.GetComponent<Animator>();
     }
@@ -211,32 +213,32 @@ public class gameManager : MonoBehaviour
     }
     public void showShop()
     {
-        float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
+        //float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
 
-        if (shopDist < 8.6)
+        //if (shopDist < 8.6)
 
-        {
-            shopText.SetActive(true);
-            if (Input.GetButtonDown("Shop"))
-            {
-                shopText.SetActive(false);
-                if (menuActive == null)
-                {
+        //{
+        //    shopText.SetActive(true);
+        //    if (Input.GetButtonDown("Shop"))
+        //    {
+        //        shopText.SetActive(false);
+        //        if (menuActive == null)
+        //        {
 
-                    shop();
+        //            shop();
 
-                }
-                else if (menuActive == menuShop)
-                {
-                    stateUnpause();
-                    shopText.SetActive(true);
-                }
-            }
-        }
-        else
-        {
-            shopText.SetActive(false);
-        }
+        //        }
+        //        else if (menuActive == menuShop)
+        //        {
+        //            stateUnpause();
+        //            shopText.SetActive(true);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    shopText.SetActive(false);
+        //}
     }
 
     //public void buyDoor()

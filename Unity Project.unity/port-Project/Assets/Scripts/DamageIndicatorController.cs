@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DamageIndicatorController : MonoBehaviour
 {
+    public static DamageIndicatorController Instance;
     [Header("References")]
     [SerializeField] private DamageIndicator indicatorprefab = null;
     [SerializeField] private RectTransform holder = null;
@@ -17,8 +18,20 @@ public class DamageIndicatorController : MonoBehaviour
     #region Delegates
     public static Action<Transform> CreateIndicator = delegate { };
     public static Func<Transform, bool> CheckIfObjectInSight = null;
+
     #endregion
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnEnable()
     {
         CreateIndicator += Create;
