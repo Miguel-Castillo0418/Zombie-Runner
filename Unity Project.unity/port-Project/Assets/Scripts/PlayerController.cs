@@ -87,14 +87,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            if (isReloading)
-                return;
-            if (currentAmmo <= 0 && stockAmmo > 0)
+            if (currentAmmo <= 0 && stockAmmo > 0 && isReloading == false && !gameManager.instance.isPaused)
             {
                 StartCoroutine(reload());
                 return;
             }
-            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false && isReloading == false)
             {
                 StartCoroutine(shoot());
             }
@@ -237,8 +235,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.SetDamage(shootDamage);
             }
-
+            
+            gunModel.GetComponent<Animator>().Play("Weapon Recoil");
             yield return new WaitForSeconds(shootRate);
+            gunModel.GetComponent<Animator>().Play("New State");
             isShooting = false;
         }
         else
@@ -344,7 +344,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isReloading = true;
         Debug.Log("Reloading");
+        gunModel.GetComponent<Animator>().Play("Reload");
         yield return new WaitForSeconds(2);
+        gunModel.GetComponent<Animator>().Play("New State");
         int ammoToReload = Mathf.Min(magazineSize, stockAmmo);
         int neededAmmo = magazineSize - currentAmmo;
 
