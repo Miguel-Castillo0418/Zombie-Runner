@@ -24,9 +24,9 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
         Collider[] enemies = Physics.OverlapSphere(this.transform.position, range);
         foreach (Collider enemy in enemies)
         {
-            if (enemy.GetComponent<EnemyAI>() != null)
+            if (enemy.GetComponent<IElementalDamage>() != null)
             {
-                enemy.GetComponent<EnemyAI>().takeDamage(explosionDamage); 
+                enemy.GetComponent<IElementalDamage>().takeFireDamage(explosionDamage); 
             }
         }
 
@@ -41,8 +41,6 @@ public class ExplosiveBarrel : MonoBehaviour, IDamage
             Explode();
         }
     }
-
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, range);

@@ -2,16 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
-public class PlayerController : MonoBehaviour, IDamage
+
+public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementalDamage
 {
-
+    public static PlayerController instance;
     [SerializeField] CharacterController charController;
     [SerializeField] Cameracontroller cameraController;
     [SerializeField] AudioSource gunAud;
 
-    [SerializeField] int HP;
+    [SerializeField] public float HP;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
@@ -29,13 +31,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-    
+
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
+
+    [SerializeField] public GameObject loadingIcon;
 
     [SerializeField] gunStats[] guns;
     Transform muzzleFlashPoint;
@@ -52,8 +56,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     bool isShooting;
     int jumpCount;
-    public int HPorig;
-    public int shopHP;
+    public float HPorig;
+    public float shopHP;
 
     public int currentAmmo;
     public int magazineSize;
@@ -67,9 +71,48 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 playerVel;
     Vector3 pushBack;
 
+    private SaveSystem saveSystem;
+    public PlayerControls playerControls;
+
+
+    // Start is called before the first frame update
+    //void Start()
+    //{
+    //    playerControls = new PlayerControls();
+
+    //}
+
+    private void OnEnable()
+    {
+        playerControls.Player.Enable();
+        playerControls.Player.Jump.performed += OnJump;
+        playerControls.Player.Crouch.performed += OnCrouch;
+        playerControls.Player.Shoot.performed += OnShoot;
+        playerControls.Player.Reload.performed += OnReload;
+
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Disable();
+        playerControls.Player.Jump.performed -= OnJump;
+        playerControls.Player.Crouch.performed -= OnCrouch;
+        playerControls.Player.Shoot.performed -= OnShoot;
+        playerControls.Player.Reload.performed -= OnReload;
+
+    }
+
+    //private void Start()
+    //private SaveSystem saveSystem;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerControls = new PlayerControls();
+        saveSystem = new SaveSystem();
+        LoadGuns();
+        HP = saveSystem.LoadData();
+        Debug.Log("Player HP: " + HP);
         spreadAngle = 10;
         pelletsFired = 8;
         HPorig = HP;
@@ -87,12 +130,14 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            if (currentAmmo <= 0 && stockAmmo > 0 && isReloading == false && !gameManager.instance.isPaused)
+            if (isReloading)
+                return;
+            if (currentAmmo <= 0 && stockAmmo > 0)
             {
                 StartCoroutine(reload());
                 return;
             }
-            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false && isReloading == false)
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
             {
                 StartCoroutine(shoot());
             }
@@ -112,6 +157,47 @@ public class PlayerController : MonoBehaviour, IDamage
         selectGun();
         sprint();
         crouch();
+
+        StartCoroutine(reload());
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns(); // Save guns
+            Debug.Log("Game Saved");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            saveSystem.delete();
+            Debug.Log("Save Deleted");
+        }
+    }
+
+    public IEnumerator loadIcon()
+    {
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(3);
+        loadingIcon.SetActive(false);
+    }
+
+    void OnJump(InputAction.CallbackContext context)
+    {
+        jump();
+    }
+
+    void OnCrouch(InputAction.CallbackContext context)
+    {
+        crouch();
+    }
+
+    void OnShoot(InputAction.CallbackContext context)
+    {
+        StartCoroutine(shoot());
+    }
+
+    void OnReload(InputAction.CallbackContext context)
+    {
+        StartCoroutine(reload());
     }
     void movement()
     {
@@ -133,8 +219,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         playerVel.y -= gravity * Time.deltaTime;
         charController.Move((playerVel) * Time.deltaTime);
-        if(charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
-          StartCoroutine(walkCycle());
+        if (charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
+            StartCoroutine(walkCycle());
 
     }
 
@@ -147,13 +233,23 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            if (isSprinting && speed != origSpeed) {
+            if (isSprinting && speed != origSpeed)
+            {
                 isSprinting = false;
                 speed /= sprintMod;
             }
         }
     }
 
+    void jump()
+    {
+        if (charController.isGrounded && jumpCount < jumpMax)
+        {
+            AudioManager.instance.jumpSound();
+            jumpCount++;
+            playerVel.y = jumpSpeed;
+        }
+    }
     void crouch()
     {
         if (Input.GetButtonDown("Crouch"))
@@ -235,10 +331,8 @@ public class PlayerController : MonoBehaviour, IDamage
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.SetDamage(shootDamage);
             }
-            
-            gunModel.GetComponent<Animator>().Play("Weapon Recoil");
+
             yield return new WaitForSeconds(shootRate);
-            gunModel.GetComponent<Animator>().Play("New State");
             isShooting = false;
         }
         else
@@ -275,7 +369,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
                     Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                     bulletScript.SetDamage(shootDamage);
-                    if(hit.collider.CompareTag("Enemy"))
+                    if (hit.collider.CompareTag("Enemy"))
                         Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
                 }
             }
@@ -291,27 +385,34 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(float amount)
     {
         HP -= (int)amount;
-        AudioManager.instance.hurtSound();
+        //AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
         {
             gameManager.instance.youLose();
         }
     }
+    public void takeFireDamage(float amount) { }
+    public void takePoisonDamage(float amount) { }
+    public void takeElectricDamage(float amount) { }
+    public void takeExplosiveDamage(float amount)
+    {
+        HP -= amount;
+    }
 
     void updatePlayerUI()
     {
-       // gameManager.instance.hpTarget = (float)HP / HPorig;
-        //if (HP > 0)
-        //{
-        //    gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
-        //}
-        //else
-        //{
-        //    gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
-        //}
-        //gameManager.instance.CheckHealthBar();
-        //shopHP = HP;
+        gameManager.instance.hpTarget = (float)HP / HPorig;
+        if (HP > 0)
+        {
+            gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
+        }
+        else
+        {
+            gameManager.instance.playerHPBar.fillAmount = (float)HP / HPorig;
+        }
+        gameManager.instance.CheckHealthBar();
+        shopHP = HP;
     }
 
     IEnumerator MeleeAttack()
@@ -334,19 +435,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void OnDrawGizmosSelected()
     {
-        //if (meleeAttackPoint == null)
-        //    return;
+        if (meleeAttackPoint == null)
+            return;
 
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
     }
     public IEnumerator reload()
     {
         isReloading = true;
         Debug.Log("Reloading");
-        gunModel.GetComponent<Animator>().Play("Reload");
         yield return new WaitForSeconds(2);
-        gunModel.GetComponent<Animator>().Play("New State");
         int ammoToReload = Mathf.Min(magazineSize, stockAmmo);
         int neededAmmo = magazineSize - currentAmmo;
 
@@ -389,8 +488,8 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     public void spinRoulette()
     {
-       gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
-            getGunStats(wonGun);
+        gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
+        getGunStats(wonGun);
     }
     public void getGunStats(gunStats gun)
     {
@@ -460,7 +559,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isPlayingSteps = true;
         AudioManager.instance.walkSound();
-        if(!isSprinting)
+        if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
         }
@@ -468,7 +567,93 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             yield return new WaitForSeconds(0.25f);
         }
-        isPlayingSteps=false;
+        isPlayingSteps = false;
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("MedKit"))
+        {
+            HP = Mathf.Clamp(HP + 20, 0, HPorig); // Adjust the amount of healing as needed
+            updatePlayerUI();
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("SaveZone"))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns();
+            Debug.Log("Game Saved in SaveZone");
+        }
+    }
+    public void SaveGuns()
+    {
+        for (int i = 0; i < guns.Length; i++)
+        {
+            PlayerPrefs.SetInt(guns[i].gunID, gunList.Contains(guns[i]) ? 1 : 0);
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGuns()
+    {
+
+        for (int i = 0; i < guns.Length; i++)
+        {
+            if (PlayerPrefs.GetInt(guns[i].gunID, 0) == 1)
+            {
+                gunList.Add(guns[i]);
+            }
+        }
+        changeGun();
+    }
+
+    //for the knockback to work with the player
+    public void Knockback(int lvl, int damage)
+    {
+        int force = lvl * damage * 10;
+        float knockbackDuration = 0.5f;
+        float knockbackDistance = 3f;
+
+        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance;
+        Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
+        StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
+    }
+    public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration, float force)
+    {
+        Vector3 initialPosition = playerTransform.position;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            float progress = timer / duration;
+            float currentSpeed = Mathf.Lerp(0, force, progress);
+
+            playerTransform.position += (targetPosition - initialPosition).normalized * currentSpeed * Time.deltaTime;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+    public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
+    {
+        float timer = 0f;
+        float damagePerSec = amount / duration;
+
+        while (timer < duration)
+        {
+            float damagePerFrame = damagePerSec * Time.deltaTime;
+            takeDamage(damagePerFrame);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(VFX);
     }
 }
+
+
+
+
 

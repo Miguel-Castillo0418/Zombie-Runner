@@ -529,13 +529,18 @@ MonoBehaviour:
   meleeRange: 4
   atkRate: 2
   HP: 10
+  maxHp: 0
   lvl: 1
   damage: 1
   pointsRewarded: 100
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
+  onFire: {fileID: 123576, guid: 72927d14e1ac8472e98ffb2d1b9cc111, type: 3}
+  poisoned: {fileID: 1264767446766646, guid: 864abb5013c2a2847be33dd89157474a, type: 3}
+  electrified: {fileID: 6645675767264168321, guid: d0257f75638d1e64695c8a023850657d, type: 3}
   whereISpawned: {fileID: 0}
+  explosion: {fileID: 141070, guid: 805832771bf9f5f48bead8310975480e, type: 3}
 --- !u!95 &2897734273628311978
 Animator:
   serializedVersion: 5
