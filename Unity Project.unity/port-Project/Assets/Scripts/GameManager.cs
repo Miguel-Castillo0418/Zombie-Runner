@@ -25,12 +25,15 @@ public class gameManager : MonoBehaviour
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
     [SerializeField] GameObject computer;
+    [SerializeField] GameObject key;
+    [SerializeField] Animator keyAnim;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
     [SerializeField] private float attackRate;
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
+    [SerializeField] GameObject puzzleTxt;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -46,6 +49,11 @@ public class gameManager : MonoBehaviour
     int enemycount;
     public int points;
     int round;
+
+    public GameObject PipeHolder;
+    public GameObject[] Pipes;
+    public int totalPipes = 0;
+    private int correctPipes = 0;
 
     private int enemyCount;
 
@@ -63,10 +71,18 @@ public class gameManager : MonoBehaviour
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
         CheckHealthBar();
+        keyAnim = key.GetComponent<Animator>();
     }
     void Start()
     {
         AudioManager.instance.playMusic("Song");
+        totalPipes = PipeHolder.transform.childCount;
+
+        Pipes = new GameObject[totalPipes];
+        for (int i = 0; i < Pipes.Length; i++)
+        {
+            Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -286,16 +302,35 @@ public class gameManager : MonoBehaviour
         {
             if (Input.GetButtonDown("Shop"))
             {
-                if(menuActive = null)
+                if(menuActive == null)
                 {
                     game();
                 }
-                else if (menuActive = gameComputer)
+                else if (menuActive == gameComputer)
                 {
                     stateUnpause();
 
                 }
             }
         }
+    }
+    public void goodMove()
+    {
+        correctPipes += 1;
+        if(correctPipes == totalPipes)
+        {
+            puzzleTxt.SetActive(true);
+            Instantiate(key, computer.transform);
+            keyAnimation();
+        }
+    }
+    public void badMove()
+    {
+        correctPipes -= 1;
+    }
+    IEnumerator keyAnimation()
+    {
+        yield return new WaitForSeconds(.4F);
+        keyAnim.Play("KeyMove");
     }
 }
