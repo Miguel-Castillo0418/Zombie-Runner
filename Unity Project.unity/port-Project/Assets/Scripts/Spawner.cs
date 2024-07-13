@@ -4,10 +4,10 @@ public class Spawner : MonoBehaviour
 {
     public GameObject enemyPrefab; 
     public float spawnInterval = 5f; 
-    public float spawnRadius = 10f; 
+    //public float spawnRadius = 10f; 
     public float maxDistanceToPlayer = 20f; 
     public float minDistanceToPlayer = 5f; 
-    public int maxEnemies = -1; // Maximum number of enemies to spawn (-1 for infinite)
+    public int maxEnemies; // Maximum number of enemies to spawn (-1 for infinite)
 
     private Transform player;
     private bool isActive = false;
@@ -48,7 +48,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
+        Vector3 spawnPosition = transform.position + Random.insideUnitSphere; // * spawnRadius;
         spawnPosition.y = transform.position.y; 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         spawnedEnemiesCount++;

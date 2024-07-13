@@ -2116,9 +2116,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 283347105395640437, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: maxEnemies
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 513620196365555733, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
       propertyPath: m_Name
       value: ZoneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 624881666744506803, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: m_Size.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 624881666744506803, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: m_Size.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 930176048822328197, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 22.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089329602108016745, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946633519991693708, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
+      propertyPath: maxEnemies
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7631389140666004725, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
       propertyPath: m_LocalPosition.x

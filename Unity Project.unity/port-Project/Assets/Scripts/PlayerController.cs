@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
-    private SpawnIndicator spawnIndicator;
+ //   private SpawnIndicator spawnIndicator;
     public PlayerControls playerControls;
     private Camera mainCamera; 
     private Camera weaponCamera;
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
-        spawnIndicator = new SpawnIndicator();
+       // spawnIndicator = new SpawnIndicator();
         LoadGuns();
         HP = saveSystem.LoadHP();
         Debug.Log("Player HP: " + HP);
