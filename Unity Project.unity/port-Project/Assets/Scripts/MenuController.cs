@@ -41,10 +41,10 @@ public class MenuController : MonoBehaviour
 
 
 
-
+    public Button[] lvlButtons;
     public string _newGameLevel;
     public string _newGameLevel2;
-    private string levelToLoad;
+    //private string levelToLoad;
     // [SerializeField] private GameObject noSavedGameDialog = null;
 
 
@@ -71,6 +71,13 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
         AudioManager.instance.playMusic("Theme");
+
+        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
+        for (int i = 0; i < lvlButtons.Length; i++)
+        {
+            if (i + 2 > levelAt)
+                lvlButtons[i].interactable = false;
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -88,6 +95,22 @@ public class MenuController : MonoBehaviour
     {
         SceneManager.LoadScene(_newGameLevel2);
         //gameManager.instance.stateUnpause();
+    }
+
+    public void UnlockLevel(int levelIndex)
+    {
+        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
+        if (levelIndex > levelAt)
+        {
+            PlayerPrefs.SetInt("levelAt", levelIndex);
+            PlayerPrefs.Save();
+        }
+
+        for (int i = 0; i < lvlButtons.Length; i++)
+        {
+            if (i + 2 <= levelIndex)
+                lvlButtons[i].interactable = true;
+        }
     }
 
     // public void LoadGameDialogYes()
