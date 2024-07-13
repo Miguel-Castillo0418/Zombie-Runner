@@ -20,6 +20,7 @@ public class DamageIndicator : MonoBehaviour
     private Quaternion TargetRot = Quaternion.identity;
     private Vector3 TargetPos = Vector3.zero;
     private Vector3 dir = Vector3.zero;
+
     public CanvasGroup CanvasGroup
     {
         get
@@ -59,6 +60,7 @@ public class DamageIndicator : MonoBehaviour
         StartCoroutine(RotateIndicator());
         Timer();
     }
+
     IEnumerator RotateIndicator()
     {
         while (enabled)
@@ -67,10 +69,10 @@ public class DamageIndicator : MonoBehaviour
             {
                 TargetPos = Target.position;
                 TargetRot = Target.transform.rotation;
+
             }
             dir = player.transform.position - TargetPos;
-
-            TargetRot = Quaternion.LookRotation(dir);
+            TargetRot = Quaternion.LookRotation(TargetPos - player.position);
             TargetRot.z = -TargetRot.y;
             TargetRot.x = 0;
             TargetRot.y = 0;
