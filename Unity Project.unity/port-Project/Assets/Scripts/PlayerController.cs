@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
+    private SpawnIndicator spawnIndicator;
     public PlayerControls playerControls;
 
 
@@ -110,8 +111,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
+        spawnIndicator = new SpawnIndicator();
         LoadGuns();
-        HP = saveSystem.LoadData();
+        HP = saveSystem.LoadHP();
         Debug.Log("Player HP: " + HP);
         spreadAngle = 10;
         pelletsFired = 8;
@@ -158,12 +160,12 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         sprint();
         crouch();
 
-        StartCoroutine(reload());
         if (Input.GetKeyDown(KeyCode.L))
         {
-            saveSystem.SaveData(HP);
+            saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns(); // Save guns
+            saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved");
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -386,6 +388,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         HP -= (int)amount;
         //AudioManager.instance.hurtSound();
+        //spawnIndicator.Register();
         updatePlayerUI();
         if (HP <= 0)
         {
@@ -582,9 +585,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
         if (other.CompareTag("SaveZone"))
         {
-            saveSystem.SaveData(HP);
+            saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns();
+            saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved in SaveZone");
         }
     }
