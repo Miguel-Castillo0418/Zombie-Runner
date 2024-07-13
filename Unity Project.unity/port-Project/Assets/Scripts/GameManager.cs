@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuShop;
+    [SerializeField] GameObject gameComputer;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
     [SerializeField] TMP_Text pointsCountText;
@@ -23,6 +24,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
+    [SerializeField] GameObject computer;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -56,6 +58,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
+        computer = GameObject.FindWithTag("Computer");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         pointsCountText.text = points.ToString("F0");
@@ -268,5 +271,30 @@ public class gameManager : MonoBehaviour
     public void CheckHealthBar()
     {
         playerHPBar.color = PlayerHPBarGradient.Evaluate(hpTarget);
+    }
+    public void game()
+    {
+        statePause();
+        menuActive = gameComputer;
+        menuActive.SetActive(isPaused);
+    }
+    public void ComputerGame()
+    {
+        float computerDist = Vector3.Distance(computer.transform.position, gameManager.instance.player.transform.position);
+        if(computerDist < 3.2)
+        {
+            if (Input.GetButtonDown("Shop"))
+            {
+                if(menuActive = null)
+                {
+                    game();
+                }
+                else if (menuActive = gameComputer)
+                {
+                    stateUnpause();
+
+                }
+            }
+        }
     }
 }
