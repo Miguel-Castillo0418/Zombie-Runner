@@ -53,9 +53,10 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             normSpeed = agent.velocity.normalized.magnitude;
 
         anim.SetFloat("Speed", normSpeed);
-
+        //if player is not in range enemy will follow if not they will stand still while attacking
         if (!anim.GetBool("PlayerInRange"))
             agent.SetDestination(gameManager.instance.player.transform.position);
+
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             anim.SetBool("PlayerInRange", true);
