@@ -2,9 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+<<<<<<< HEAD
 
 public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementalDamage
+=======
+public class PlayerController : MonoBehaviour, IDamage, IKnockbackable
+>>>>>>> bf885417f73e27c98ab447bd6ed7cc79a9454d7f
 {
     public static PlayerController instance;
     [SerializeField] CharacterController charController;
@@ -29,7 +34,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-    
+
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
@@ -70,10 +75,43 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
+    public PlayerControls playerControls;
+
+
+    // Start is called before the first frame update
+    //void Start()
+    //{
+    //    playerControls = new PlayerControls();
+
+    //}
+
+    private void OnEnable()
+    {
+        playerControls.Player.Enable();
+        playerControls.Player.Jump.performed += OnJump;
+        playerControls.Player.Crouch.performed += OnCrouch;
+        playerControls.Player.Shoot.performed += OnShoot;
+        playerControls.Player.Reload.performed += OnReload;
+
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Player.Disable();
+        playerControls.Player.Jump.performed -= OnJump;
+        playerControls.Player.Crouch.performed -= OnCrouch;
+        playerControls.Player.Shoot.performed -= OnShoot;
+        playerControls.Player.Reload.performed -= OnReload;
+
+    }
+
+    //private void Start()
+    //private SaveSystem saveSystem;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
         LoadGuns();
         HP = saveSystem.LoadData();
@@ -122,6 +160,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         selectGun();
         sprint();
         crouch();
+
+        StartCoroutine(reload());
         if (Input.GetKeyDown(KeyCode.L))
         {
             saveSystem.SaveData(HP);
@@ -135,11 +175,32 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             Debug.Log("Save Deleted");
         }
     }
+
     public IEnumerator loadIcon()
     {
         loadingIcon.SetActive(true);
         yield return new WaitForSeconds(3);
         loadingIcon.SetActive(false);
+    }
+
+    void OnJump(InputAction.CallbackContext context)
+    {
+        jump();
+    }
+
+    void OnCrouch(InputAction.CallbackContext context)
+    {
+        crouch();
+    }
+
+    void OnShoot(InputAction.CallbackContext context)
+    {
+        StartCoroutine(shoot());
+    }
+
+    void OnReload(InputAction.CallbackContext context)
+    {
+        StartCoroutine(reload());
     }
     void movement()
     {
@@ -161,8 +222,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
         playerVel.y -= gravity * Time.deltaTime;
         charController.Move((playerVel) * Time.deltaTime);
-        if(charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
-          StartCoroutine(walkCycle());
+        if (charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
+            StartCoroutine(walkCycle());
 
     }
 
@@ -175,13 +236,23 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            if (isSprinting && speed != origSpeed) {
+            if (isSprinting && speed != origSpeed)
+            {
                 isSprinting = false;
                 speed /= sprintMod;
             }
         }
     }
 
+    void jump()
+    {
+        if (charController.isGrounded && jumpCount < jumpMax)
+        {
+            AudioManager.instance.jumpSound();
+            jumpCount++;
+            playerVel.y = jumpSpeed;
+        }
+    }
     void crouch()
     {
         if (Input.GetButtonDown("Crouch"))
@@ -301,7 +372,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
                     Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                     bulletScript.SetDamage(shootDamage);
-                    if(hit.collider.CompareTag("Enemy"))
+                    if (hit.collider.CompareTag("Enemy"))
                         Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
                 }
             }
@@ -327,9 +398,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     public void takeFireDamage(float amount) { }
     public void takePoisonDamage(float amount) { }
     public void takeElectricDamage(float amount) { }
-    public void takeExplosiveDamage(float amount) 
+    public void takeExplosiveDamage(float amount)
     {
-        HP-=amount;
+        HP -= amount;
     }
 
     void updatePlayerUI()
@@ -420,8 +491,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     }
     public void spinRoulette()
     {
-       gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
-            getGunStats(wonGun);
+        gunStats wonGun = guns[UnityEngine.Random.Range(0, guns.Length)];
+        getGunStats(wonGun);
     }
     public void getGunStats(gunStats gun)
     {
@@ -491,7 +562,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         isPlayingSteps = true;
         AudioManager.instance.walkSound();
-        if(!isSprinting)
+        if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
         }
@@ -499,7 +570,26 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         {
             yield return new WaitForSeconds(0.25f);
         }
-        isPlayingSteps=false;
+        isPlayingSteps = false;
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("MedKit"))
+        {
+            HP = Mathf.Clamp(HP + 20, 0, HPorig); // Adjust the amount of healing as needed
+            updatePlayerUI();
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("SaveZone"))
+        {
+            saveSystem.SaveData(HP);
+            StartCoroutine(loadIcon());
+            SaveGuns();
+            Debug.Log("Game Saved in SaveZone");
+        }
     }
     public void SaveGuns()
     {
@@ -512,7 +602,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     public void LoadGuns()
     {
-        
+
         for (int i = 0; i < guns.Length; i++)
         {
             if (PlayerPrefs.GetInt(guns[i].gunID, 0) == 1)
@@ -522,16 +612,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         }
         changeGun();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("SaveZone"))
-        {
-            saveSystem.SaveData(HP);
-            StartCoroutine(loadIcon());
-            SaveGuns();
-            Debug.Log("Game Saved in SaveZone");
-        }
-    }
+
     //for the knockback to work with the player
     public void Knockback(int lvl, int damage)
     {
@@ -539,7 +620,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
 
-        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance; 
+        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance;
         Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
         StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
     }
@@ -574,4 +655,8 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         Destroy(VFX);
     }
 }
+
+
+
+
 
