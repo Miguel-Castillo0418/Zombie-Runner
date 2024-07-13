@@ -158,7 +158,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         sprint();
         crouch();
 
-        StartCoroutine(reload());
         if (Input.GetKeyDown(KeyCode.L))
         {
             saveSystem.SaveData(HP);
