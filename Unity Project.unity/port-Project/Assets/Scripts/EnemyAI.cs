@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     public WaveSpawner whereISpawned;
     public static bool isSound;
     bool playerInRange;
-    
+
     public GameObject explosion;
     float range = 5;
     Vector3 playerDir;
@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         AudioManager.instance.playZombie();
     }
 
-
+    //for IDamage
     public void takeDamage(float amount)
     {
         HP -= amount;
@@ -101,51 +101,53 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             gameManager.instance.updateGameGoal(-1);
         }
     }
-    public void takeFireDamage(float amount)
-    {
-        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-        fireVFX.transform.parent = transform;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
-    }
-    public void takePoisonDamage(float amount)
-    {
-        Vector3 newPosition = Vector3.zero + Vector3.up * 1.5f;
-        GameObject poisonVFX = Instantiate(poisoned, newPosition, Quaternion.identity);
-        poisonVFX.transform.parent = transform;
-        poisonVFX.transform.localPosition = newPosition;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, poisonVFX));
-    }
-    public void takeElectricDamage(float amount)
-    {
-        Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f + Vector3.down * 0.002f;
-        GameObject ElecVFX = Instantiate(electrified, transform.position, Quaternion.identity);
-        ElecVFX.transform.parent = transform.Find("Z_Body");
-        ElecVFX.transform.localRotation = Quaternion.identity;
-        ElecVFX.transform.localPosition = newPosition;
-        Vector3 newScale = Vector3.one * 0.4f;
-        ElecVFX.transform.localScale = newScale;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
-    }
-    public void takeExplosiveDamage(float amount)
-    {
-        GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-        fireVFX.transform.parent = transform;
-        StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
-    }
-    public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
-    {
-        float timer = 0f;
-        float damagePerSec = amount / duration;
+    ////for IElementalDamage
+    //public void takeFireDamage(float amount)
+    //{
+    //    GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
+    //    fireVFX.transform.parent = transform;
+    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
+    //}
+    //public void takePoisonDamage(float amount)
+    //{
+    //    Vector3 newPosition = Vector3.zero + Vector3.up * 1.5f;
+    //    GameObject poisonVFX = Instantiate(poisoned, newPosition, Quaternion.identity);
+    //    poisonVFX.transform.parent = transform;
+    //    poisonVFX.transform.localPosition = newPosition;
+    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, poisonVFX));
+    //}
+    //public void takeElectricDamage(float amount)
+    //{
+    //    Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f + Vector3.down * 0.002f;
+    //    GameObject ElecVFX = Instantiate(electrified, transform.position, Quaternion.identity);
+    //    ElecVFX.transform.parent = transform.Find("Z_Body");
+    //    ElecVFX.transform.localRotation = Quaternion.identity;
+    //    ElecVFX.transform.localPosition = newPosition;
+    //    Vector3 newScale = Vector3.one * 0.4f;
+    //    ElecVFX.transform.localScale = newScale;
+    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
+    //}
+    //public void takeExplosiveDamage(float amount)
+    //{
+    //    GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
+    //    fireVFX.transform.parent = transform;
+    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
+    //}
+    //public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
+    //{
+    //    float timer = 0f;
+    //    float damagePerSec = amount / duration;
 
-        while (timer < duration)
-        {
-            float damagePerFrame = damagePerSec * Time.deltaTime;
-            takeDamage(damagePerFrame);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        Destroy(VFX);
-    }
+    //    while (timer < duration)
+    //    {
+    //        float damagePerFrame = damagePerSec * Time.deltaTime;
+    //        takeDamage(damagePerFrame);
+    //        timer += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    Destroy(VFX);
+    //}
+    //
     //private void OnTriggerEnter(Collider other)
     //{
     //    IDamage dmg = other.GetComponent<IDamage>();
@@ -229,10 +231,18 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     {
         collider.enabled = false;
     }
+    //for the explosion animation
     public void Explode()
     {
         AudioManager.instance.explosionSound();
-        Instantiate(explosion, transform.position, Quaternion.identity);
+        Instantiate(explosion, transform.position + (Vector3.up * 2), Quaternion.identity);
+        StartCoroutine(WaitForAnimationThenDestroy(explosion));
         //sources.Play();
+    }
+
+    private IEnumerator WaitForAnimationThenDestroy(GameObject explosion)
+    {
+            yield return new WaitForSeconds(5.0f);  // Adjust the time as needed
+            Destroy(explosion);
     }
 }

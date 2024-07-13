@@ -1968,6 +1968,7 @@ GameObject:
   - component: {fileID: 1213539899774097501}
   - component: {fileID: 4012123593325626988}
   - component: {fileID: 5590949022974777255}
+  - component: {fileID: 7121830168499110739}
   - component: {fileID: 6851769186333706337}
   - component: {fileID: 6545970631928684256}
   m_Layer: 0
@@ -2063,14 +2064,32 @@ MonoBehaviour:
   anim: {fileID: 1213539899774097501}
   meleeRange: 4
   atkRate: 2
-  HP: 3
+  HP: 10
+  maxHp: 0
   lvl: 2
   damage: 2
   pointsRewarded: 100
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+  onFire: {fileID: 123576, guid: 72927d14e1ac8472e98ffb2d1b9cc111, type: 3}
+  poisoned: {fileID: 1532640984780780, guid: 4c49d9bab89170043b9b9738ccaefeda, type: 3}
+  electrified: {fileID: 6645675767264168321, guid: d0257f75638d1e64695c8a023850657d, type: 3}
   whereISpawned: {fileID: 0}
+  explosion: {fileID: 141070, guid: 805832771bf9f5f48bead8310975480e, type: 3}
+--- !u!114 &7121830168499110739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585829775478146487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302e1118aea0268479214b8cdc727f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiScript: {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
 --- !u!136 &6851769186333706337
 CapsuleCollider:
   m_ObjectHideFlags: 0
