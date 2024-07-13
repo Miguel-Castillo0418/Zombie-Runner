@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position + Vector3.forward, Camera.main.transform.forward, out hit, shootDistance))
             {
-                if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+                if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Shottie"))
                 {
                     shootShotgun();
                 }
@@ -340,11 +340,35 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             }
             if (isAiming == true && isShooting == true)
             {
-                if(gunModel.CompareTag("Sniper"))
+                if(gunModel.CompareTag("Sniper") || gunModel.CompareTag("Rifle") || gunModel.CompareTag("Shottie"))
                 {
                     gunModel.GetComponent<Animator>().Play("ADS Sniper Recoil");
                     yield return new WaitForSeconds(shootRate);
                     gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
+                }
+                else if (gunModel.CompareTag("Rev"))
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS Rev Recoil");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS Rev Idle");
+                }
+                else if (gunModel.CompareTag("Handgun"))
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS Handgun Recoil");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS Handgun Idle");
+                }
+                else if (gunModel.CompareTag("Compact"))
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS Compact Recoil");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS Compact Idle");
+                }
+                else if(gunModel.CompareTag("AR"))
+                {
+                    gunModel.GetComponent<Animator>().Play("ADS AR Recoil");
+                    yield return new WaitForSeconds(shootRate);
+                    gunModel.GetComponent<Animator>().Play("ADS AR Idle");
                 }
                 else
                 {
@@ -369,7 +393,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     void shootShotgun()
     {
-        if (gunList[selectedGun].gunModel.CompareTag("Shotgun"))
+        if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Shottie"))
         {
             for (int i = 0; i < pelletsFired; ++i)
             {
@@ -419,6 +443,40 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             {
                 Camera.main.fieldOfView = 20;
             }
+        }
+        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Rev"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Rev");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Rev Idle");
+            if (cameraController != null)
+            {
+                Camera.main.fieldOfView = 20;
+            }
+        }
+        else if(Input.GetButtonDown("Aim") && (gunModel.CompareTag("Rifle") || (gunModel.CompareTag("Shottie"))))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Sniper");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
+        }
+        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Compact"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Compact");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Compact Idle");
+        }
+        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Handgun"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS Handgun");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS Handgun Idle");
+        }
+        else if(Input.GetButtonDown("Aim") && gunModel.CompareTag("AR"))
+        {
+            gunModel.GetComponent<Animator>().Play("ADS AR");
+            yield return new WaitForSeconds(0.2f);
+            gunModel.GetComponent<Animator>().Play("ADS AR Idle");
         }
         else if (Input.GetButtonDown("Aim") && !gunModel.CompareTag("Sniper"))
         {
