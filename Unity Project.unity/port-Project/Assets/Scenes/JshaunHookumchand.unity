@@ -379,7 +379,7 @@ PrefabInstance:
     - target: {fileID: 5590949022974777255, guid: c373c4cab97bfc84db7b7cc0a660adaa, type: 3}
       propertyPath: explosion
       value: 
-      objectReference: {fileID: 2136553031}
+      objectReference: {fileID: 141070, guid: 805832771bf9f5f48bead8310975480e, type: 3}
     - target: {fileID: 5590949022974777255, guid: c373c4cab97bfc84db7b7cc0a660adaa, type: 3}
       propertyPath: electrified
       value: 
@@ -391,29 +391,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6585829775478146487, guid: c373c4cab97bfc84db7b7cc0a660adaa, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 838804026}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c373c4cab97bfc84db7b7cc0a660adaa, type: 3}
---- !u!1 &838804019 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6585829775478146487, guid: c373c4cab97bfc84db7b7cc0a660adaa, type: 3}
-  m_PrefabInstance: {fileID: 829550491}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &838804026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 838804019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 302e1118aea0268479214b8cdc727f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aiScript: {fileID: 3746801385072911128, guid: 5902b65d76ae60b45a4e47572f9fc997, type: 3}
 --- !u!1001 &1067895783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -736,11 +715,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
---- !u!1 &2136553031 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8193598341121087274, guid: 4af59a6e823d94b4691af0aae60b8f57, type: 3}
-  m_PrefabInstance: {fileID: 1225342308}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
