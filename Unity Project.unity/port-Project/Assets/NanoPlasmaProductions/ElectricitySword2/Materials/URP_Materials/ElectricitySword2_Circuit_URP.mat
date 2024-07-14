@@ -7,8 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ElectricitySword2_ElectricityEffect_URP
+  m_Name: ElectricitySword2_Circuit_URP
   m_Shader: {fileID: -6465566751694194690, guid: 6d7dcd2bb1ce8a14081162df82e36985, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -25,11 +28,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Color:
-        m_Texture: {fileID: 2800000, guid: 515b0b44100faed46840654c46e93726, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7b6df7080ca00324bb9ce76a3fdf3896, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Base_Map:
         m_Texture: {fileID: 2800000, guid: 28e60141b3fd6e945a6e5d9609f61bd0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CircuitMask:
+        m_Texture: {fileID: 2800000, guid: 9b754864e650db24083a1cf1f841059d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Color_ID_Map:
@@ -41,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 7684ed4c9782ac14c95ff11cc6437406, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4c646e0e5a9a606468fb1f7e10e9f99a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic_Map:
@@ -71,20 +78,23 @@ Material:
     - _Brightness_1: 1
     - _Brightness_2: 1
     - _Brightness_3: 1
+    - _CircuitScale: 50
+    - _Circuit_Amount: 25
     - _Circuit_Density: 15
     - _Circuit_Opacity: 1
+    - _Circuit_Scale: 5
     - _Circuit_Speed_X: 0.1
     - _Circuit_Speed_Y: 0.1
-    - _Circuit_Width: 0.5
+    - _Circuit_Width: 3
     - _Electricity_Density: 50
     - _Electricity_Opacity: 1
-    - _Electricity_Scale: 100
+    - _Electricity_Scale: 50
     - _Electricity_Speed_X: 0.3
     - _Electricity_Speed_Y: 0.3
-    - _Electricity_Width: 0.047
+    - _Electricity_Width: 0.15
     - _Emission_Opacity_Maximum: 0.7
     - _Emission_Opacity_Minimum: 0.2
-    - _Metallic: 0.846
+    - _Metallic: 0.944
     - _Normal_Map_Strength: 1
     - _Orb_Density: 9
     - _Orb_Invert: 0
@@ -101,10 +111,14 @@ Material:
     - _Base_Color_1: {r: 0.3647059, g: 0.2, b: 0.24313726, a: 0}
     - _Base_Color_2: {r: 0.8666667, g: 0.54509807, b: 0.16078432, a: 0}
     - _Base_Color_3: {r: 0.18039216, g: 0.24313726, b: 0.29411766, a: 0}
-    - _Circuit_Color: {r: 1, g: 0, b: 0, a: 0}
-    - _Electricity_Color: {r: 1.3176471, g: 3.7019608, b: 11.984314, a: 1}
+    - _CircuitColor: {r: 3.2351816, g: 110.13088, b: 0, a: 0}
+    - _CircuitDirection: {r: 0.5, g: 1, b: 0, a: 0}
+    - _CircuitSpeed: {r: 0.05, g: 0.2, b: 0, a: 0}
+    - _Circuit_Color: {r: 0, g: 14.9074745, b: 67.79352, a: 1}
+    - _Circuit_Speed: {r: 0.1, g: 0.2, b: 0, a: 0}
+    - _Electricity_Color: {r: 1.8634343, g: 6.477653, b: 16.94838, a: 1}
     - _Electricity_Speed: {r: 0.1, g: 0.2, b: 0, a: 0}
-    - _Emission_Color: {r: 0, g: 0.8649024, b: 3.4415908, a: 1}
+    - _Emission_Color: {r: 0, g: 0.41763514, b: 1.6629472, a: 1}
     - _Orb_Color: {r: 0, g: 0.9622642, b: 0.9622642, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5354418071819742646
@@ -119,4 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 5
+  version: 7
