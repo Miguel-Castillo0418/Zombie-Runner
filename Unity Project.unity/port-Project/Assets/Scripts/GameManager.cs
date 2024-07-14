@@ -213,32 +213,32 @@ public class gameManager : MonoBehaviour
     }
     public void showShop()
     {
-        //float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
+        float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
 
-        //if (shopDist < 8.6)
+        if (shopDist < 8.6)
 
-        //{
-        //    shopText.SetActive(true);
-        //    if (Input.GetButtonDown("Shop"))
-        //    {
-        //        shopText.SetActive(false);
-        //        if (menuActive == null)
-        //        {
+        {
+            shopText.SetActive(true);
+            if (Input.GetButtonDown("Shop"))
+            {
+                shopText.SetActive(false);
+                if (menuActive == null)
+                {
 
-        //            shop();
+                    shop();
 
-        //        }
-        //        else if (menuActive == menuShop)
-        //        {
-        //            stateUnpause();
-        //            shopText.SetActive(true);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    shopText.SetActive(false);
-        //}
+                }
+                else if (menuActive == menuShop)
+                {
+                    stateUnpause();
+                    shopText.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            shopText.SetActive(false);
+        }
     }
 
     //public void buyDoor()
