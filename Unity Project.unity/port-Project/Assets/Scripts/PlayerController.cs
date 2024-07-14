@@ -552,10 +552,41 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         // Apply damage to enemies
         foreach (Collider enemy in hitEnemies)
         {
-            IDamage damageable = enemy.GetComponent<IDamage>();
-            if (damageable != null)
+
+            if(SwordModel.CompareTag("Electric"))
             {
-                damageable.takeDamage(meleeDamage);
+                IElementalDamage ElectricDamageable = enemy.GetComponent<IElementalDamage>();
+                if (ElectricDamageable != null)
+                {
+                    ElectricDamageable.takeElectricDamage(meleeDamage);
+                }
+
+            }
+            else if (SwordModel.CompareTag("Acid"))
+            {
+                IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
+                if (AcidDamageable != null)
+                {
+                    AcidDamageable.takeElectricDamage(meleeDamage);
+                }
+
+            }
+            else if (SwordModel.CompareTag("Fire"))
+            {
+                IElementalDamage FireDamageable = enemy.GetComponent<IElementalDamage>();
+                if (FireDamageable != null)
+                {
+                    FireDamageable.takeElectricDamage(meleeDamage);
+                }
+
+            }
+            else
+            {
+                IDamage damageable = enemy.GetComponent<IDamage>();
+                if (damageable != null)
+                {
+                    damageable.takeDamage(meleeDamage);
+                }
             }
         }
 
