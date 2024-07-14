@@ -173,12 +173,14 @@ MonoBehaviour:
   bullet: {fileID: 6714574156796921523, guid: a1e17ecd05b3ce948a2ad8a8a31e72cf, type: 3}
   ShootPos: {fileID: 6107836234394334680}
   gunModel: {fileID: 9027558375115623006}
+  SwordModel: {fileID: 6620425015829353916}
   shootDamage: 2
   shootRate: 0.3
   shootDistance: 175
   muzzleFlash: {fileID: 1158457095782501061}
   gunList:
   - {fileID: 11400000, guid: 020818250d270b94c935ab43eee15ba4, type: 2}
+  swordList: []
   meleeRange: 3
   meleeDamage: 1
   enemyLayer:
@@ -204,6 +206,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da94d340f67e0da4e882c61b111f7e48, type: 2}
   - {fileID: 11400000, guid: 3416715b7585ac14a831de1ffda432e6, type: 2}
   - {fileID: 11400000, guid: 6ce505acfce828a4c976019d038b5476, type: 2}
+  swords: []
   HPorig: 0
   shopHP: 0
   currentAmmo: 0
