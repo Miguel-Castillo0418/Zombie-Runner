@@ -335,4 +335,11 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(.4F);
         keyAnim.Play("KeyMove");
     }
+
+    public void DisplayWinMenu()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(isPaused);
+    }
 }
