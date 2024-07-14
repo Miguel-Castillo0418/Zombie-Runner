@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gunPickup : MonoBehaviour
+public class SwordPickup : MonoBehaviour
 {
-
-    [SerializeField] gunStats gun; 
+    
+    [SerializeField] SwordStats sword;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.getGunStats(gun);
+            gameManager.instance.playerScript.getSwordStats(sword);
             Destroy(gameObject);
         }
     }
