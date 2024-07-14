@@ -26,12 +26,13 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     [SerializeField] GameObject bullet;
     [SerializeField] Transform ShootPos;
     [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject SwordModel;
     [SerializeField] float shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] GameObject muzzleFlash;
     [SerializeField] List<gunStats> gunList = new List<gunStats>();
-
+    [SerializeField] List<SwordStats> swordList = new List<SwordStats>();
 
     [SerializeField] private float meleeRange;
     [SerializeField] private int meleeDamage;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     [SerializeField] public GameObject loadingIcon;
 
     [SerializeField] gunStats[] guns;
+    [SerializeField] SwordStats[] swords;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
 
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     int selectedGun;
     public float spreadAngle;
     public int pelletsFired;
+    int selectedSword;
 
 
     Vector3 moveDir;
@@ -78,10 +81,13 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     private Camera mainCamera; 
     private Camera weaponCamera;
 
-    private void Awake()
+
+    void Awake()
     {
         playerControls = new PlayerControls();
+
     }
+
     private void OnEnable()
     {
         playerControls.Player.Enable();
@@ -161,7 +167,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
                 StartCoroutine(ADS());
             }
         }
-        selectGun();
+        selectWeapon();
         sprint();
         crouch();
 
@@ -532,6 +538,14 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     IEnumerator MeleeAttack()
     {
+        // Disable gun model components
+        // Disable gun model renderer
+        MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
+        if (gunMeshRenderer != null)
+        {
+            gunMeshRenderer.enabled = false;
+        }
+
         // Detect enemies in range
         Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
 
@@ -545,16 +559,27 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             }
         }
 
+        // Play sword swing animation
+        SwordModel.GetComponent<Animator>().Play("Sword Swing");
+
         yield return new WaitForSeconds(attackRate);
+
+        // Re-enable gun model renderer
+        if (gunMeshRenderer != null)
+        {
+            gunMeshRenderer.enabled = true;
+        }
+
+        SwordModel.GetComponent<Animator>().Play("New State");
     }
 
     void OnDrawGizmosSelected()
     {
         if (meleeAttackPoint == null)
             return;
-
+        
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(meleeAttackPoint.position, meleeRange);
+        Gizmos.DrawWireSphere(ShootPos.position, 1);
     }
     public IEnumerator reload()
     {
@@ -640,18 +665,57 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         muzzleFlash.transform.localPosition = gun.muzzleFlashPositionOffset;
         muzzleFlash.transform.localRotation = Quaternion.Euler(gun.muzzleFlashRotationOffset);
     }
-
-    void selectGun()
+    public void getSwordStats(SwordStats sword)
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
+        // If the player already has 2 swords, remove the currently equipped one
+        if (swordList.Count >= 2)
         {
-            selectedGun++;
-            changeGun();
+            SwordStats removedSword = swordList[selectedSword];
+            swordList.RemoveAt(selectedSword);
+
+            // Adjust the selected sword index to avoid errors
+            selectedSword = swordList.Count - 1;
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+
+        swordList.Add(sword);
+        selectedSword = swordList.Count - 1;
+
+        updatePlayerUI();
+
+        meleeDamage = sword.swordDMG;
+
+        SwordModel.tag = sword.SwordModel.tag;
+        SwordModel.GetComponent<MeshFilter>().sharedMesh = sword.SwordModel.GetComponent<MeshFilter>().sharedMesh;
+        SwordModel.GetComponent<MeshRenderer>().sharedMaterials = sword.SwordModel.GetComponent<MeshRenderer>().sharedMaterials;
+    }
+
+    void selectWeapon()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            selectedGun--;
-            changeGun();
+            if (selectedGun < gunList.Count - 1)
+            {
+                selectedGun++;
+                changeGun();
+            }
+            else if (selectedSword < swordList.Count - 1)
+            {
+                selectedSword++;
+                changeSword();
+            }
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            if (selectedSword > 0)
+            {
+                selectedSword--;
+                changeSword();
+            }
+            else if (selectedGun > 0)
+            {
+                selectedGun--;
+                changeGun();
+            }
         }
     }
 
@@ -671,6 +735,15 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         // Adjust muzzle flash position and rotation based on the new weapon
         muzzleFlash.transform.localPosition = gunList[selectedGun].muzzleFlashPositionOffset;
         muzzleFlash.transform.localRotation = Quaternion.Euler(gunList[selectedGun].muzzleFlashRotationOffset);
+    }
+
+    void changeSword()
+    {
+        updatePlayerUI();
+        meleeDamage = swordList[selectedSword].swordDMG;
+
+        SwordModel.GetComponent<MeshFilter>().sharedMesh = swordList[selectedSword].SwordModel.GetComponent<MeshFilter>().sharedMesh;
+        SwordModel.GetComponent<MeshRenderer>().sharedMaterials = swordList[selectedSword].SwordModel.GetComponent<MeshRenderer>().sharedMaterials;
     }
     IEnumerator walkCycle()
     {
