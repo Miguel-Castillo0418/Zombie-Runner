@@ -33,7 +33,6 @@ namespace keyCards
             }
             else if (key)
             {
-                AudioManager.instance.keyPickup();
                 _keycards.hasKeyCard = true;
                 gameObject.SetActive(false);
             }

@@ -40,14 +40,14 @@ namespace keyCards
             {
                 if(!doorOpen && !pauseInteraction)
                 {
-                    AudioManager.instance.openDoor();
+                    
                     doorAnim.Play(openAnim, 0, 0.0f);
                     doorOpen = true;
                     StartCoroutine(PauseInteract());
                 }
                 else if(doorOpen && !pauseInteraction)
                 {
-                    AudioManager.instance.closeDoor();
+                    
                     doorAnim.Play(closeAnim, 0, 0.0f);
                     
                     doorOpen = false;
@@ -61,7 +61,6 @@ namespace keyCards
         }
         IEnumerator doorIsLocked()
         {
-            AudioManager.instance.doorLocked();
             lockedDoorTxt.SetActive(true);
             yield return new WaitForSeconds(lockedWaitTime);
             lockedDoorTxt.SetActive(false);

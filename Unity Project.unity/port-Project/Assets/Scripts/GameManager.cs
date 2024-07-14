@@ -77,16 +77,16 @@ public class gameManager : MonoBehaviour
         updateRound(1);
         CheckHealthBar();
         keyAnim = key.GetComponent<Animator>();
-    }
-    void Start()
-    {
-        AudioManager.instance.playMusic("Song");
         totalPipes = PipeHolder.transform.childCount;
         Pipes = new GameObject[totalPipes];
         for (int i = 0; i < Pipes.Length; i++)
         {
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
+    }
+    void Start()
+    {
+        AudioManager.instance.playMusic("Song");
 
     }
 

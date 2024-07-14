@@ -11,7 +11,7 @@ namespace keyCards
         [SerializeField] private string excludeLayerName = null;
 
         private keyCardController rcOBJ;
-        [SerializeField] private KeyCode doorKey = KeyCode.G;
+        [SerializeField] private KeyCode doorKey = KeyCode.E;
 
         private string interactableTag = "InteractiveObj";
         private bool doOnce;
