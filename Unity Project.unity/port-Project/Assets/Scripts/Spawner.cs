@@ -4,7 +4,6 @@ public class Spawner : MonoBehaviour
 {
     public GameObject enemyPrefab; 
     public float spawnInterval = 5f; 
-    //public float spawnRadius = 10f; 
     public float maxDistanceToPlayer = 20f; 
     public float minDistanceToPlayer = 5f; 
     public int maxEnemies; // Maximum number of enemies to spawn (-1 for infinite)
@@ -13,6 +12,7 @@ public class Spawner : MonoBehaviour
     private bool isActive = false;
     private float spawnTimer;
     private int spawnedEnemiesCount = 0;
+    private bool canSpawn = true;
 
     void Start()
     {
@@ -24,11 +24,28 @@ public class Spawner : MonoBehaviour
     {
         if (!isActive) return;
 
+        // Stop checking if the maximum number of enemies has been reached
+        if (maxEnemies != -1 && spawnedEnemiesCount >= maxEnemies)
+        {
+            Debug.Log("Maximum number of enemies reached.");
+            canSpawn = false; // Prevent further spawning
+            return;
+        }
+
+        if (!canSpawn) return;
+
+        // Debug log to see if the update loop is still running
+        Debug.Log("Update Loop Running");
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // Debug log to see the distance to player
+        Debug.Log($"Distance to Player: {distanceToPlayer}");
 
         // Deactivate spawner if player is too close
         if (distanceToPlayer <= minDistanceToPlayer)
         {
+            Debug.Log("Player too close to spawn.");
             return;
         }
 
@@ -38,11 +55,9 @@ public class Spawner : MonoBehaviour
         spawnTimer -= Time.deltaTime;
         if (spawnTimer <= 0 && Random.value < spawnChance)
         {
-            if (maxEnemies == -1 || spawnedEnemiesCount < maxEnemies)
-            {
-                SpawnEnemy();
-                spawnTimer = spawnInterval;
-            }
+            Debug.Log("Attempting to spawn enemy.");
+            SpawnEnemy();
+            spawnTimer = spawnInterval; // Reset timer after attempting to spawn
         }
     }
 
@@ -52,6 +67,13 @@ public class Spawner : MonoBehaviour
         spawnPosition.y = transform.position.y; 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         spawnedEnemiesCount++;
+        Debug.Log("Enemy spawned. Total spawned: " + spawnedEnemiesCount);
+
+        if (maxEnemies != -1 && spawnedEnemiesCount >= maxEnemies)
+        {
+            Debug.Log("Reached maxEnemies in SpawnEnemy.");
+            canSpawn = false; // Prevent further spawning
+        }
     }
 
     public void SetActive(bool active)
@@ -59,7 +81,8 @@ public class Spawner : MonoBehaviour
         isActive = active;
         if (!active)
         {
-            spawnedEnemiesCount = 0; 
+            spawnedEnemiesCount = 0;
+            canSpawn = true; 
         }
     }
 }
