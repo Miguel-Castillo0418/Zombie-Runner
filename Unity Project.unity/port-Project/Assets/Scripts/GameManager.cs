@@ -79,12 +79,12 @@ public class gameManager : MonoBehaviour
     {
         AudioManager.instance.playMusic("Song");
         totalPipes = PipeHolder.transform.childCount;
-
         Pipes = new GameObject[totalPipes];
         for (int i = 0; i < Pipes.Length; i++)
         {
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
+
     }
 
     // Update is called once per frame
@@ -278,12 +278,11 @@ public class gameManager : MonoBehaviour
     {
         float fill = playerHPBar.fillAmount;
         float timePassed = 0f;
+        Debug.Log(hpTarget);
         while (timePassed < drainTime)
         {
             timePassed += Time.deltaTime;
             playerHPBar.fillAmount = Mathf.Lerp(fill, hpTarget, (timePassed / drainTime));
-
-
             yield return null;
         }
     }

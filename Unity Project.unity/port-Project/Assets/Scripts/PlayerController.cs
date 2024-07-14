@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 
 
-public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementalDamage
+public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElementalDamage
 {
     public static PlayerController instance;
     [SerializeField] CharacterController charController;
@@ -76,9 +76,9 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
- //   private SpawnIndicator spawnIndicator;
+    //   private SpawnIndicator spawnIndicator;
     public PlayerControls playerControls;
-    private Camera mainCamera; 
+    private Camera mainCamera;
     private Camera weaponCamera;
 
 
@@ -116,17 +116,17 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         playerControls = new PlayerControls();
         saveSystem = new SaveSystem();
-       // spawnIndicator = new SpawnIndicator();
-        LoadGuns();
+        // spawnIndicator = new SpawnIndicator();
         HP = saveSystem.LoadHP();
+        HPorig = HP;
         Debug.Log("Player HP: " + HP);
+        updatePlayerUI();
+        LoadGuns();
         spreadAngle = 10;
         pelletsFired = 8;
-        HPorig = HP;
         origHeight = charController.height;
         origSpeed = speed;
         currentAmmo = magazineSize;
-        updatePlayerUI();
         muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
         mainCamera = Camera.main;
         weaponCamera = transform.Find("WeaponCamera").GetComponent<Camera>();
@@ -346,7 +346,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             }
             if (isAiming == true && isShooting == true)
             {
-                if(gunModel.CompareTag("Sniper") || gunModel.CompareTag("Rifle") || gunModel.CompareTag("Shottie"))
+                if (gunModel.CompareTag("Sniper") || gunModel.CompareTag("Rifle") || gunModel.CompareTag("Shottie"))
                 {
                     gunModel.GetComponent<Animator>().Play("ADS Sniper Recoil");
                     yield return new WaitForSeconds(shootRate);
@@ -370,7 +370,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
                     yield return new WaitForSeconds(shootRate);
                     gunModel.GetComponent<Animator>().Play("ADS Compact Idle");
                 }
-                else if(gunModel.CompareTag("AR"))
+                else if (gunModel.CompareTag("AR"))
                 {
                     gunModel.GetComponent<Animator>().Play("ADS AR Recoil");
                     yield return new WaitForSeconds(shootRate);
@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
                     gunModel.GetComponent<Animator>().Play("ADS Shoot");
                     yield return new WaitForSeconds(shootRate);
                     gunModel.GetComponent<Animator>().Play("ADS Idle");
-                }               
+                }
             }
             else
             {
@@ -442,7 +442,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         isAiming = true;
         if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Sniper"))
         {
-            gunModel.GetComponent<Animator>().Play("ADS Sniper");          
+            gunModel.GetComponent<Animator>().Play("ADS Sniper");
             yield return new WaitForSeconds(0.2f);
             gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
             if (cameraController != null)
@@ -460,7 +460,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
                 Camera.main.fieldOfView = 20;
             }
         }
-        else if(Input.GetButtonDown("Aim") && (gunModel.CompareTag("Rifle") || (gunModel.CompareTag("Shottie"))))
+        else if (Input.GetButtonDown("Aim") && (gunModel.CompareTag("Rifle") || (gunModel.CompareTag("Shottie"))))
         {
             gunModel.GetComponent<Animator>().Play("ADS Sniper");
             yield return new WaitForSeconds(0.2f);
@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             yield return new WaitForSeconds(0.2f);
             gunModel.GetComponent<Animator>().Play("ADS Handgun Idle");
         }
-        else if(Input.GetButtonDown("Aim") && gunModel.CompareTag("AR"))
+        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("AR"))
         {
             gunModel.GetComponent<Animator>().Play("ADS AR");
             yield return new WaitForSeconds(0.2f);
@@ -490,7 +490,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             yield return new WaitForSeconds(0.2f);
             gunModel.GetComponent<Animator>().Play("ADS Idle");
         }
-        else if(Input.GetButtonUp("Aim"))
+        else if (Input.GetButtonUp("Aim"))
         {
             gunModel.GetComponent<Animator>().Play("ADS Disable");
             if (cameraController != null)
@@ -499,7 +499,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
             }
             isAiming = false;
         }
-        
+
     }
 
     public void takeDamage(float amount)
@@ -523,7 +523,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     void updatePlayerUI()
     {
-        gameManager.instance.hpTarget = (float)HP / HPorig;
+        gameManager.instance.hpTarget = HP / HPorig;
         if (HP > 0)
         {
             gameManager.instance.drainHealthBar = StartCoroutine(gameManager.instance.DrainHealthBar());
@@ -577,7 +577,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         if (meleeAttackPoint == null)
             return;
-        
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(ShootPos.position, 1);
     }
@@ -648,8 +648,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
 
-        updatePlayerUI();
-
         shootDamage = gun.shootDmg;
         shootDistance = gun.shootDist;
         shootRate = gun.shootRate;
@@ -680,7 +678,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
         swordList.Add(sword);
         selectedSword = swordList.Count - 1;
 
-        updatePlayerUI();
+
 
         meleeDamage = sword.swordDMG;
 
@@ -721,7 +719,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     void changeGun()
     {
-        updatePlayerUI();
+
         shootDamage = gunList[selectedGun].shootDmg;
         shootDistance = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
@@ -739,7 +737,6 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
 
     void changeSword()
     {
-        updatePlayerUI();
         meleeDamage = swordList[selectedSword].swordDMG;
 
         SwordModel.GetComponent<MeshFilter>().sharedMesh = swordList[selectedSword].SwordModel.GetComponent<MeshFilter>().sharedMesh;
@@ -765,7 +762,7 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     {
         if (other.CompareTag("MedKit"))
         {
-            HP = Mathf.Clamp(HP + 20, 0, HPorig); // Adjust the amount of healing as needed
+            HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
             updatePlayerUI();
             Destroy(other.gameObject);
         }
