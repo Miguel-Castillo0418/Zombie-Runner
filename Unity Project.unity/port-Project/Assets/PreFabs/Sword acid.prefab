@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4253547412431469739}
   m_Layer: 0
   m_Name: Sword acid
-  m_TagString: Untagged
+  m_TagString: acid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066517731277157561}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.45, y: 2.51, z: -18.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066517731277157561}
-  m_Mesh: {fileID: -1195938968934217610, guid: 98318b7fbb6008a488a87d8f130a5b45, type: 3}
+  m_Mesh: {fileID: -1195938968934217610, guid: 29731814c7c496340a311c68bcedd178, type: 3}
 --- !u!23 &1515619356272524896
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d3dcfae311cd2f418047e848e3b45d8, type: 2}
+  - {fileID: 2100000, guid: f46631e99c026c44e83517f2acf5b418, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,8 +104,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0.7, z: -0.0007418956}
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: -0.0007418956}
 --- !u!114 &4253547412431469739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee870a10ca5dfae4982b328b27b208d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sword: {fileID: 11400000, guid: a7b98fd683eddc14f9c105c21d729f78, type: 2}
+  sword: {fileID: 11400000, guid: 812dd0433b95fa840b776bd82c2fc277, type: 2}

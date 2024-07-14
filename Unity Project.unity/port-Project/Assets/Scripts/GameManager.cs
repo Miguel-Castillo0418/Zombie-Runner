@@ -25,6 +25,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
     [SerializeField] GameObject computer;
+    [SerializeField] GameObject compText;
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
     //[SerializeField] GameObject doorObj1;
@@ -46,6 +47,7 @@ public class gameManager : MonoBehaviour
 
     public bool isHint;
     public bool isPaused;
+    private bool isWon = false;
     //bool doorPurchased;
     int enemycount;
     [SerializeField] public int points;
@@ -70,6 +72,7 @@ public class gameManager : MonoBehaviour
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
         computer = GameObject.FindWithTag("Computer");
+        compText = GameObject.FindWithTag("CompTxt");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         CheckHealthBar();
@@ -79,12 +82,12 @@ public class gameManager : MonoBehaviour
     {
         AudioManager.instance.playMusic("Song");
         totalPipes = PipeHolder.transform.childCount;
-
         Pipes = new GameObject[totalPipes];
         for (int i = 0; i < Pipes.Length; i++)
         {
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
+
     }
 
     // Update is called once per frame
@@ -213,32 +216,32 @@ public class gameManager : MonoBehaviour
     }
     public void showShop()
     {
-        //float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
+        float shopDist = Vector3.Distance(shopObj.transform.position, gameManager.instance.player.transform.position);
 
-        //if (shopDist < 8.6)
+        if (shopDist < 2)
 
-        //{
-        //    shopText.SetActive(true);
-        //    if (Input.GetButtonDown("Shop"))
-        //    {
-        //        shopText.SetActive(false);
-        //        if (menuActive == null)
-        //        {
+        {
+            shopText.SetActive(true);
+            if (Input.GetButtonDown("Shop"))
+            {
+                shopText.SetActive(false);
+                if (menuActive == null)
+                {
 
-        //            shop();
+                    shop();
 
-        //        }
-        //        else if (menuActive == menuShop)
-        //        {
-        //            stateUnpause();
-        //            shopText.SetActive(true);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    shopText.SetActive(false);
-        //}
+                }
+                else if (menuActive == menuShop)
+                {
+                    stateUnpause();
+                    shopText.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            shopText.SetActive(false);
+        }
     }
 
     //public void buyDoor()
@@ -278,12 +281,11 @@ public class gameManager : MonoBehaviour
     {
         float fill = playerHPBar.fillAmount;
         float timePassed = 0f;
+        Debug.Log(hpTarget);
         while (timePassed < drainTime)
         {
             timePassed += Time.deltaTime;
             playerHPBar.fillAmount = Mathf.Lerp(fill, hpTarget, (timePassed / drainTime));
-
-
             yield return null;
         }
     }
@@ -302,9 +304,10 @@ public class gameManager : MonoBehaviour
         float computerDist = Vector3.Distance(computer.transform.position, gameManager.instance.player.transform.position);
         if(computerDist < 3.2)
         {
+            compText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
             {
-                if(menuActive == null)
+                if(menuActive == null && !isWon)
                 {
                     game();
                 }
@@ -315,7 +318,12 @@ public class gameManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            compText.SetActive(false);
+        }
     }
+
     public void goodMove()
     {
         correctPipes += 1;
@@ -324,6 +332,7 @@ public class gameManager : MonoBehaviour
             puzzleTxt.SetActive(true);
             Instantiate(key, computer.transform);
             keyAnimation();
+            isWon = true;
         }
     }
     public void badMove()
@@ -334,5 +343,12 @@ public class gameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.4F);
         keyAnim.Play("KeyMove");
+    }
+
+    public void DisplayWinMenu()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(isPaused);
     }
 }
