@@ -27,7 +27,7 @@ public class ObjectiveComplete : MonoBehaviour
     }
     public IEnumerator WaitForSec()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         DestroyImmediate(Text);
     }
 
