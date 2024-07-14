@@ -78,14 +78,10 @@ public class PlayerController : MonoBehaviour, IDamage,IKnockbackable, IElementa
     private Camera mainCamera; 
     private Camera weaponCamera;
 
-
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    playerControls = new PlayerControls();
-
-    //}
-
+    private void Awake()
+    {
+        playerControls = new PlayerControls();
+    }
     private void OnEnable()
     {
         playerControls.Player.Enable();
