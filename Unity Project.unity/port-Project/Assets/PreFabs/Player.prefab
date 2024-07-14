@@ -177,7 +177,8 @@ MonoBehaviour:
   shootRate: 0.3
   shootDistance: 175
   muzzleFlash: {fileID: 1158457095782501061}
-  gunList: []
+  gunList:
+  - {fileID: 11400000, guid: 020818250d270b94c935ab43eee15ba4, type: 2}
   meleeRange: 3
   meleeDamage: 1
   enemyLayer:
