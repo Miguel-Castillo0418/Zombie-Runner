@@ -65,8 +65,7 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-        saveSystem = new SaveSystem();
-        points = saveSystem.LoadPoints();
+       saveSystem = new SaveSystem();
         pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
@@ -86,7 +85,8 @@ public class gameManager : MonoBehaviour
     }
     void Start()
     {
-        AudioManager.instance.playMusic("Song");
+        //AudioManager.instance.playMusic("Song");
+        points = saveSystem.LoadPoints();
 
     }
 
@@ -137,28 +137,28 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal(int amount)
     {
-        enemyCount += amount;
-        enemyCountText.text = enemyCount.ToString("F0");
+    //    enemyCount += amount;
+    //    enemyCountText.text = enemyCount.ToString("F0");
 
-        if (enemyCount <= 0 && round <= tempRound.totalRounds)
-        {
-            Debug.Log("test");
-            round++;
-            Debug.Log(round);
-            updateRound(round);
-            if (round <= tempRound.totalRounds)
-            {
-                Debug.Log(round);
-                // Start the next round or restart spawners
-                waveManager.StartNextWave();
-            }
-            else
-            {
-                statePause();
-                menuActive = menuWin;
-                menuActive.SetActive(isPaused);
-            }
-        }
+    //    if (enemyCount <= 0 && round <= tempRound.totalRounds)
+    //    {
+    //        Debug.Log("test");
+    //        round++;
+    //        Debug.Log(round);
+    //        updateRound(round);
+    //        if (round <= tempRound.totalRounds)
+    //        {
+    //            Debug.Log(round);
+    //            // Start the next round or restart spawners
+    //            waveManager.StartNextWave();
+    //        }
+    //        else
+    //        {
+    //            statePause();
+    //            menuActive = menuWin;
+    //            menuActive.SetActive(isPaused);
+    //        }
+    //    }
     }
 
     public void updateRound(int amount)

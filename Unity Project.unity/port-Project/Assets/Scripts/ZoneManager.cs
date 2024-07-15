@@ -4,6 +4,8 @@ public class ZoneManager : MonoBehaviour
 {
     public Spawner[] zoneOneSpawners;
     public Spawner[] zoneTwoSpawners;
+    public Spawner[] zoneThreeSpawners;
+    public Spawner[] zoneFourSpawners;
 
     [SerializeField] private Spawner[] activeZone;
 

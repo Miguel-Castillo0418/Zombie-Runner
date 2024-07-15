@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 7233397305959384027}
   - component: {fileID: 3746801385072911128}
   - component: {fileID: -417668058714705066}
+  - component: {fileID: 3501161468472690272}
   - component: {fileID: 2897734273628311978}
   - component: {fileID: 1035010071805329366}
   - component: {fileID: 4638701184208983523}
@@ -532,7 +533,7 @@ MonoBehaviour:
   HP: 10
   maxHp: 0
   lvl: 1
-  damage: 5
+  damage: 1
   pointsRewarded: 100
   enemyLayer:
     serializedVersion: 2
@@ -543,6 +544,19 @@ MonoBehaviour:
   whereISpawned: {fileID: 0}
   explosion: {fileID: 141070, guid: 805832771bf9f5f48bead8310975480e, type: 3}
 --- !u!114 &-417668058714705066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828527729946470034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4936478774dcab843897d8454604c0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aiScript: {fileID: 0}
+--- !u!114 &3501161468472690272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

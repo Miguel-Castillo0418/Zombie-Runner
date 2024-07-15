@@ -5,6 +5,7 @@ public class MoveToNextScene : MonoBehaviour
 {
     public int nextSceneLoad;
     public MenuController gameLevelManager;
+    public LoadingScreen loadingScreen;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class MoveToNextScene : MonoBehaviour
             }
             else
             {
+                //loadingScreen.loadScene(2);
                 SceneManager.LoadScene(nextSceneLoad);
                 gameLevelManager.UnlockLevel(nextSceneLoad);
                 PlayerPrefs.SetInt("levelAt", nextSceneLoad);

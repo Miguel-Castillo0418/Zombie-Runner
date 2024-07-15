@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         currentAmmo = magazineSize;
         muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
         mainCamera = Camera.main;
-        weaponCamera = transform.Find("WeaponCamera").GetComponent<Camera>();
+       
     }
 
     // Update is called once per frame
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         charController.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            AudioManager.instance.jumpSound();
+            //AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         if (charController.isGrounded && jumpCount < jumpMax)
         {
-            AudioManager.instance.jumpSound();
+            //AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -567,7 +567,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
                 if (AcidDamageable != null)
                 {
-                    AcidDamageable.takeElectricDamage(meleeDamage);
+                    AcidDamageable.takePoisonDamage(meleeDamage);
                 }
 
             }
@@ -576,7 +576,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 IElementalDamage FireDamageable = enemy.GetComponent<IElementalDamage>();
                 if (FireDamageable != null)
                 {
-                    FireDamageable.takeElectricDamage(meleeDamage);
+                    FireDamageable.takeFireDamage(meleeDamage);
                 }
 
             }
@@ -776,7 +776,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     IEnumerator walkCycle()
     {
         isPlayingSteps = true;
-        AudioManager.instance.walkSound();
+        //AudioManager.instance.walkSound();
         if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
@@ -832,7 +832,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     //for the knockback to work with the player
     public void Knockback(int lvl, int damage)
     {
-        int force = lvl * damage * 10;
+        int force = 5;
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
 

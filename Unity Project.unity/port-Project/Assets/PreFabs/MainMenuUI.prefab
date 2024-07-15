@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7505583995604084115
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9577,12 +9577,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 642542916723362516}
     - target: {fileID: 8549952202902318060, guid: 41161495305efe44e8bdf8a1249d2697, type: 3}
+      propertyPath: _newGameLevel
+      value: Dungeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549952202902318060, guid: 41161495305efe44e8bdf8a1249d2697, type: 3}
       propertyPath: invertYToggle
       value: 
       objectReference: {fileID: 1314748440384621112}
     - target: {fileID: 8549952202902318060, guid: 41161495305efe44e8bdf8a1249d2697, type: 3}
       propertyPath: _newGameLevel2
-      value: Level2
+      value: ZombieRunner
       objectReference: {fileID: 0}
     - target: {fileID: 8549952202902318060, guid: 41161495305efe44e8bdf8a1249d2697, type: 3}
       propertyPath: mouseSensSlider

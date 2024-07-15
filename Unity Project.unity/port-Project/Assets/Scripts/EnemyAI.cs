@@ -33,7 +33,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //bool playerInRange;
 
     public GameObject explosion;
-    float range = 5;
+   // float range = 5;
     Vector3 playerDir;
 
 
@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         {
             anim.SetBool("PlayerInRange", false);
         }
-        AudioManager.instance.playZombie();
+        //AudioManager.instance.playZombie();
     }
 
     //for IDamage
@@ -82,8 +82,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         }
         if (HP <= 0)
         {
-            AudioManager.instance.stopSound();
-            AudioManager.instance.zombDeath("Zdead");
+            //AudioManager.instance.stopSound();
+            //AudioManager.instance.zombDeath("Zdead");
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
@@ -237,7 +237,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //for the explosion animation
     public void Explode()
     {
-        AudioManager.instance.explosionSound();
+        //AudioManager.instance.explosionSound();
         Instantiate(explosion, transform.position + (Vector3.up * 2), Quaternion.identity);
         StartCoroutine(WaitForAnimationThenDestroy(explosion));
         //sources.Play();

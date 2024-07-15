@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5518609337798345717}
+  - component: {fileID: 7817209731947689679}
   m_Layer: 0
   m_Name: MedKit
   m_TagString: MedKit
@@ -32,6 +33,59 @@ Transform:
   - {fileID: 6910393349010301041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7817209731947689679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476103228667580485}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c413a1773016048aa49209dc45ce87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charController: {fileID: 0}
+  cameraController: {fileID: 0}
+  gunAud: {fileID: 0}
+  HP: 0
+  speed: 0
+  sprintMod: 0
+  jumpMax: 0
+  jumpSpeed: 0
+  gravity: 0
+  crouchHeight: 0
+  slideSpeed: 0
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  bullet: {fileID: 0}
+  ShootPos: {fileID: 0}
+  gunModel: {fileID: 0}
+  SwordModel: {fileID: 0}
+  shootDamage: 0
+  shootRate: 0
+  shootDistance: 0
+  muzzleFlash: {fileID: 0}
+  gunList: []
+  swordList: []
+  meleeRange: 0
+  meleeDamage: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  meleeAttackPoint: {fileID: 0}
+  attackRate: 0
+  loadingIcon: {fileID: 0}
+  guns: []
+  swords: []
+  HPorig: 0
+  shopHP: 0
+  currentAmmo: 0
+  magazineSize: 0
+  stockAmmo: 0
+  spreadAngle: 0
+  pelletsFired: 0
 --- !u!1001 &6910393349010378207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5352958085840695558, guid: 4cdcc6c16809ba5439c8798d9bb925f4, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 490541873500495394, guid: 4cdcc6c16809ba5439c8798d9bb925f4, type: 3}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
-    public static SaveSystem instance;
+    public SaveSystem instance;
     public void SaveHP(float hp)
     {
         PlayerPrefs.SetFloat("playerHP", hp);
