@@ -35,6 +35,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
+    [SerializeField] public GameObject savesystemobj;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -65,7 +66,8 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-       saveSystem = new SaveSystem();
+        savesystemobj = new GameObject("savesystemobj");
+        saveSystem = savesystemobj.AddComponent<SaveSystem>();
         pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
@@ -137,28 +139,28 @@ public class gameManager : MonoBehaviour
     }
     public void updateGameGoal(int amount)
     {
-    //    enemyCount += amount;
-    //    enemyCountText.text = enemyCount.ToString("F0");
+        //    enemyCount += amount;
+        //    enemyCountText.text = enemyCount.ToString("F0");
 
-    //    if (enemyCount <= 0 && round <= tempRound.totalRounds)
-    //    {
-    //        Debug.Log("test");
-    //        round++;
-    //        Debug.Log(round);
-    //        updateRound(round);
-    //        if (round <= tempRound.totalRounds)
-    //        {
-    //            Debug.Log(round);
-    //            // Start the next round or restart spawners
-    //            waveManager.StartNextWave();
-    //        }
-    //        else
-    //        {
-    //            statePause();
-    //            menuActive = menuWin;
-    //            menuActive.SetActive(isPaused);
-    //        }
-    //    }
+        //    if (enemyCount <= 0 && round <= tempRound.totalRounds)
+        //    {
+        //        Debug.Log("test");
+        //        round++;
+        //        Debug.Log(round);
+        //        updateRound(round);
+        //        if (round <= tempRound.totalRounds)
+        //        {
+        //            Debug.Log(round);
+        //            // Start the next round or restart spawners
+        //            waveManager.StartNextWave();
+        //        }
+        //        else
+        //        {
+        //            statePause();
+        //            menuActive = menuWin;
+        //            menuActive.SetActive(isPaused);
+        //        }
+        //    }
     }
 
     public void updateRound(int amount)
@@ -302,12 +304,12 @@ public class gameManager : MonoBehaviour
     public void ComputerGame()
     {
         float computerDist = Vector3.Distance(computer.transform.position, gameManager.instance.player.transform.position);
-        if(computerDist < 3.2)
+        if (computerDist < 3.2)
         {
             compText.SetActive(true);
             if (Input.GetButtonDown("Shop"))
             {
-                if(menuActive == null && !isWon)
+                if (menuActive == null && !isWon)
                 {
                     game();
                 }
@@ -327,7 +329,7 @@ public class gameManager : MonoBehaviour
     public void goodMove()
     {
         correctPipes += 1;
-        if(correctPipes == totalPipes)
+        if (correctPipes == totalPipes)
         {
             puzzleTxt.SetActive(true);
             Instantiate(key, computer.transform);

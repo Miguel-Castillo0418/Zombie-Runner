@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Start()
     {
         playerControls = new PlayerControls();
-        saveSystem = new SaveSystem();
+        saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
         // spawnIndicator = new SpawnIndicator();
         HP = saveSystem.LoadHP();
         HPorig = HP;
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         currentAmmo = magazineSize;
         muzzleFlashPoint = gunModel.transform.Find("MuzzleFlashPoint");
         mainCamera = Camera.main;
-       
+
     }
 
     // Update is called once per frame
@@ -553,7 +553,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         foreach (Collider enemy in hitEnemies)
         {
 
-            if(SwordModel.CompareTag("Electric"))
+            if (SwordModel.CompareTag("Electric"))
             {
                 IElementalDamage ElectricDamageable = enemy.GetComponent<IElementalDamage>();
                 if (ElectricDamageable != null)
@@ -562,7 +562,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 }
 
             }
-            else if (SwordModel.CompareTag("Acid"))
+            else if (SwordModel.CompareTag("acid"))
             {
                 IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
                 if (AcidDamageable != null)
@@ -793,7 +793,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         if (other.CompareTag("MedKit"))
         {
-            HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
+            IncreaseHealth();
+           // HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
             updatePlayerUI();
             Destroy(other.gameObject);
         }

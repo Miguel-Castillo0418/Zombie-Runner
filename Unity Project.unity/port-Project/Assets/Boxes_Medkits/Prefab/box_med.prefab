@@ -127,7 +127,6 @@ GameObject:
   - component: {fileID: 9580444}
   - component: {fileID: 5352958085840695558}
   - component: {fileID: 7834608275243468696}
-  - component: {fileID: 490541873500495394}
   m_Layer: 0
   m_Name: box_med
   m_TagString: MedKit
@@ -223,20 +222,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &490541873500495394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d54a5432ad64ece4ca01c53ae0857df2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  medKit: 0
-  myValue: 100
 --- !u!1 &177648
 GameObject:
   m_ObjectHideFlags: 0

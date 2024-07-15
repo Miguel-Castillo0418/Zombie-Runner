@@ -22,6 +22,12 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.statePause();
     }
 
+    public void nextLevel()
+    {
+        SceneManager.LoadScene(MoveToNextScene.instance.nextSceneLoad);
+        
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR
