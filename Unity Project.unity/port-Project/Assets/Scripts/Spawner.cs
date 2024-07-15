@@ -1,11 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; 
-    public float spawnInterval = 5f; 
-    public float maxDistanceToPlayer = 20f; 
-    public float minDistanceToPlayer = 5f; 
+    public GameObject enemyPrefab;
+    public float spawnInterval = 5f;
+    public float maxDistanceToPlayer = 20f;
+    public float minDistanceToPlayer = 5f;
     public int maxEnemies; // Maximum number of enemies to spawn (-1 for infinite)
 
     private Transform player;
@@ -20,19 +21,19 @@ public class Spawner : MonoBehaviour
         spawnTimer = spawnInterval;
     }
 
-    void Update()
+    public IEnumerator spawnEnemies()
     {
-        if (!isActive) return;
+        if (!isActive) yield return null;
 
         // Stop checking if the maximum number of enemies has been reached
         if (maxEnemies != -1 && spawnedEnemiesCount >= maxEnemies)
         {
             Debug.Log("Maximum number of enemies reached.");
             canSpawn = false; // Prevent further spawning
-            return;
+            yield return null;
         }
 
-        if (!canSpawn) return;
+        if (!canSpawn) yield return null;
 
         // Debug log to see if the update loop is still running
         Debug.Log("Update Loop Running");
@@ -46,7 +47,7 @@ public class Spawner : MonoBehaviour
         if (distanceToPlayer <= minDistanceToPlayer)
         {
             Debug.Log("Player too close to spawn.");
-            return;
+            yield return null;
         }
 
         // Adjust spawn rate based on distance to player
@@ -59,12 +60,13 @@ public class Spawner : MonoBehaviour
             SpawnEnemy();
             spawnTimer = spawnInterval; // Reset timer after attempting to spawn
         }
+        yield return null;
     }
 
     void SpawnEnemy()
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere; // * spawnRadius;
-        spawnPosition.y = transform.position.y; 
+        spawnPosition.y = transform.position.y;
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         spawnedEnemiesCount++;
         Debug.Log("Enemy spawned. Total spawned: " + spawnedEnemiesCount);
@@ -82,7 +84,8 @@ public class Spawner : MonoBehaviour
         if (!active)
         {
             spawnedEnemiesCount = 0;
-            canSpawn = true; 
+            canSpawn = true;
         }
     }
+
 }
