@@ -55,6 +55,10 @@ MonoBehaviour:
   zDead:
   - Name: Zdead
     clip: {fileID: 8300000, guid: 115f9667fe577444f8fb3e77c1a4087c, type: 3}
+  click: []
+  purchase:
+  - Name: Purchase Sound
+    clip: {fileID: 8300000, guid: 0017b3e62a342534fbdc0cb979baf5ef, type: 3}
   zombieSFX:
   - {fileID: 8300000, guid: 2f7d8b9fc7691e94ebb0fb1d37ead1cb, type: 3}
   - {fileID: 8300000, guid: f055099c687d5e24c856d3925bd4d7fc, type: 3}
@@ -113,7 +117,13 @@ MonoBehaviour:
   playerWalk:
   - {fileID: 8300000, guid: e501c841c431b50499c8dad58850d106, type: 3}
   explosion:
-  - {fileID: 8300000, guid: 88900550cb245344d91c21d815b85783, type: 3}
+  - {fileID: 8300000, guid: e61a4c7cf9ddf5740b13e71c38146f0c, type: 3}
+  doors:
+  - {fileID: 8300000, guid: ca4b1b4d67eb15743ab2fcc634f7483b, type: 3}
+  - {fileID: 8300000, guid: 59e473aacec00a149b0d70d15c1f8f80, type: 3}
+  - {fileID: 8300000, guid: 6a20248e1a254e64c98ca4fd9e252c69, type: 3}
+  keys:
+  - {fileID: 8300000, guid: 45a225c95c61d0f4098f2624cb83cb1b, type: 3}
   MusicSource: {fileID: 1779740058658159246}
   zSFXSource: {fileID: 1299898199855627201}
   pSFXSource: {fileID: 4916492432871705345}
@@ -123,6 +133,7 @@ MonoBehaviour:
   hurtVol: 0.5
   walkVol: 0.5
   exploVol: 0.5
+  doorsVol: 0.5
 --- !u!1001 &2787976576023286061
 PrefabInstance:
   m_ObjectHideFlags: 0
