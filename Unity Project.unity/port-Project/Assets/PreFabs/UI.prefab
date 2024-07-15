@@ -9070,6 +9070,7 @@ MonoBehaviour:
   menuWin: {fileID: 1815858563851035595}
   menuLose: {fileID: 3171479762044887582}
   menuShop: {fileID: 1229064961499555235}
+  loadingScreen: {fileID: 0}
   gameComputer: {fileID: 660277531031160080}
   enemyCountText: {fileID: 3257013181002561957}
   roundCountText: {fileID: 4312446987253150028}
@@ -9823,9 +9824,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4525004928770143749}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: rouletteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11419,7 +11420,7 @@ MonoBehaviour:
   speedCost: 200
   strengthCost: 300
   rouletteCost: 500
-  playerController: {fileID: 0}
+  playerController: {fileID: 4192162789329210410, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
   healthbutton: {fileID: 43419570057163977}
 --- !u!1 &7936973037764576110
 GameObject:
