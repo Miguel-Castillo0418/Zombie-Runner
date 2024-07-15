@@ -12,6 +12,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuShop;
+
+    [SerializeField] GameObject loadingScreen;
+
     [SerializeField] GameObject gameComputer;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
@@ -173,6 +176,16 @@ public class gameManager : MonoBehaviour
         Debug.Log("Lose");
         statePause();
         menuActive = menuLose;
+        menuActive.SetActive(isPaused);
+
+
+    }
+
+    public void loading()
+    {
+        Debug.Log("load");
+        statePause();
+        menuActive = loadingScreen;
         menuActive.SetActive(isPaused);
 
     }

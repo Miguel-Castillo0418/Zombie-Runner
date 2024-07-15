@@ -24,8 +24,9 @@ public class buttonFunctions : MonoBehaviour
 
     public void nextLevel()
     {
+        gameManager.instance.loading();
         SceneManager.LoadScene(MoveToNextScene.instance.nextSceneLoad);
-        
+        gameManager.instance.stateUnpause();
     }
 
     public void quit()

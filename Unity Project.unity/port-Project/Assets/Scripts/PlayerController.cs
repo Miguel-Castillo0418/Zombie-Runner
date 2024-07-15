@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     bool isReloading = false;
     bool isAiming;
     bool isPlayingSteps;
+    public bool hasSword = false;
 
     bool isShooting;
     int jumpCount;
@@ -117,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         playerControls = new PlayerControls();
         saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
         // spawnIndicator = new SpawnIndicator();
-        HP = saveSystem.LoadHP();
+        //HP = saveSystem.LoadHP();
         HPorig = HP;
         Debug.Log("Player HP: " + HP);
         updatePlayerUI();
@@ -504,8 +505,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     public void takeDamage(float amount)
     {
-        HP -= (int)amount;
-        //AudioManager.instance.hurtSound();
+        HP -= amount;
+        AudioManager.instance.hurtSound();
         //spawnIndicator.Register();
         updatePlayerUI();
         if (HP <= 0)
@@ -541,7 +542,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         // Disable gun model components
         // Disable gun model renderer
         MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
-        if (gunMeshRenderer != null)
+        
+        if (gunMeshRenderer != null&& hasSword)
         {
             gunMeshRenderer.enabled = false;
         }
@@ -562,7 +564,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 }
 
             }
-            else if (SwordModel.CompareTag("acid"))
+            else if (SwordModel.CompareTag("Acid"))
             {
                 IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
                 if (AcidDamageable != null)
@@ -580,14 +582,14 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 }
 
             }
-            else
-            {
-                IDamage damageable = enemy.GetComponent<IDamage>();
-                if (damageable != null)
-                {
-                    damageable.takeDamage(meleeDamage);
-                }
-            }
+            //else
+            //{
+            //    IDamage damageable = enemy.GetComponent<IDamage>();
+            //    if (damageable != null)
+            //    {
+            //        damageable.takeDamage(meleeDamage);
+            //    }
+            //}
         }
 
         // Play sword swing animation
@@ -870,6 +872,12 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             yield return null;
         }
         Destroy(VFX);
+    }
+    public void toggleSword()
+    {
+       //may lock later
+            hasSword = true;
+         
     }
 }
 
