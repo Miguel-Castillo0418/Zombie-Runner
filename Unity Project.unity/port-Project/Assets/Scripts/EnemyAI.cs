@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     public WaveSpawner whereISpawned;
     public static bool isSound;
     //bool playerInRange;
-
+    bool isDead=false;
     public GameObject explosion;
    // float range = 5;
     Vector3 playerDir;
@@ -80,10 +80,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             agent.speed = HalfHpSpeed;
             anim.SetBool("HalfHp", true);
         }
-        if (HP <= 0)
+        if (HP <= 0&&!isDead)
         {
             //AudioManager.instance.stopSound();
             //AudioManager.instance.zombDeath("Zdead");
+            isDead= true;
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);
             anim.SetTrigger("Die");
