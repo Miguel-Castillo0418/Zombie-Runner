@@ -319,14 +319,16 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 }
                 else
                 {
-                    GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
+                    Vector3 targetPoint = GetTargetPoint();
+                    Vector3 shootDirection = (targetPoint - ShootPos.position).normalized;
+
+                    GameObject bulletInstance = Instantiate(bullet, ShootPos.position, Quaternion.LookRotation(shootDirection));
                     Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
-                    rb.velocity = ShootPos.forward * shootDistance;
+                    rb.velocity = shootDirection * shootDistance;
 
                     // Set the damage value of the bullet
                     Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                     bulletScript.SetDamage(shootDamage);
-
                     // Instantiate effects based on what was hit
                     if (hit.collider.CompareTag("Enemy"))
                         Instantiate(gunList[selectedGun].enemyHitEffect, hit.point, Quaternion.identity);
@@ -878,6 +880,22 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
        //may lock later
             hasSword = true;
          
+    }
+
+    Vector3 GetTargetPoint()
+    {
+        // Assuming the crosshair is in the center of the screen
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        Ray ray = mainCamera.ScreenPointToRay(screenCenter);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, hitLayers))
+        {
+            return hit.point;
+        }
+        else
+        {
+            return ray.GetPoint(shootDistance);
+        }
     }
 }
 
