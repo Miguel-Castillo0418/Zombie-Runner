@@ -168,13 +168,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6911520971986371291}
-  - component: {fileID: 9208924239670982107}
+  - component: {fileID: 5178581796463845405}
   - component: {fileID: 3677838813767252629}
   - component: {fileID: 422698597008868054}
   - component: {fileID: 1219830368237868438}
   - component: {fileID: 2813565888691786513}
   m_Layer: 3
-  m_Name: enemy_3
+  m_Name: enemy_3 invicible
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +197,7 @@ Transform:
   - {fileID: 963215598491347838}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9208924239670982107
+--- !u!114 &5178581796463845405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,22 +206,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405712784865628135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ea64715e56b824594feb5efc77d017, type: 3}
+  m_Script: {fileID: 11500000, guid: a2314b49e0da13d43b89f96a2c02ed5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1219830368237868438}
   agent: {fileID: 422698597008868054}
-  meleeAttack:
-  - {fileID: 0}
-  collider: {fileID: 5806692066841405024}
+  meleeAttack: []
+  collider: {fileID: 0}
   anim: {fileID: 3677838813767252629}
-  meleeRange: 4
-  atkRate: 3
-  HP: 30
+  meleeRange: 0
+  atkRate: 0
+  HP: 100000
   maxHp: 0
-  lvl: 3
-  damage: 5
-  pointsRewarded: 30
+  lvl: 0
+  damage: 100
+  pointsRewarded: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -230,15 +229,6 @@ MonoBehaviour:
   electrified: {fileID: 0}
   whereISpawned: {fileID: 0}
   explosion: {fileID: 0}
-  meleeAttackPoint: {fileID: 2108099784635268686}
-  enemyAI: {fileID: 0}
-  chargeRadius: 25
-  chargeDamage: 4
-  lastAttackTime: 0
-  chargeSpeed: 10
-  normalSpeed: 5
-  chargeDuration: 3
-  chargeCooldown: 15
 --- !u!95 &3677838813767252629
 Animator:
   serializedVersion: 5
@@ -249,7 +239,7 @@ Animator:
   m_GameObject: {fileID: 1405712784865628135}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 738797b18eab5eb439c635a6270b767b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 14f8e9466e8f0d24499af1b366d28b5e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 01a30087d08a7544c983c81b230f89b2, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -269,9 +259,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 1405712784865628135}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 2
+  m_Speed: 10
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 600
   m_StoppingDistance: 3
@@ -324,7 +314,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
