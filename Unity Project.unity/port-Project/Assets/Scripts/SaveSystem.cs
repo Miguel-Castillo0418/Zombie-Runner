@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
+    [SerializeField] GameObject[] collectibles;
     public SaveSystem instance;
     public void SaveHP(float hp)
     {
@@ -44,5 +45,7 @@ public class SaveSystem : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+    public void saveCollectibles() { 
     
+    }
 }
