@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         {
             anim.SetBool("PlayerInRange", false);
         }
-        //AudioManager.instance.playZombie();
+        AudioManager.instance.playZombie();
     }
 
     //for IDamage
@@ -82,8 +82,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         }
         if (HP <= 0&&!isDead)
         {
-            //AudioManager.instance.stopSound();
-            //AudioManager.instance.zombDeath("Zdead");
+            AudioManager.instance.stopSound();
+            AudioManager.instance.zombDeath("Zdead");
             isDead= true;
             EnemyColliderToggle();
             anim.SetBool("IsDead", true);

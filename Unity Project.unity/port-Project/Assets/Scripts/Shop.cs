@@ -19,6 +19,8 @@ public class Shop : MonoBehaviour
     [SerializeField] PlayerController playerController;
     [SerializeField] Button healthbutton;
     int Zombucks;
+    bool lowHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,7 @@ public class Shop : MonoBehaviour
         StrengthCostText.text = strengthCost.ToString();
         RouletteCostText.text = rouletteCost.ToString();
         Zombucks = gameManager.instance.points;
-        healthbutton.enabled = false;
+        lowHealth = false;
         updateZombucks();
     }
 
@@ -37,7 +39,11 @@ public class Shop : MonoBehaviour
         Zombucks = gameManager.instance.points;
         if (playerController.shopHP < playerController.HPorig)
         {
-            healthbutton.enabled = true;
+            lowHealth = true;
+        }
+        else if(playerController.shopHP == playerController.HPorig)
+        {
+            lowHealth = false;
         }
         updateZombucks();
     }
@@ -47,17 +53,17 @@ public class Shop : MonoBehaviour
     }
     public void healthButton()
     {
-        if (playerController.HPorig == playerController.shopHP)
-        {
-            healthbutton.enabled = false;
-        }
-        if (Zombucks - healthCost >= 0)
+        if (Zombucks - healthCost >= 0 && lowHealth)
         {
             
             gameManager.instance.points -= healthCost;
             AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.IncreaseHealth();
+        }
+        else
+        {
+            AudioManager.instance.error();
         }
     }
 
@@ -71,6 +77,10 @@ public class Shop : MonoBehaviour
             updateZombucks();
             playerController.IncreaseSpeed();
         }
+        else 
+        {
+            AudioManager.instance.error();
+        }
     }
 
     public void strengthButton()
@@ -82,6 +92,10 @@ public class Shop : MonoBehaviour
             updateZombucks();
             playerController.IncreaseStrength();
         }
+        else
+        {
+            AudioManager.instance.error();
+        }
     }
     public void rouletteButton()
     {
@@ -91,6 +105,10 @@ public class Shop : MonoBehaviour
             AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.spinRoulette();
+        }
+        else
+        {
+            AudioManager.instance.error();
         }
     }
 }

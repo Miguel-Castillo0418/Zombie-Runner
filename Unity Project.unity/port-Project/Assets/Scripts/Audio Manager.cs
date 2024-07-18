@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] click;
     public Sound[] purchase;
     public AudioClip[] zombieSFX, playerJump, playerHurt, playerWalk, explosion, doors, keys;
+    public AudioClip errorAud;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
     [SerializeField] AudioSource zSFXSource;
@@ -138,5 +139,9 @@ public class AudioManager : MonoBehaviour
     public void keyPickup()
     {
         pSFXSource.PlayOneShot(keys[0], doorsVol);
+    }
+    public void error()
+    {
+        pSFXSource.PlayOneShot(errorAud, doorsVol);
     }
 }
