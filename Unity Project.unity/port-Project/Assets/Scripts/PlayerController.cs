@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
+    [SerializeField] public DamageIndicator indicator;
+    [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
 
@@ -72,12 +74,12 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     int selectedSword;
 
 
+
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushBack;
 
     private SaveSystem saveSystem;
-    //   private SpawnIndicator spawnIndicator;
     public PlayerControls playerControls;
     private Camera mainCamera;
     private Camera weaponCamera;
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         playerControls = new PlayerControls();
         saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
-        // spawnIndicator = new SpawnIndicator();
+
         //HP = saveSystem.LoadHP();
         HPorig = HP;
         Debug.Log("Player HP: " + HP);
@@ -509,7 +511,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         HP -= amount;
         AudioManager.instance.hurtSound();
-        //spawnIndicator.Register();
         updatePlayerUI();
         if (HP <= 0)
         {
