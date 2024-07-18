@@ -15,6 +15,7 @@ public class LargeEnemy : EnemyAI
     [SerializeField] float normalSpeed = 3.5f;
     [SerializeField] float chargeDuration = 1f;
     [SerializeField] float chargeCooldown = 10f;
+    [SerializeField] public NavMeshPath path;
     private bool isCharging = false;
     private bool canCharge = true;
     private bool attacking = false;
@@ -31,7 +32,7 @@ public class LargeEnemy : EnemyAI
     {
         gameManager.instance.updateGameGoal(1);
         agent.speed = normalSpeed;
-        
+
     }
 
     // Update is called once per frame
@@ -56,10 +57,8 @@ public class LargeEnemy : EnemyAI
             else if (distanceToPlayer <= chargeRadius && !(distanceToPlayer <= meleeRange) && canCharge)
             {
                 // Charge towards the player
-
-                Debug.Log("Startcharge");
-                StartCoroutine(Charge());
-
+                //StartCoroutine(Charge());
+                agent.speed = chargeSpeed;
             }
 
         }
@@ -69,6 +68,7 @@ public class LargeEnemy : EnemyAI
     //------------NEW-------------
     IEnumerator Charge()
     {
+        Debug.Log("Startcharge");
         isCharging = true;
         canCharge = false;
         agent.isStopped = true;
