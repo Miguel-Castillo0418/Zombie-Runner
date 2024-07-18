@@ -32,6 +32,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject compText;
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
+    [SerializeField] AudioSource pipeWin;
+    [SerializeField] AudioClip winSound;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -337,6 +339,7 @@ public class gameManager : MonoBehaviour
         if (correctPipes == totalPipes)
         {
             puzzleTxt.SetActive(true);
+            pipeWin.PlayOneShot(winSound);
             Instantiate(key, computer.transform);
             keyAnimation();
             isWon = true;
