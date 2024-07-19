@@ -6,17 +6,6 @@ using TMPro;
 using UnityEngine;
 
 
-public class CollectibleData
-{
-    public string collectibleName;
-    public bool isImageActive;
-    public CollectibleData() { }
-    public CollectibleData(string name, bool active)
-    {
-        collectibleName = name;
-        isImageActive = active;
-    }
-}
 
 public class SaveSystem : MonoBehaviour
 {
