@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour
 {
@@ -42,7 +43,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
-    //[SerializeField] public GameObject savesystemobj;
+    [SerializeField] public GameObject savesystemobj;
+    public SaveSystem saveSystem;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -51,7 +53,6 @@ public class gameManager : MonoBehaviour
 
     public GameObject player;
     public PlayerController playerScript;
-    private SaveSystem saveSystem;
 
     public bool isHint;
     public bool isPaused;
@@ -75,9 +76,8 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-        //savesystemobj = new GameObject("savesystemobj");
-        //instance = this;
-        //saveSystem = SaveSystem.instance;
+        savesystemobj = new GameObject("savesystemobj");
+        saveSystem = savesystemobj.AddComponent<SaveSystem>();
         pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
@@ -103,7 +103,8 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-            points = saveSystem.LoadPoints();
+            //saveSystem.loadCollectibles();
+            points = gameManager.instance.saveSystem.LoadPoints();
         }
         
         //AudioManager.instance.playMusic("Song");
