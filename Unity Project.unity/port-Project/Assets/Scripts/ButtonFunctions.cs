@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class buttonFunctions : MonoBehaviour
 {
+    
     public void resume()
     {
+        AudioManager.instance.clickSound("click");
         gameManager.instance.stateUnpause();
     }
 
     public void restart()
     {
+        AudioManager.instance.clickSound("click");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameManager.instance.stateUnpause();
     }
 
     public void mainMenu()
     {
+        AudioManager.instance.clickSound("click");
         SceneManager.LoadScene("Level1");
         gameManager.instance.statePause();
     }
@@ -31,6 +36,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void quit()
     {
+        AudioManager.instance.clickSound("click");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

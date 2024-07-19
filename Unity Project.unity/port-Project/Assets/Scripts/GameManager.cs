@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
     [SerializeField] GameObject testhintText;
-    [SerializeField] GameObject hintobject;
+    [SerializeField] GameObject hintObject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
@@ -31,6 +33,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject compText;
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
+    [SerializeField] AudioSource pipeWin;
+    [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -39,15 +44,18 @@ public class gameManager : MonoBehaviour
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
     [SerializeField] public GameObject savesystemobj;
+    public SaveSystem saveSystem;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
     public Image playerHPBar;
-
+    [SerializeField] GameObject PinPadDoor;
+    [SerializeField] GameObject pinPadText;
+    [SerializeField] GameObject PinPadUI;
+    PinPad pin;
 
     public GameObject player;
     public PlayerController playerScript;
-    private SaveSystem saveSystem;
 
     public bool isHint;
     public bool isPaused;
@@ -63,6 +71,8 @@ public class gameManager : MonoBehaviour
     private int correctPipes = 0;
 
     private int enemyCount;
+    public int deadEnemies;
+    public int coinsCollected;
 
     // Start is called before the first frame update
     void Awake()
@@ -87,11 +97,22 @@ public class gameManager : MonoBehaviour
         {
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
+        pin = PinPadUI.GetComponent<PinPad>();
     }
-    void Start()
+    void OnEnable()
     {
+        if (saveSystem == null) 
+        { 
+            saveSystem = SaveSystem.instance;
+        }
+        else
+        {
+            //saveSystem.loadCollectibles();
+            points = gameManager.instance.saveSystem.LoadPoints();
+        }
+        
         //AudioManager.instance.playMusic("Song");
-        points = saveSystem.LoadPoints();
+        
 
     }
 
@@ -115,6 +136,7 @@ public class gameManager : MonoBehaviour
         updateAmmo();
         showShop();
         ComputerGame();
+        pinPad();
         // buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
@@ -200,22 +222,13 @@ public class gameManager : MonoBehaviour
         pointsCountText.text = points.ToString("F0");
     }
 
-    public void showHints()
+    public void showHint()
     {
-        float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
-        if (hint < 3)
-        {
-
-            testhintText.SetActive(true);
-
-
-        }
-        else
-        {
-
-            testhintText.SetActive(false);
-
-        }
+        hintObject.SetActive(true);
+    }
+    public void disappearHint()
+    {
+        hintObject.SetActive(false);
     }
     public void updateAmmo()
     {
@@ -345,6 +358,7 @@ public class gameManager : MonoBehaviour
         if (correctPipes == totalPipes)
         {
             puzzleTxt.SetActive(true);
+            pipeWin.PlayOneShot(winSound);
             Instantiate(key, computer.transform);
             keyAnimation();
             isWon = true;
@@ -365,5 +379,41 @@ public class gameManager : MonoBehaviour
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(isPaused);
+    }
+    public void clickAud()
+    {
+        pipeWin.PlayOneShot(pipeClick, 0.5f);
+    }
+    public void pinpadMenu()
+    {
+        statePause();
+        menuActive = PinPadUI;
+        menuActive.SetActive(true);
+    }
+    public void pinPad()
+    {
+        float doorDist = Vector3.Distance(PinPadDoor.transform.position, gameManager.instance.player.transform.position);
+        if (doorDist < 3.3) 
+        {
+            if(pin.iscorrect == false)
+            {
+                pinPadText.SetActive(true);
+            }
+            if (Input.GetButtonDown("Shop"))
+            {
+                if (menuActive == null && pin.iscorrect == false)
+                {
+                    pinpadMenu();
+                }
+                else if (menuActive == PinPadUI)
+                {
+                    stateUnpause();
+                }
+            }
+        }
+        else
+        {
+            pinPadText.SetActive(false);
+        }
     }
 }

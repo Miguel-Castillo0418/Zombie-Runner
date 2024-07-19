@@ -2018,6 +2018,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4444463997481237779, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -22.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444463997481237779, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 278.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4525004928770143749, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: playerController
       value: 
@@ -2117,6 +2125,10 @@ PrefabInstance:
     - target: {fileID: 5053629561674881216, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 134
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192427573206278387, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5581854343976183484, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -88831,22 +88843,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc00000000014355467875208119911, type: 3}
---- !u!1 &1503587687 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7348740828750156445, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
-  m_PrefabInstance: {fileID: 187872238}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1503587689 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1415076019533965425, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
-  m_PrefabInstance: {fileID: 187872238}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503587687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1506804775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89493,7 +89489,7 @@ PrefabInstance:
     - target: {fileID: 2536950403510884290, guid: edfb91072a1fe9146914de1bc372a40d, type: 3}
       propertyPath: Text
       value: 
-      objectReference: {fileID: 1503587689}
+      objectReference: {fileID: 0}
     - target: {fileID: 5612036787914340702, guid: edfb91072a1fe9146914de1bc372a40d, type: 3}
       propertyPath: m_Name
       value: ObjectiveComplete (Explore)
@@ -90391,6 +90387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572a962b837fc4a4ab49ccb535e1bf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectibleArr: []
   instance: {fileID: 0}
 --- !u!4 &1701395155
 Transform:
@@ -91096,7 +91093,7 @@ PrefabInstance:
     - target: {fileID: 5266399021626967224, guid: 6b38cca9a94a9eb43b5e92cf6fc95fd7, type: 3}
       propertyPath: CompletedText
       value: 
-      objectReference: {fileID: 1503587687}
+      objectReference: {fileID: 0}
     - target: {fileID: 5266399021626967224, guid: 6b38cca9a94a9eb43b5e92cf6fc95fd7, type: 3}
       propertyPath: ObjectiveText
       value: 

@@ -37,6 +37,7 @@ public class PipesScript : MonoBehaviour
     public void rotatePipe()
     {
         transform.Rotate(new Vector3(0, 0, 90));
+        gameManager.instance.clickAud();
 
         if (corRotate > 1)
         {
