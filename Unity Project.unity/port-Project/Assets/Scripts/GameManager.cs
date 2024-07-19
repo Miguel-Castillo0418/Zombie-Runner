@@ -103,7 +103,6 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-            saveSystem.loadCollectibles();
             points = saveSystem.LoadPoints();
         }
         

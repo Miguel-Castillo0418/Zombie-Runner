@@ -8,7 +8,6 @@ public class Collectible : MonoBehaviour
 {
     [SerializeField] public GameObject hint;
     [SerializeField] public GameObject itemImage;
-    //[SerializeField] public GameObject saveSystemObj;
     [SerializeField] public gameManager gameManager;
     GameObject newHint = null;
     SaveSystem saveSystem = null;
@@ -43,7 +42,6 @@ public class Collectible : MonoBehaviour
             itemImage.SetActive(true);
             hasObject = true;
             enabled = false;
-            saveSystem.saveCollectibles();
         }
     }
     private void OnTriggerEnter(Collider other)
