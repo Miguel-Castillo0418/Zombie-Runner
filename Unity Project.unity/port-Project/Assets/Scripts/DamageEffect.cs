@@ -57,26 +57,26 @@ public class DamageEffect : MonoBehaviour
         dmgVignette.enabled.Override(false);
         yield return null;
     }
-    public IEnumerator ShowBloodOverlay()
-    {
-        dmgIntensity = 0.4f;
-        dmgVignette.enabled.Override(true);
-        dmgVignette.intensity.Override(0.4f);
+    //public IEnumerator ShowBloodOverlay()
+    //{
+    //    dmgIntensity = 0.4f;
+    //    dmgVignette.enabled.Override(true);
+    //    dmgVignette.intensity.Override(0.4f);
 
 
-        yield return new WaitUntil(() => PlayerController.instance.HP > 30);
-        while (dmgIntensity > 0)
-        {
-            dmgIntensity -= 0.01f;
-            if (dmgIntensity < 0)
-            {
-                dmgIntensity = 0;
-            }
-            dmgVignette.intensity.Override(dmgIntensity);
-            yield return new WaitForSeconds(0.1f);
-        }
-        dmgVignette.enabled.Override(false);
-        yield return null;
-    }
+    //    yield return new WaitUntil(() => PlayerController.instance.HP > 30);
+    //    while (dmgIntensity > 0)
+    //    {
+    //        dmgIntensity -= 0.01f;
+    //        if (dmgIntensity < 0)
+    //        {
+    //            dmgIntensity = 0;
+    //        }
+    //        dmgVignette.intensity.Override(dmgIntensity);
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //    dmgVignette.enabled.Override(false);
+    //    yield return null;
+    //}
 
 }
