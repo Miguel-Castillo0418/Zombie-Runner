@@ -33,6 +33,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] Animator keyAnim;
     [SerializeField] AudioSource pipeWin;
     [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -65,6 +66,8 @@ public class gameManager : MonoBehaviour
     private int correctPipes = 0;
 
     private int enemyCount;
+    public int deadEnemies;
+    public int coinsCollected;
 
     // Start is called before the first frame update
     void Awake()
@@ -368,5 +371,9 @@ public class gameManager : MonoBehaviour
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(isPaused);
+    }
+    public void clickAud()
+    {
+        pipeWin.PlayOneShot(pipeClick, 0.5f);
     }
 }

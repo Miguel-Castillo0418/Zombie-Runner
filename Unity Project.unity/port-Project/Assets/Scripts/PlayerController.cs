@@ -72,7 +72,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public float spreadAngle;
     public int pelletsFired;
     int selectedSword;
-
+    public int deadEnemies;
+    public int coinsCollected;
 
 
     Vector3 moveDir;
@@ -228,7 +229,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         charController.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            //AudioManager.instance.jumpSound();
+            AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -261,7 +262,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         if (charController.isGrounded && jumpCount < jumpMax)
         {
-            //AudioManager.instance.jumpSound();
+            AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -398,6 +399,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         }
         else
         {
+            StartCoroutine(AudioManager.instance.gunEmpty(gunAud, shootRate));
             Debug.Log("Out of Ammo!");
         }
     }
@@ -621,6 +623,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         isReloading = true;
         Debug.Log("Reloading");
+        AudioManager.instance.reloadSound(gunAud);
         gunModel.GetComponent<Animator>().Play("Reload");
         yield return new WaitForSeconds(2);
         gunModel.GetComponent<Animator>().Play("New State");
@@ -755,7 +758,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     void changeGun()
     {
-
+        AudioManager.instance.reloadSound(gunAud);
         shootDamage = gunList[selectedGun].shootDmg;
         shootDistance = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
@@ -781,7 +784,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     IEnumerator walkCycle()
     {
         isPlayingSteps = true;
-        //AudioManager.instance.walkSound();
+        AudioManager.instance.walkSound();
         if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);

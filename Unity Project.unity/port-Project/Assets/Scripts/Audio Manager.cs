@@ -11,20 +11,23 @@ public class AudioManager : MonoBehaviour
     public Sound[] zDead;
     public Sound[] click;
     public Sound[] purchase;
-    public AudioClip[] zombieSFX, playerJump, playerHurt, playerWalk, explosion, doors, keys;
-    public AudioClip errorAud;
+    public AudioClip[] zombieSFX, playerJump, playerHurt, doors;
+    public AudioClip playerWalk, explosion, errorAud, keys, swordSwing, gunClick, reloading;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
     [SerializeField] AudioSource zSFXSource;
     [SerializeField] AudioSource pSFXSource;
     [Header("-----Volume-----")]
-    [SerializeField] float musicVol;
-    [SerializeField] float zomBVol;
-    [SerializeField] float jumpVol;
-    [SerializeField] float hurtVol;
-    [SerializeField] float walkVol;
-    [SerializeField] float exploVol;
-    [SerializeField] float doorsVol;
+    [SerializeField] [Range(0, 1.0f)] float musicVol;
+    [SerializeField] [Range(0, 1.0f)] float zomBVol;
+    [SerializeField] [Range(0, 1.0f)] float jumpVol;
+    [SerializeField] [Range(0, 1.0f)] float hurtVol;
+    [SerializeField] [Range(0, 1.0f)] float walkVol;
+    [SerializeField] [Range(0, 1.0f)] float exploVol;
+    [SerializeField] [Range(0, 1.0f)] float doorsVol;
+    [SerializeField] [Range(0, 1.0f)] float swordVol;
+    [SerializeField] [Range(0, 1.0f)] float damageVol;
+    [SerializeField][Range(0, 1.0f)] float gunVol;
 
     private void Awake()
     {
@@ -118,11 +121,11 @@ public class AudioManager : MonoBehaviour
     }
     public void walkSound()
     {
-        pSFXSource.PlayOneShot(playerWalk[UnityEngine.Random.Range(0, playerWalk.Length)], walkVol);
+        pSFXSource.PlayOneShot(playerWalk, walkVol);
     }
     public void explosionSound()
     {
-        pSFXSource.PlayOneShot(explosion[0], exploVol);
+        pSFXSource.PlayOneShot(explosion, exploVol);
     }
     public void closeDoor()
     {
@@ -138,10 +141,30 @@ public class AudioManager : MonoBehaviour
     }
     public void keyPickup()
     {
-        pSFXSource.PlayOneShot(keys[0], doorsVol);
+        pSFXSource.PlayOneShot(keys, doorsVol);
     }
     public void error()
     {
         pSFXSource.PlayOneShot(errorAud, doorsVol);
+    }
+    public void swordElement(AudioClip clip)
+    {
+        pSFXSource.PlayOneShot(swordSwing, swordVol);
+        pSFXSource.PlayOneShot(clip, swordVol);
+    }
+    public void elementalDamage(AudioClip clip)
+    {
+        pSFXSource.PlayOneShot(clip, damageVol);
+    }
+    public IEnumerator gunEmpty(AudioSource source, float rate)
+    {
+        source.PlayOneShot(gunClick, gunVol);
+        yield return new WaitForSeconds(rate);
+        
+ 
+    }
+    public void reloadSound(AudioSource source)
+    {
+        source.PlayOneShot(reloading, gunVol);
     }
 }

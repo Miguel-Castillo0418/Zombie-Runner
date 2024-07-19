@@ -2066,9 +2066,41 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: keys
+      value: 
+      objectReference: {fileID: 8300000, guid: 45a225c95c61d0f4098f2624cb83cb1b, type: 3}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: gunVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
       propertyPath: errorAud
       value: 
       objectReference: {fileID: 8300000, guid: c4d74bcbbd74e8c4f96b2a50dfd761f5, type: 3}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: gunClick
+      value: 
+      objectReference: {fileID: 8300000, guid: 60fd0df21e7dbde40ac0742cd3e19f37, type: 3}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: explosion
+      value: 
+      objectReference: {fileID: 8300000, guid: e61a4c7cf9ddf5740b13e71c38146f0c, type: 3}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: playerWalk
+      value: 
+      objectReference: {fileID: 8300000, guid: e501c841c431b50499c8dad58850d106, type: 3}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: click.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: click.Array.data[0].Name
+      value: click
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218781377930091518, guid: 5b0876ae437e85f44a2856c8b0b15191, type: 3}
+      propertyPath: click.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a7a3d6e65aed96f469f9ad8e3c7f60f6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2161,6 +2193,10 @@ PrefabInstance:
     - target: {fileID: 4525004928770143749, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: speedCost
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525004928770143749, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: healthCost
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4525004928770143749, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: strengthCost
@@ -2298,6 +2334,10 @@ PrefabInstance:
       propertyPath: winSound
       value: 
       objectReference: {fileID: 8300000, guid: 423e8506b018aa244b2d5b38a94158dd, type: 3}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: pipeClick
+      value: 
+      objectReference: {fileID: 8300000, guid: 45888f3cab4013b43912ba839ad14803, type: 3}
     - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

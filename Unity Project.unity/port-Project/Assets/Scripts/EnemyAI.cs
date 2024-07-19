@@ -36,7 +36,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
    // float range = 5;
     Vector3 playerDir;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -103,6 +102,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             }
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.deadEnemies += 1;
+            gameManager.instance.coinsCollected += 10;
         }
     }
     ////for IElementalDamage
