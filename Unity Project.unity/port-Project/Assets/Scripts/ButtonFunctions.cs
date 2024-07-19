@@ -6,12 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
-    SaveSystem saveSystem;
-    void Start()
-    {
-       saveSystem = SaveSystem.instance;
-
-    }
+    
     public void resume()
     {
         AudioManager.instance.clickSound("click");
@@ -36,7 +31,6 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.loading();
         SceneManager.LoadScene(MoveToNextScene.instance.nextSceneLoad);
-        saveSystem.loadCollectibles();
         gameManager.instance.stateUnpause();
     }
 

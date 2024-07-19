@@ -812,7 +812,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             StartCoroutine(loadIcon());
             SaveGuns();
             gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
-            SaveSystem.instance.saveCollectibles();
+            //SaveSystem.instance.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
         }
     }

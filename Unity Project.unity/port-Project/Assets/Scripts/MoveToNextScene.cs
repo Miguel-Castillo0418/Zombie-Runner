@@ -9,11 +9,11 @@ public class MoveToNextScene : MonoBehaviour
     public GameObject nextLevel;
     public GameObject menuActive;
     public static MoveToNextScene instance;
-
-
-
+    SaveSystem saveSystem;
+    
     void Start()
     {
+        saveSystem = SaveSystem.instance;
         nextSceneLoad = SceneManager.GetActiveScene().buildIndex + 1;
         gameLevelManager = FindObjectOfType<MenuController>();
         instance = this;
@@ -43,7 +43,7 @@ public class MoveToNextScene : MonoBehaviour
         gameManager.instance.statePause();
         menuActive = nextLevel;
         menuActive.SetActive(nextLevel);
-       
+
 
     }
 }
