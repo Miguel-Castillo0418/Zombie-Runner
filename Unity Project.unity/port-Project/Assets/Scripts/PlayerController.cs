@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
-    [SerializeField] public DamageIndicator indicator;
+    //[SerializeField] public DamageIndicator indicator;
     [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Start()
     {
         playerControls = new PlayerControls();
-        saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
+        saveSystem = SaveSystem.instance;
 
         //HP = saveSystem.LoadHP();
         HPorig = HP;
@@ -812,6 +812,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             StartCoroutine(loadIcon());
             SaveGuns();
             saveSystem.SavePoints(gameManager.instance.points);
+            saveSystem.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
         }
     }
