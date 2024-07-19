@@ -42,7 +42,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
-    [SerializeField] public GameObject savesystemobj;
+    //[SerializeField] public GameObject savesystemobj;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -75,8 +75,9 @@ public class gameManager : MonoBehaviour
     {
         //doorPurchased = false;
         instance = this;
-        savesystemobj = new GameObject("savesystemobj");
-        saveSystem = savesystemobj.AddComponent<SaveSystem>();
+        //savesystemobj = new GameObject("savesystemobj");
+        //instance = this;
+        //saveSystem = SaveSystem.instance;
         pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
@@ -94,10 +95,20 @@ public class gameManager : MonoBehaviour
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
     }
-    void Start()
+    void OnEnable()
     {
+        if (saveSystem == null) 
+        { 
+            saveSystem = SaveSystem.instance;
+        }
+        else
+        {
+            saveSystem.loadCollectibles();
+            points = saveSystem.LoadPoints();
+        }
+        
         //AudioManager.instance.playMusic("Song");
-        points = saveSystem.LoadPoints();
+        
 
     }
 

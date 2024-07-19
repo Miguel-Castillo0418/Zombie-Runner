@@ -8,12 +8,18 @@ public class Collectible : MonoBehaviour
 {
     [SerializeField] public GameObject hint;
     [SerializeField] public GameObject itemImage;
+    //[SerializeField] public GameObject saveSystemObj;
+    [SerializeField] public gameManager gameManager;
     GameObject newHint = null;
+    SaveSystem saveSystem = null;
     //gameManager gameManager = gameManager.instance;
     bool hasObject = false;
+    
      // Start is called before the first frame update
     void Start()
     {
+        saveSystem = SaveSystem.instance;
+
         //this will disable the object if it has already been collected
         if (hasObject)
         {
