@@ -46,6 +46,7 @@ namespace keyCards
                 AudioManager.instance.keyPickup();
                 _keycards.hasKeyCard = true;
                 gameObject.SetActive(false);
+                doorObj.PlayAnim();
             }
         }
     }

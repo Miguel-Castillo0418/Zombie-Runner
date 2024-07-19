@@ -9,6 +9,10 @@ namespace KeyCards
     {
     public bool hasKeyCard = false;
     public bool hasKeyCode = false;
+    public bool hasKeyCardRed = false;
+    public bool hasKeyCardGreen = false;
+    public bool hasKeyCardBlue = false;
+
     }
 
 }
