@@ -17,7 +17,7 @@ public class SaveSystem : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -60,7 +60,7 @@ public class SaveSystem : MonoBehaviour
     {
         PlayerPrefs.SetInt("playerPoints", coins);
         PlayerPrefs.Save();
-        Debug.Log(coins);
+        Debug.Log("Saved Coins:" + coins);
     }
     public int LoadPoints()
     {

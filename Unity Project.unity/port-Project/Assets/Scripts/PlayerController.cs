@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     Vector3 playerVel;
     Vector3 pushBack;
 
-    private SaveSystem saveSystem;
     public PlayerControls playerControls;
     public DamageEffect dmgEffect;
+    public SaveSystem saveSystem;
     private Camera mainCamera;
     private Camera weaponCamera;
 
@@ -118,10 +118,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Start()
     {
         playerControls = new PlayerControls();
-        saveSystem = SaveSystem.instance;
 
-        //HP = saveSystem.LoadHP();
-        HPorig = HP;
+        HP = gameManager.instance.saveSystem.LoadHP();
+        HPorig = 100;
         Debug.Log("Player HP: " + HP);
         updatePlayerUI();
         LoadGuns();
@@ -176,15 +175,15 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            saveSystem.SaveHP(HP);
+            gameManager.instance.saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns(); // Save guns
-            saveSystem.SavePoints(gameManager.instance.points);
+            gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved");
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            saveSystem.delete();
+            SaveSystem.instance.delete();
             Debug.Log("Save Deleted");
         }
     }
@@ -809,11 +808,11 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
         if (other.CompareTag("SaveZone"))
         {
-            saveSystem.SaveHP(HP);
+            gameManager.instance.saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns();
-            saveSystem.SavePoints(gameManager.instance.points);
-            saveSystem.saveCollectibles();
+            gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
+            SaveSystem.instance.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
         }
     }
