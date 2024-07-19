@@ -8,7 +8,6 @@ public class Collectible : MonoBehaviour
 {
     [SerializeField] public GameObject hint;
     [SerializeField] public GameObject itemImage;
-    [SerializeField] public gameManager gameManager;
     GameObject newHint = null;
     SaveSystem saveSystem = null;
     bool hasObject = false;
