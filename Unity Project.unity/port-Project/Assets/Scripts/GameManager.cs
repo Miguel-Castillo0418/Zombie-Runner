@@ -47,7 +47,10 @@ public class gameManager : MonoBehaviour
     public Coroutine drainHealthBar;
 
     public Image playerHPBar;
-
+    [SerializeField] GameObject PinPadDoor;
+    [SerializeField] GameObject pinPadText;
+    [SerializeField] GameObject PinPadUI;
+    PinPad pin;
 
     public GameObject player;
     public PlayerController playerScript;
@@ -93,10 +96,11 @@ public class gameManager : MonoBehaviour
         {
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
+        pin = PinPadUI.GetComponent<PinPad>();
     }
     void Start()
     {
-        //AudioManager.instance.playMusic("Song");
+        AudioManager.instance.playMusic("Song");
         points = saveSystem.LoadPoints();
 
     }
@@ -121,6 +125,7 @@ public class gameManager : MonoBehaviour
         updateAmmo();
         showShop();
         ComputerGame();
+        pinPad();
         // buyDoor();
         pointsCountText.text = points.ToString("F0");
     }
@@ -367,5 +372,37 @@ public class gameManager : MonoBehaviour
     public void clickAud()
     {
         pipeWin.PlayOneShot(pipeClick, 0.5f);
+    }
+    public void pinpadMenu()
+    {
+        statePause();
+        menuActive = PinPadUI;
+        menuActive.SetActive(true);
+    }
+    public void pinPad()
+    {
+        float doorDist = Vector3.Distance(PinPadDoor.transform.position, gameManager.instance.player.transform.position);
+        if (doorDist < 3.3) 
+        {
+            if(pin.iscorrect == false)
+            {
+                pinPadText.SetActive(true);
+            }
+            if (Input.GetButtonDown("Shop"))
+            {
+                if (menuActive == null && pin.iscorrect == false)
+                {
+                    pinpadMenu();
+                }
+                else if (menuActive == PinPadUI)
+                {
+                    stateUnpause();
+                }
+            }
+        }
+        else
+        {
+            pinPadText.SetActive(false);
+        }
     }
 }

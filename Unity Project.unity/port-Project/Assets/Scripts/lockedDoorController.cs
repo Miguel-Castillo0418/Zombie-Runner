@@ -36,7 +36,7 @@ namespace keyCards
         }
         public void PlayAnim()
         {
-            if (_keyCards.hasKeyCard)
+            if (_keyCards.hasKeyCard || _keyCards.hasKeyCode)
             {
                 if(!doorOpen && !pauseInteraction)
                 {

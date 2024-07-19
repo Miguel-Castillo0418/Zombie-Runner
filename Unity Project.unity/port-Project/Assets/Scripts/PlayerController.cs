@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
-    [SerializeField] public DamageIndicator indicator;
+    //[SerializeField] public DamageIndicator indicator;
     [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;

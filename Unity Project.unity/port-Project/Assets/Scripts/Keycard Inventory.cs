@@ -8,6 +8,7 @@ namespace KeyCards
     public class KeycardInventory : MonoBehaviour
     {
     public bool hasKeyCard = false;
+    public bool hasKeyCode = false;
     }
 
 }
