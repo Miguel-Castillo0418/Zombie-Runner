@@ -12,7 +12,6 @@ public class Collectible : MonoBehaviour
     [SerializeField] public gameManager gameManager;
     GameObject newHint = null;
     SaveSystem saveSystem = null;
-    //gameManager gameManager = gameManager.instance;
     bool hasObject = false;
     
      // Start is called before the first frame update
