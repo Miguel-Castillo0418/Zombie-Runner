@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
-    [SerializeField] public DamageIndicator indicator;
+    //[SerializeField] public DamageIndicator indicator;
     [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public float spreadAngle;
     public int pelletsFired;
     int selectedSword;
-
+    
 
 
     Vector3 moveDir;
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Start()
     {
         playerControls = new PlayerControls();
-        saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
+        saveSystem = SaveSystem.instance;
 
         //HP = saveSystem.LoadHP();
         HPorig = HP;
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         charController.Move(moveDir * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            //AudioManager.instance.jumpSound();
+            AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         if (charController.isGrounded && jumpCount < jumpMax)
         {
-            //AudioManager.instance.jumpSound();
+            AudioManager.instance.jumpSound();
             jumpCount++;
             playerVel.y = jumpSpeed;
         }
@@ -398,6 +398,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         }
         else
         {
+            StartCoroutine(AudioManager.instance.gunEmpty(gunAud, shootRate));
             Debug.Log("Out of Ammo!");
         }
     }
@@ -621,6 +622,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         isReloading = true;
         Debug.Log("Reloading");
+        AudioManager.instance.reloadSound(gunAud);
         gunModel.GetComponent<Animator>().Play("Reload");
         yield return new WaitForSeconds(2);
         gunModel.GetComponent<Animator>().Play("New State");
@@ -755,7 +757,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     void changeGun()
     {
-
+        AudioManager.instance.reloadSound(gunAud);
         shootDamage = gunList[selectedGun].shootDmg;
         shootDistance = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
@@ -781,7 +783,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     IEnumerator walkCycle()
     {
         isPlayingSteps = true;
-        //AudioManager.instance.walkSound();
+        AudioManager.instance.walkSound();
         if (!isSprinting)
         {
             yield return new WaitForSeconds(0.3f);
@@ -810,6 +812,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             StartCoroutine(loadIcon());
             SaveGuns();
             saveSystem.SavePoints(gameManager.instance.points);
+            saveSystem.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
         }
     }

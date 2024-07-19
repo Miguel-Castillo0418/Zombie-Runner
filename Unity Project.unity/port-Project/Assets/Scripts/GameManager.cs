@@ -32,6 +32,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject compText;
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
+    [SerializeField] AudioSource pipeWin;
+    [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
@@ -39,7 +42,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
-    [SerializeField] public GameObject savesystemobj;
+    //[SerializeField] public GameObject savesystemobj;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -64,14 +67,17 @@ public class gameManager : MonoBehaviour
     private int correctPipes = 0;
 
     private int enemyCount;
+    public int deadEnemies;
+    public int coinsCollected;
 
     // Start is called before the first frame update
     void Awake()
     {
         //doorPurchased = false;
         instance = this;
-        savesystemobj = new GameObject("savesystemobj");
-        saveSystem = savesystemobj.AddComponent<SaveSystem>();
+        //savesystemobj = new GameObject("savesystemobj");
+        //instance = this;
+        //saveSystem = SaveSystem.instance;
         pointsCountText.text = points.ToString("F0");
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
@@ -89,10 +95,20 @@ public class gameManager : MonoBehaviour
             Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
         }
     }
-    void Start()
+    void OnEnable()
     {
+        if (saveSystem == null) 
+        { 
+            saveSystem = SaveSystem.instance;
+        }
+        else
+        {
+            saveSystem.loadCollectibles();
+            points = saveSystem.LoadPoints();
+        }
+        
         //AudioManager.instance.playMusic("Song");
-        points = saveSystem.LoadPoints();
+        
 
     }
 
@@ -337,6 +353,7 @@ public class gameManager : MonoBehaviour
         if (correctPipes == totalPipes)
         {
             puzzleTxt.SetActive(true);
+            pipeWin.PlayOneShot(winSound);
             Instantiate(key, computer.transform);
             keyAnimation();
             isWon = true;
@@ -357,5 +374,9 @@ public class gameManager : MonoBehaviour
         statePause();
         menuActive = menuWin;
         menuActive.SetActive(isPaused);
+    }
+    public void clickAud()
+    {
+        pipeWin.PlayOneShot(pipeClick, 0.5f);
     }
 }
