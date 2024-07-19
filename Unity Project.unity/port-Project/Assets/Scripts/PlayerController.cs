@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
-    //[SerializeField] public DamageIndicator indicator;
     [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
@@ -72,7 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public float spreadAngle;
     public int pelletsFired;
     int selectedSword;
-    
+
 
 
     Vector3 moveDir;
@@ -81,6 +80,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     private SaveSystem saveSystem;
     public PlayerControls playerControls;
+    public DamageEffect dmgEffect;
     private Camera mainCamera;
     private Camera weaponCamera;
 
@@ -511,6 +511,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public void takeDamage(float amount)
     {
         HP -= amount;
+        StartCoroutine(DamageEffect.Instance.damageEffect());
         AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
@@ -546,8 +547,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         // Disable gun model components
         // Disable gun model renderer
         MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
-        
-        if (gunMeshRenderer != null&& hasSword)
+
+        if (gunMeshRenderer != null && hasSword)
         {
             gunMeshRenderer.enabled = false;
         }
@@ -801,7 +802,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         if (other.CompareTag("MedKit"))
         {
             IncreaseHealth();
-           // HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
+            // HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
             updatePlayerUI();
             Destroy(other.gameObject);
         }
@@ -881,9 +882,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     }
     public void toggleSword()
     {
-       //may lock later
-            hasSword = true;
-         
+        //may lock later
+        hasSword = true;
+
     }
 
     Vector3 GetTargetPoint()
