@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SaveSystem.instance.delete();
+            gameManager.instance.saveSystem.delete();
             Debug.Log("Save Deleted");
         }
     }

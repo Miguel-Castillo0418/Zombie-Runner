@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem instance;
+    public int currentLevel;
     void Awake()
     {
         if (instance == null)
