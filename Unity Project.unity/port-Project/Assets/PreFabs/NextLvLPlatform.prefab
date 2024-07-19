@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14, y: 0, z: 6}
-  m_LocalScale: {x: 4.641112, y: 0.0443744, z: 4.8449087}
+  m_LocalScale: {x: 5.4292836, y: 0.0443744, z: 4.864773}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -120,3 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextSceneLoad: 2
   gameLevelManager: {fileID: 0}
+  loadingScreen: {fileID: 1596906280331727573, guid: b7b523d96d53efd42873b608a8de5b80, type: 3}
+  nextLevel: {fileID: 0}
+  menuActive: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Burst.CompilerServices;
 
 public class gameManager : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text ammoMagCountText;
     [SerializeField] TMP_Text ammoStockCountText;
     [SerializeField] GameObject testhintText;
-    [SerializeField] GameObject hintobject;
+    [SerializeField] GameObject hintObject;
     [SerializeField] GameObject shopObj;
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
@@ -205,22 +206,13 @@ public class gameManager : MonoBehaviour
         pointsCountText.text = points.ToString("F0");
     }
 
-    public void showHints()
+    public void showHint()
     {
-        float hint = Vector3.Distance(hintobject.transform.position, gameManager.instance.player.transform.position);
-        if (hint < 3)
-        {
-
-            testhintText.SetActive(true);
-
-
-        }
-        else
-        {
-
-            testhintText.SetActive(false);
-
-        }
+        hintObject.SetActive(true);
+    }
+    public void disappearHint()
+    {
+        hintObject.SetActive(false);
     }
     public void updateAmmo()
     {
