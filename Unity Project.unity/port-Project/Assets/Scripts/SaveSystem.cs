@@ -1,17 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 public class SaveSystem : MonoBehaviour
 {
-    [SerializeField] GameObject[] collectibles;
-    public SaveSystem instance;
+    public static SaveSystem instance;
+    public int currentLevel;
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    //Put all methods needed to be saved in the method below to only need to call one method
+    //this method stays at the top
+    public void saveData()
+    {
+
+    }
+    //Put all methods needed to be loaded in the method below to only need to call one method
+    //this method stays at the top
+
+    public void loadData()
+    {
+    }
     public void SaveHP(float hp)
     {
         PlayerPrefs.SetFloat("playerHP", hp);
         PlayerPrefs.Save();
-        Debug.Log(hp);
+        Debug.Log("Saved HP:" + hp);
     }
     public float LoadHP()
     {
@@ -28,7 +57,7 @@ public class SaveSystem : MonoBehaviour
     {
         PlayerPrefs.SetInt("playerPoints", coins);
         PlayerPrefs.Save();
-        Debug.Log(coins);
+        Debug.Log("Saved Coins:" + coins);
     }
     public int LoadPoints()
     {
@@ -45,7 +74,6 @@ public class SaveSystem : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-    public void saveCollectibles() { 
-    
-    }
+
 }
+

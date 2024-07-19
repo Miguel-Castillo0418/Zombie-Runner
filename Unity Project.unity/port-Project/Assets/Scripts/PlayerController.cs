@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
-    //[SerializeField] public DamageIndicator indicator;
     [SerializeField] public GameObject damageIndicatorPrefab;
     Transform muzzleFlashPoint;
     private float nextAttackTime;
@@ -72,15 +71,16 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public float spreadAngle;
     public int pelletsFired;
     int selectedSword;
-    
+
 
 
     Vector3 moveDir;
     Vector3 playerVel;
     Vector3 pushBack;
 
-    private SaveSystem saveSystem;
     public PlayerControls playerControls;
+    public DamageEffect dmgEffect;
+    public SaveSystem saveSystem;
     private Camera mainCamera;
     private Camera weaponCamera;
 
@@ -118,10 +118,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Start()
     {
         playerControls = new PlayerControls();
-        saveSystem = gameManager.instance.savesystemobj.AddComponent<SaveSystem>();
 
-        //HP = saveSystem.LoadHP();
-        HPorig = HP;
+        HP = gameManager.instance.saveSystem.LoadHP();
+        HPorig = 100;
         Debug.Log("Player HP: " + HP);
         updatePlayerUI();
         LoadGuns();
@@ -176,15 +175,15 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            saveSystem.SaveHP(HP);
+            gameManager.instance.saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns(); // Save guns
-            saveSystem.SavePoints(gameManager.instance.points);
+            gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
             Debug.Log("Game Saved");
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            saveSystem.delete();
+            gameManager.instance.saveSystem.delete();
             Debug.Log("Save Deleted");
         }
     }
@@ -511,6 +510,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public void takeDamage(float amount)
     {
         HP -= amount;
+        StartCoroutine(DamageEffect.Instance.damageEffect());
         AudioManager.instance.hurtSound();
         updatePlayerUI();
         if (HP <= 0)
@@ -546,8 +546,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         // Disable gun model components
         // Disable gun model renderer
         MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
-        
-        if (gunMeshRenderer != null&& hasSword)
+
+        if (gunMeshRenderer != null && hasSword)
         {
             gunMeshRenderer.enabled = false;
         }
@@ -801,17 +801,18 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         if (other.CompareTag("MedKit"))
         {
             IncreaseHealth();
-           // HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
+            // HP = Mathf.Clamp(HP + 30, 0, HPorig); // Adjust the amount of healing as needed
             updatePlayerUI();
             Destroy(other.gameObject);
         }
 
         if (other.CompareTag("SaveZone"))
         {
-            saveSystem.SaveHP(HP);
+            gameManager.instance.saveSystem.SaveHP(HP);
             StartCoroutine(loadIcon());
             SaveGuns();
-            saveSystem.SavePoints(gameManager.instance.points);
+            gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
+            //SaveSystem.instance.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
         }
     }
@@ -880,9 +881,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     }
     public void toggleSword()
     {
-       //may lock later
-            hasSword = true;
-         
+        //may lock later
+        hasSword = true;
+
     }
 
     Vector3 GetTargetPoint()

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
     [SerializeField] public GameObject savesystemobj;
+    public SaveSystem saveSystem;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
 
@@ -54,7 +56,6 @@ public class gameManager : MonoBehaviour
 
     public GameObject player;
     public PlayerController playerScript;
-    private SaveSystem saveSystem;
 
     public bool isHint;
     public bool isPaused;
@@ -98,10 +99,20 @@ public class gameManager : MonoBehaviour
         }
         pin = PinPadUI.GetComponent<PinPad>();
     }
-    void Start()
+    void OnEnable()
     {
-        AudioManager.instance.playMusic("Song");
-        points = saveSystem.LoadPoints();
+        if (saveSystem == null) 
+        { 
+            saveSystem = SaveSystem.instance;
+        }
+        else
+        {
+            //saveSystem.loadCollectibles();
+            points = gameManager.instance.saveSystem.LoadPoints();
+        }
+        
+        //AudioManager.instance.playMusic("Song");
+        
 
     }
 
