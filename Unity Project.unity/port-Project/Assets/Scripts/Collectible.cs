@@ -46,6 +46,7 @@ public class Collectible : MonoBehaviour
             hasObject = true;
             enabled = false;
             collectibleManager.SaveData();
+            AudioManager.instance.playCollectibleGatheredSound();
         }
     }
     private void OnTriggerEnter(Collider other)
