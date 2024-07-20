@@ -76,6 +76,7 @@ public class gameManager : MonoBehaviour
     private int enemyCount;
     public int deadEnemies;
     public int coinsCollected;
+    public int collectiblesCollected;
     float elapsedTime;
 
     // Start is called before the first frame update
