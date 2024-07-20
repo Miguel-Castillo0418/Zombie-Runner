@@ -18,9 +18,9 @@ public class Objective : MonoBehaviour
         ObjectiveText.text = Description.ToString();
         ObjectiveTextObject.SetActive(false);
         CompletedText.SetActive(false);
-        
+
     }
-    
+
 
     void OnTriggerEnter(Collider other)
     {
