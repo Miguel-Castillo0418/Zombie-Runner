@@ -5,19 +5,15 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-
-
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem instance;
-    public int currentLevel;
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -50,14 +46,16 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            return PlayerController.instance.HP;
+            //change made to reference the gameManger instead of the player null ref otherwise
+
+            return gameManager.instance.playerScript.HP;
         }
     }
     public void SavePoints(int coins)
     {
         PlayerPrefs.SetInt("playerPoints", coins);
         PlayerPrefs.Save();
-        Debug.Log("Saved Coins:" + coins);
+        Debug.Log(coins);
     }
     public int LoadPoints()
     {

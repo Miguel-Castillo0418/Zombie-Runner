@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] click;
     public Sound[] purchase;
     public AudioClip[] zombieSFX, playerJump, playerHurt, doors;
-    public AudioClip playerWalk, explosion, errorAud, keys, swordSwing, gunClick, reloading;
+    public AudioClip playerWalk, explosion, errorAud, keys, swordSwing, gunClick, reloading,collectibleGathered;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
     [SerializeField] AudioSource zSFXSource;
@@ -166,5 +166,9 @@ public class AudioManager : MonoBehaviour
     public void reloadSound(AudioSource source)
     {
         source.PlayOneShot(reloading, gunVol);
+    }
+    public void playCollectibleGatheredSound()
+    {
+        pSFXSource.PlayOneShot(collectibleGathered, 1);
     }
 }

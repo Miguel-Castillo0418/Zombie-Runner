@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030982426}
   - component: {fileID: 5107271444374793619}
+  - component: {fileID: 3057420660116879290}
   m_Layer: 0
   m_Name: Skull_of_the_First_One
   m_TagString: Untagged
@@ -48,14 +49,29 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.17670715
+  m_Radius: 2
   m_Height: 0.27652004
   m_Direction: 1
-  m_Center: {x: -0.016093694, y: 0.13846402, z: -0.015511572}
+  m_Center: {x: 2.21, y: 0.55, z: 0.12}
+--- !u!114 &3057420660116879290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030982425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9226fc08f98f9428193d8cc08ae4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hint: {fileID: 5027278618747540073, guid: 0e0082f65f31a30469bc95fb3b216d9e, type: 3}
+  itemImage: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &1030982428
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,13 +98,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030982428}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1030982426}
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1030982430
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -109,7 +125,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 148f829d51273554b8328cb09c39e91e, type: 2}
+  - {fileID: 2100000, guid: c66b650cc06d4e342bff68d4cd47af50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,4 +154,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030982428}
-  m_Mesh: {fileID: 7226917936133265684, guid: 1a2c8fb7dba41cb49ab8fc798cd720f1, type: 3}
+  m_Mesh: {fileID: 4300000, guid: abc00000000008124612743877045410, type: 3}

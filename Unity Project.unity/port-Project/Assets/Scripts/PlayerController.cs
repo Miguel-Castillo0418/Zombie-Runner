@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Awake()
     {
         playerControls = new PlayerControls();
-
+        
     }
 
     private void OnEnable()
