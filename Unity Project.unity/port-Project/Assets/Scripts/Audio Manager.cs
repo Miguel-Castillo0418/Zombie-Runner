@@ -159,7 +159,7 @@ public class AudioManager : MonoBehaviour
     public IEnumerator gunEmpty(AudioSource source, float rate)
     {
         source.PlayOneShot(gunClick, gunVol);
-        yield return new WaitForSeconds(rate);
+        yield return new WaitForSeconds(6);
         
  
     }
