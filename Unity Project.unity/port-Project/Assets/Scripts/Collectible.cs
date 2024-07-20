@@ -7,16 +7,19 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     [SerializeField] public GameObject hint;
-    [SerializeField] public GameObject itemImage;
-    [SerializeField] public gameManager gameManager;
     GameObject newHint = null;
-    SaveSystem saveSystem = null;
+    CollectibleManager collectibleManager = null;
     bool hasObject = false;
-    
+    Transform item=null;
+
      // Start is called before the first frame update
     void Start()
     {
-        saveSystem = SaveSystem.instance;
+        collectibleManager = CollectibleManager.instance;
+        GameObject collectibles = GameObject.Find("Collectibles");
+        item = collectibles.transform.Find(name);
+
+        //saveSystem = SaveSystem.instance;
 
         //this will disable the object if it has already been collected
         if (hasObject)
@@ -39,9 +42,10 @@ public class Collectible : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             gameObject.SetActive(false);
-            itemImage.SetActive(true);
+            item.gameObject.SetActive(true);
             hasObject = true;
             enabled = false;
+            collectibleManager.SaveData();
         }
     }
     private void OnTriggerEnter(Collider other)
