@@ -12,7 +12,6 @@ namespace KeyCards
     public bool hasKeyCardRed = false;
     public bool hasKeyCardGreen = false;
     public bool hasKeyCardBlue = false;
-
     }
 
 }
