@@ -4062,6 +4062,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9493521d3e3fb249b454d15e047ae71, type: 3}
+--- !u!1 &457363091 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4567910755205033011, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
+  m_PrefabInstance: {fileID: 936161483}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &457806116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6470391206542248677, guid: 6b38cca9a94a9eb43b5e92cf6fc95fd7, type: 3}
@@ -7668,6 +7673,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 428304, guid: ecd043ae1c3e75c43844895c90556ed4, type: 3}
   m_PrefabInstance: {fileID: 1764694520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &742513266 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6605219843872401395, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+  m_PrefabInstance: {fileID: 1564302561}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &746915208
 PrefabInstance:
@@ -12534,7 +12544,7 @@ PrefabInstance:
     - target: {fileID: 2536950403510884290, guid: edfb91072a1fe9146914de1bc372a40d, type: 3}
       propertyPath: Text
       value: 
-      objectReference: {fileID: 1723659559}
+      objectReference: {fileID: 968310420}
     - target: {fileID: 5612036787914340702, guid: edfb91072a1fe9146914de1bc372a40d, type: 3}
       propertyPath: m_Name
       value: ObjectiveComplete (FindPuzzle)
@@ -16599,6 +16609,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1324376007}
     - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: PinPadDoor
+      value: 
+      objectReference: {fileID: 742513266}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: pinPadText
+      value: 
+      objectReference: {fileID: 742513266}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: testhintText
       value: 
       objectReference: {fileID: 0}
@@ -18246,17 +18264,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e9493521d3e3fb249b454d15e047ae71, type: 3}
   m_PrefabInstance: {fileID: 553446044}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1723659559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5244346463417040387, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
-  m_PrefabInstance: {fileID: 1564302561}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1728144125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21738,7 +21745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hint: {fileID: 5027278618747540073, guid: 0e0082f65f31a30469bc95fb3b216d9e, type: 3}
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 457363091}
   gameManager: {fileID: 2074008490}
 --- !u!4 &2104219261 stripped
 Transform:
