@@ -46,7 +46,9 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
-            return PlayerController.instance.HP;
+            //change made to reference the gameManger instead of the player null ref otherwise
+
+            return gameManager.instance.playerScript.HP;
         }
     }
     public void SavePoints(int coins)

@@ -63,18 +63,20 @@ public class CollectibleManager : MonoBehaviour
     {
         for (int i = 0; i < collectibleArr.Length; i++)
         {
-            string name = collectibleArr[i].name;
-            GameObject item = GameObject.Find(name);
-            if (item != null)
+            Transform item = gameObject.transform.Find(collectibleArr[i].name);
+            if (item.gameObject != null)
             {
-                if (PlayerPrefs.GetInt(name, 0) == 1)
+                if (PlayerPrefs.GetInt(collectibleArr[i].name, 0) == 1)
                 {
-                    item.SetActive(true);
+                    GameObject.Find(collectibleArr[i].name).SetActive(false);
+                    item.gameObject.SetActive(true);
+                }
+                else if(GameObject.Find(collectibleArr[i].name)!=null)
+                {
+                    GameObject.Find(collectibleArr[i].name).SetActive(true);
                 }
                 else
-                {
-                    item.SetActive(false);
-                }
+                    item.gameObject.SetActive(false);
             }
             
         }
