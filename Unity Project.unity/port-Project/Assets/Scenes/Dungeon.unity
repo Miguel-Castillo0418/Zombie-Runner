@@ -2194,6 +2194,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectiveCompleted (Explore
       objectReference: {fileID: 0}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: PinPadDoor
+      value: 
+      objectReference: {fileID: 916166966}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: pinPadText
+      value: 
+      objectReference: {fileID: 916166966}
     - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -9944,6 +9952,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc00000000014355467875208119911, type: 3}
+--- !u!1 &916166966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6605219843872401395, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+  m_PrefabInstance: {fileID: 187872238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &920922539
 PrefabInstance:
   m_ObjectHideFlags: 0
