@@ -821,7 +821,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     IEnumerator DisableADS()
     {
-        isAiming = false;
         if (Input.GetButtonUp("Aim"))
         {
             switch (gunModel.tag)
