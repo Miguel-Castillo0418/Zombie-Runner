@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; 
-    public float spawnInterval = 5f; 
-    public float maxDistanceToPlayer = 20f; 
-    public float minDistanceToPlayer = 5f; 
-    public int maxEnemies; // Maximum number of enemies to spawn (-1 for infinite)
+    public GameObject enemyPrefab;
+    public float spawnInterval = 5f;
+    public float maxDistanceToPlayer = 20f;
+    public float minDistanceToPlayer = 5f;
+    public int maxEnemies = -1; // Maximum number of enemies to spawn (-1 for infinite)
 
     private Transform player;
     private bool isActive = false;
     private float spawnTimer;
-    private int spawnedEnemiesCount = 0;
-    private bool canSpawn = true;
+    public int spawnedEnemiesCount = 0;
+    public bool canSpawn = true;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) return;
+        //if (!isActive) return;
 
         // Stop checking if the maximum number of enemies has been reached
         if (maxEnemies != -1 && spawnedEnemiesCount >= maxEnemies)
@@ -66,7 +66,7 @@ public class Spawner : MonoBehaviour
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere; // * spawnRadius;
         spawnPosition.y = transform.position.y; 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        spawnedEnemiesCount++;
+        ++spawnedEnemiesCount;
         Debug.Log("Enemy spawned. Total spawned: " + spawnedEnemiesCount);
 
         if (maxEnemies != -1 && spawnedEnemiesCount >= maxEnemies)
@@ -76,13 +76,13 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void SetActive(bool active)
-    {
-        isActive = active;
-        if (!active)
-        {
-            spawnedEnemiesCount = 0;
-            canSpawn = true; 
-        }
-    }
+    //public void SetActive(bool active)
+    //{
+    //    isActive = active;
+    //    if (!active)
+    //    {
+    //        spawnedEnemiesCount = 0;
+    //        canSpawn = true; 
+    //    }
+    //}
 }

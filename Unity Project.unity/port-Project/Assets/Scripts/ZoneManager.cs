@@ -9,8 +9,15 @@ public class ZoneManager : MonoBehaviour
 
     [SerializeField] private Spawner[] activeZone;
 
-    
 
+    private void Awake()
+    {
+        DeactivateZone(zoneOneSpawners);
+        DeactivateZone(zoneTwoSpawners);
+        DeactivateZone(zoneThreeSpawners);
+        DeactivateZone(zoneFourSpawners);
+
+    }
     public void ActivateZone(Spawner[] newActiveZone)
     {
         if (activeZone != null)
@@ -21,7 +28,7 @@ public class ZoneManager : MonoBehaviour
         activeZone = newActiveZone;
         foreach (var spawner in activeZone)
         {
-            spawner.SetActive(true);
+            spawner.gameObject.SetActive(true);
         }
     }
 
@@ -29,7 +36,7 @@ public class ZoneManager : MonoBehaviour
     {
         foreach (var spawner in zone)
         {
-            spawner.SetActive(false);
+            spawner.gameObject.SetActive(false);
         }
     }
 }
