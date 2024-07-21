@@ -103,7 +103,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             rewardZombucks();
             gameManager.instance.updateGameGoal(-1);
             gameManager.instance.deadEnemies += 1;
-            gameManager.instance.coinsCollected += 10;
+            gameManager.instance.coinsCollected += pointsRewarded;
         }
     }
     ////for IElementalDamage

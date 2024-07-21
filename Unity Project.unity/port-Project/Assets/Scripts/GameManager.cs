@@ -34,7 +34,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
     [SerializeField] AudioSource pipeWin;
-    [SerializeField] AudioClip winSound;
+    [SerializeField] public AudioClip winSound;
     [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
@@ -44,6 +44,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] private Gradient PlayerHPBarGradient;
     [SerializeField] GameObject puzzleTxt;
     [SerializeField] public GameObject savesystemobj;
+    [SerializeField] TMP_Text timeText;
+    [SerializeField] TMP_Text killCount;
+    [SerializeField] TMP_Text coinCount;
+    [SerializeField] TMP_Text collectCount;
     public SaveSystem saveSystem;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
@@ -73,6 +77,8 @@ public class gameManager : MonoBehaviour
     private int enemyCount;
     public int deadEnemies;
     public int coinsCollected;
+    public int collectiblesCollected;
+    float elapsedTime;
 
     // Start is called before the first frame update
     void Awake()
@@ -110,12 +116,12 @@ public class gameManager : MonoBehaviour
             //saveSystem.loadCollectibles();
             points = gameManager.instance.saveSystem.LoadPoints();
         }
-        
-        //AudioManager.instance.playMusic("Song");
-        
 
     }
-
+    private void Start()
+    {
+        AudioManager.instance.playMusic("Song");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -137,8 +143,12 @@ public class gameManager : MonoBehaviour
         showShop();
         ComputerGame();
         pinPad();
+        timer();
         // buyDoor();
         pointsCountText.text = points.ToString("F0");
+        killCount.text = deadEnemies.ToString();
+        coinCount.text = coinsCollected.ToString();
+        collectCount.text = collectiblesCollected.ToString();
     }
 
 
@@ -415,5 +425,12 @@ public class gameManager : MonoBehaviour
         {
             pinPadText.SetActive(false);
         }
+    }
+    public void timer()
+    {
+        elapsedTime += Time.deltaTime;
+        int mins = Mathf.FloorToInt(elapsedTime / 60);
+        int sec = Mathf.FloorToInt(elapsedTime % 60);
+        timeText.text = string.Format("{0:00}:{1:00}", mins, sec);
     }
 }

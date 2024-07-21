@@ -55,6 +55,10 @@ public class CollectibleManager : MonoBehaviour
             string name = collectibleArr[i].name;
             int isActive = collectibleArr[i].activeSelf ? 1 : 0;
             PlayerPrefs.SetInt(name, isActive);
+            if(isActive == 1)
+            {
+                gameManager.instance.collectiblesCollected++;
+            } 
         }
         PlayerPrefs.Save();
     }

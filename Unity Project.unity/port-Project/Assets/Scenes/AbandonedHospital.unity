@@ -8817,7 +8817,7 @@ GameObject:
   - component: {fileID: 676496301}
   - component: {fileID: 672504559}
   m_Layer: 0
-  m_Name: Door (9)
+  m_Name: DoorWhiteRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9435,7 +9435,7 @@ GameObject:
   - component: {fileID: 720294772}
   - component: {fileID: 715770422}
   m_Layer: 0
-  m_Name: Door (10)
+  m_Name: DoorExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10667,11 +10667,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 789945048}
+  - component: {fileID: 795980809}
   - component: {fileID: 790732202}
   - component: {fileID: 792112458}
   - component: {fileID: 795980808}
   m_Layer: 0
-  m_Name: Door (8)
+  m_Name: DoorKeyPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10928,6 +10929,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.769574, y: 4.755562, z: 0.27}
   m_Center: {x: 1.3070115, y: 0.00000011920929, z: 0.07809937}
+--- !u!114 &795980809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789778122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e86c5844777194aa343feb0c046338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: 0
+  codedDoor: 1
+  key: 0
+  redDoor: 0
+  lightBlueDoor: 0
+  purpleDoor: 0
+  darkBlueDoor: 0
+  _keycards: {fileID: 0}
+  keycard: {fileID: 0}
 --- !u!33 &796792523
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13509,10 +13531,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 959720937}
+  - component: {fileID: 959720938}
   - component: {fileID: 956329417}
   - component: {fileID: 957427465}
   m_Layer: 0
-  m_Name: Door (1)
+  m_Name: DoorRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13533,6 +13556,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0.801, z: 0}
+--- !u!114 &959720938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959689161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e86c5844777194aa343feb0c046338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: 1
+  codedDoor: 0
+  key: 0
+  redDoor: 1
+  lightBlueDoor: 0
+  purpleDoor: 0
+  darkBlueDoor: 0
+  _keycards: {fileID: 0}
+  keycard: {fileID: 0}
 --- !u!1001 &963899156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23978,16 +24022,38 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1702071904}
+  - component: {fileID: 1702173299}
   - component: {fileID: 1699186962}
   - component: {fileID: 1699789298}
   - component: {fileID: 1696047280}
   m_Layer: 0
-  m_Name: Door (4)
+  m_Name: DoorDarkBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
   m_IsActive: 1
+--- !u!114 &1702173299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702173298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e86c5844777194aa343feb0c046338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: 1
+  codedDoor: 0
+  key: 0
+  redDoor: 0
+  lightBlueDoor: 0
+  purpleDoor: 0
+  darkBlueDoor: 1
+  _keycards: {fileID: 0}
+  keycard: {fileID: 0}
 --- !u!23 &1703152600
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25707,9 +25773,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1832965423}
   - component: {fileID: 1836356879}
+  - component: {fileID: 1836356880}
   - component: {fileID: 1835390927}
   m_Layer: 0
-  m_Name: Door (3)
+  m_Name: DoorLightBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25928,6 +25995,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833388303}
   m_Mesh: {fileID: 4300000, guid: 4cee08c7276bf274d91d84489cdf46de, type: 3}
+--- !u!114 &1836356880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833388303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e86c5844777194aa343feb0c046338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: 1
+  codedDoor: 0
+  key: 0
+  redDoor: 0
+  lightBlueDoor: 1
+  purpleDoor: 0
+  darkBlueDoor: 0
+  _keycards: {fileID: 0}
+  keycard: {fileID: 0}
 --- !u!1 &1836566052
 GameObject:
   m_ObjectHideFlags: 0
@@ -26133,11 +26221,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1861214317}
+  - component: {fileID: 1861214318}
   - component: {fileID: 1859905311}
   - component: {fileID: 1858918399}
   - component: {fileID: 1854656189}
   m_Layer: 0
-  m_Name: Door (7)
+  m_Name: DoorPurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26158,6 +26247,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 539.643, z: 0}
+--- !u!114 &1861214318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860793471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e86c5844777194aa343feb0c046338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: 1
+  codedDoor: 0
+  key: 0
+  redDoor: 0
+  lightBlueDoor: 0
+  purpleDoor: 1
+  darkBlueDoor: 0
+  _keycards: {fileID: 0}
+  keycard: {fileID: 0}
 --- !u!33 &1866913247
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26963,6 +27073,10 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3399594874471102281, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3492867562864210663, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
@@ -27167,6 +27281,10 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5053629561674881216, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5073278078646621463, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
@@ -27330,6 +27448,10 @@ PrefabInstance:
     - target: {fileID: 7837722854081272300, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7910581579626254711, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_NavMeshLayer

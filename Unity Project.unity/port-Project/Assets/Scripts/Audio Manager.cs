@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] click;
     public Sound[] purchase;
     public AudioClip[] zombieSFX, playerJump, playerHurt, doors;
-    public AudioClip playerWalk, explosion, errorAud, keys, swordSwing, gunClick, reloading,collectibleGathered;
+    public AudioClip playerWalk, explosion, errorAud, keys, swordSwing, gunClick, reloading,collectibleGathered, keypad;
     [Header("-----Source-----")]
     [SerializeField] AudioSource MusicSource;
     [SerializeField] AudioSource zSFXSource;
@@ -28,6 +28,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] [Range(0, 1.0f)] float swordVol;
     [SerializeField] [Range(0, 1.0f)] float damageVol;
     [SerializeField][Range(0, 1.0f)] float gunVol;
+    [SerializeField][Range(0, 1.0f)] float collectVol;
+
 
     private void Awake()
     {
@@ -159,9 +161,7 @@ public class AudioManager : MonoBehaviour
     public IEnumerator gunEmpty(AudioSource source, float rate)
     {
         source.PlayOneShot(gunClick, gunVol);
-        yield return new WaitForSeconds(rate);
-        
- 
+        yield return new WaitForSeconds(6);
     }
     public void reloadSound(AudioSource source)
     {
@@ -169,6 +169,14 @@ public class AudioManager : MonoBehaviour
     }
     public void playCollectibleGatheredSound()
     {
-        pSFXSource.PlayOneShot(collectibleGathered, 1);
+        pSFXSource.PlayOneShot(collectibleGathered, collectVol);
+    }
+    public void Keypad()
+    {
+        pSFXSource.PlayOneShot(keypad, doorsVol);
+    }
+    public void playClip(AudioClip clip, float vol)
+    {
+        pSFXSource.PlayOneShot(clip, vol);
     }
 }

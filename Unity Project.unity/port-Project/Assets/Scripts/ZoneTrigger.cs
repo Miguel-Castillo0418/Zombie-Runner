@@ -1,4 +1,5 @@
 using KeyCards;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZoneTrigger : MonoBehaviour
@@ -17,11 +18,11 @@ public class ZoneTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (name == "Zone2Trigger " && inventory.hasKeyCard)
+        if (name == "Zone2Trigger" && inventory.hasKeyCard)
         {
             zoneManager.ActivateZone(targetZoneSpawners);
         }
-        else if (name != "Zone2Trigger " && other.CompareTag("Player"))
+        else if (other.CompareTag("Player") && name != "Zone2Trigger")
         {
             zoneManager.ActivateZone(targetZoneSpawners);
         }
