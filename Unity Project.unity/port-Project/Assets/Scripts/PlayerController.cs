@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     [SerializeField] GameObject bullet;
     [SerializeField] Transform ShootPos;
     [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject armModel;
     [SerializeField] GameObject SwordModel;
     [SerializeField] float shootDamage;
     [SerializeField] float shootRate;
@@ -141,13 +142,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            if (isReloading)
-                return;
-            if (currentAmmo <= 0 && stockAmmo > 0)
-            {
-                StartCoroutine(reload());
-                return;
-            }
             if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
             {
                 StartCoroutine(shoot());
@@ -163,10 +157,12 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             if (Input.GetButton("Reload") && isReloading == false && !gameManager.instance.isPaused)
             {
                 StartCoroutine(reload());
+               
             }
             if (Input.GetButtonDown("Aim") || Input.GetButtonUp("Aim"))
             {
                 StartCoroutine(ADS());
+                StartCoroutine(DisableADS());
             }
         }
         selectWeapon();
@@ -314,7 +310,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position + Vector3.forward, Camera.main.transform.forward, out hit, shootDistance))
             {
-                if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Shottie"))
+                if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Suppressor"))
                 {
                     shootShotgun();
                 }
@@ -348,50 +344,289 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.SetDamage(shootDamage);
             }
-            if (isAiming == true && isShooting == true)
+            if (isAiming)
             {
-                if (gunModel.CompareTag("Sniper") || gunModel.CompareTag("Rifle") || gunModel.CompareTag("Shottie"))
+                // Play ADS recoil animation based on gun model tag
+                switch (gunModel.tag)
                 {
-                    gunModel.GetComponent<Animator>().Play("ADS Sniper Recoil");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
-                }
-                else if (gunModel.CompareTag("Rev"))
-                {
-                    gunModel.GetComponent<Animator>().Play("ADS Rev Recoil");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS Rev Idle");
-                }
-                else if (gunModel.CompareTag("Handgun"))
-                {
-                    gunModel.GetComponent<Animator>().Play("ADS Handgun Recoil");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS Handgun Idle");
-                }
-                else if (gunModel.CompareTag("Compact"))
-                {
-                    gunModel.GetComponent<Animator>().Play("ADS Compact Recoil");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS Compact Idle");
-                }
-                else if (gunModel.CompareTag("AR"))
-                {
-                    gunModel.GetComponent<Animator>().Play("ADS AR Recoil");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS AR Idle");
-                }
-                else
-                {
-                    gunModel.GetComponent<Animator>().Play("ADS Shoot");
-                    yield return new WaitForSeconds(shootRate);
-                    gunModel.GetComponent<Animator>().Play("ADS Idle");
+                    case "RevRifle":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_RevolvingRifle_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_RevolvingRifle_Idle");
+                            break;
+                        }
+                    case "Sniper":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Sniper_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Sniper_Idle");
+                            break;
+                        }
+
+                    case "Pistol":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Pistol_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Pistol_Idle");
+                            break;
+                        }
+
+                    case "Bullpup":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Bullpup_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Bullpup_Idle");
+                            break;
+                        }
+
+                    case "Carbine":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Carbine_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Carbine_Idle");
+                            break;
+                        }
+
+                    case "CompactCharger":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Compact_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Compact_Idle");
+                            break;
+                        }
+
+                    case "Compensator":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Compensator_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Compensator_Idle");
+                            break;
+                        }
+
+                    case "DrumPDW":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_DrumPDW_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_DrumPDW_Idle");
+                            break;
+                        }
+
+                    case "AR":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_AR_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_AR_Idle_Recoil");
+                            break;
+                        }
+
+                    case "Shotgun":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Shotgun_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Shotgun_Idle");
+                            break;
+                        }
+
+                    case "Handgun":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Handgun_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Handgun_Idle");
+                            break;
+                        }
+
+                    case "MicroSMG":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_MicroSMG_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_MicroSMG_Idle");
+                            break;
+                        }
+
+                    case "SnubRevolver":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_SnubRevolver_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_SnubRevolver_Idle");
+                            break;
+                        }
+
+                    case "Suppressor":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_Suppressor_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_Suppressor_Idle");
+                            break;
+                        }
+
+                    case "Willy":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_WillySlapper_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_WillySlapper_Idle");
+                            break;
+                        }
+
+                    case "WristBreaker":
+                        {
+                            armModel.GetComponent<Animator>().Play("ADS_WristBreaker_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("ADS_WristBreaker_Idle");
+                            break;
+                        }
+
+                    default:
+                        {
+                            break;
+                        }
                 }
             }
             else
             {
-                gunModel.GetComponent<Animator>().Play("Weapon Recoil");
-                yield return new WaitForSeconds(shootRate);
-                gunModel.GetComponent<Animator>().Play("New State");
+                // Play hip-fire recoil animation based on gun model tag
+                switch (gunModel.tag)
+                {
+                    case "RevRifle":
+                        {
+                            armModel.GetComponent<Animator>().Play("RevolvingRifle_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                            if (cameraController != null)
+                            {
+                                Camera.main.fieldOfView = 60;
+                            }
+                            break;
+                        }
+                    case "Sniper":
+                        {
+                            armModel.GetComponent<Animator>().Play("Sniper_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                            if (cameraController != null)
+                            {
+                                Camera.main.fieldOfView = 60;
+                            }
+                            break;
+                        }
+
+                    case "Pistol":
+                        {
+                            armModel.GetComponent<Animator>().Play("Pistol_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                            break;
+                        }
+
+                    case "Bullpup":
+                        {
+                            armModel.GetComponent<Animator>().Play("Bullpup_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                            break;
+                        }
+
+                    case "Carbine":
+                        {
+                            armModel.GetComponent<Animator>().Play("Carbine_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                            break;
+                        }
+
+                    case "CompactCharger":
+                        {
+                            armModel.GetComponent<Animator>().Play("Compact_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Compact_Idle");
+                            break;
+                        }
+
+                    case "Compensator":
+                        {
+                            armModel.GetComponent<Animator>().Play("Compensator_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                            break;
+                        }
+
+                    case "DrumPDW":
+                        {
+                            armModel.GetComponent<Animator>().Play("DrumPDW_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                            break;
+                        }
+
+                    case "AR":
+                        {
+                            armModel.GetComponent<Animator>().Play("AR_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("AR_Idle");
+                            break;
+                        }
+
+                    case "Shotgun":
+                        {
+                            armModel.GetComponent<Animator>().Play("Shotgun_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                            break;
+                        }
+
+                    case "Handgun":
+                        {
+                            armModel.GetComponent<Animator>().Play("Handgun_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                            break;
+                        }
+
+                    case "MicroSMG":
+                        {
+                            armModel.GetComponent<Animator>().Play("MicroSMG_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                            break;
+                        }
+
+                    case "SnubRevolver":
+                        {
+                            armModel.GetComponent<Animator>().Play("SnubRevolver_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                            break;
+                        }
+
+                    case "Suppressor":
+                        {
+                            armModel.GetComponent<Animator>().Play("Suppressor_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                            break;
+                        }
+
+                    case "Willy":
+                        {
+                            armModel.GetComponent<Animator>().Play("WillySlapper_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                            break;
+                        }
+
+                    case "WristBreaker":
+                        {
+                            armModel.GetComponent<Animator>().Play("WristBreaker_Recoil");
+                            yield return new WaitForSeconds(shootRate);
+                            armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                            break;
+                        }
+                   
+                    default:
+                        {
+                            break;
+                        }
+                }
             }
             isShooting = false;
         }
@@ -404,7 +639,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     void shootShotgun()
     {
-        if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Shottie"))
+        if (gunModel.CompareTag("Shotgun") || gunModel.CompareTag("Suppressor"))
         {
             for (int i = 0; i < pelletsFired; ++i)
             {
@@ -445,66 +680,420 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     IEnumerator ADS()
     {
         isAiming = true;
-        if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Sniper"))
+        if (Input.GetButtonDown("Aim"))
         {
-            gunModel.GetComponent<Animator>().Play("ADS Sniper");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
-            if (cameraController != null)
+            switch (gunModel.tag)
             {
-                Camera.main.fieldOfView = 20;
+                case "RevRifle":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_RevolvingRifle");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_RevolvingRifle_Idle");
+                        if (cameraController != null)
+                        {
+                            Camera.main.fieldOfView = 20;
+                        }
+                        break;
+                    } 
+                case "Sniper":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Sniper");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Sniper_Idle");
+                        if (cameraController != null)
+                        {
+                            Camera.main.fieldOfView = 20;
+                        }
+                        break;
+                    }
+
+                case "Pistol":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Pistol");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Pistol_Idle");
+                        break;
+                    }
+
+                case "Bullpup":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Bullpup");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Bullpup_Idle");
+                        break;
+                    }
+
+                case "Carbine":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Carbine");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Carbine_Idle");
+                        break;
+                    }
+
+                case "CompactCharger":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Compact");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Compact_Idle");
+                        break;
+                    }
+
+                case "Compensator":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Compensator");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Compensator_Idle");
+                        break;
+                    }
+
+                case "DrumPDW":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_DrumPDW");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_DrumPDW_Idle");
+                        break;
+                    }
+                case "AR":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_AR");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_AR_Idle");
+                        break;
+                    }
+                case "Shotgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Shotgun");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Shotgun_Idle");
+                        break;
+                    }
+                case "Handgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Handgun");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Handgun_Idle");
+                        break;
+                    }
+                case "MicroSMG":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_MicroSMG");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_MicroSMG_Idle");
+                        break;
+                    }
+                case "SnubRevolver":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_SnubRevolver");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_SnubRevolver_Idle");
+                        break;
+                    }
+                case "Suppressor":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Suppressor");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_Suppressor_Idle");
+                        break;
+                    }         
+                case "Willy":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_WillySlapper");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_WillySlapper_Idle");
+                        break;
+                    }
+                case "WristBreaker":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_WristBreaker");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("ADS_WristBreaker_Idle");
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
             }
         }
-        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Rev"))
+    }
+
+    IEnumerator DisableADS()
+    {
+        isAiming = false;
+        if (Input.GetButtonUp("Aim"))
         {
-            gunModel.GetComponent<Animator>().Play("ADS Rev");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Rev Idle");
-            if (cameraController != null)
+            switch (gunModel.tag)
             {
-                Camera.main.fieldOfView = 20;
-            }
-        }
-        else if (Input.GetButtonDown("Aim") && (gunModel.CompareTag("Rifle") || (gunModel.CompareTag("Shottie"))))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS Sniper");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Sniper Idle");
-        }
-        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Compact"))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS Compact");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Compact Idle");
-        }
-        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("Handgun"))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS Handgun");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Handgun Idle");
-        }
-        else if (Input.GetButtonDown("Aim") && gunModel.CompareTag("AR"))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS AR");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS AR Idle");
-        }
-        else if (Input.GetButtonDown("Aim") && !gunModel.CompareTag("Sniper"))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS");
-            yield return new WaitForSeconds(0.2f);
-            gunModel.GetComponent<Animator>().Play("ADS Idle");
-        }
-        else if (Input.GetButtonUp("Aim"))
-        {
-            gunModel.GetComponent<Animator>().Play("ADS Disable");
-            if (cameraController != null)
-            {
-                Camera.main.fieldOfView = 60;
+                case "RevRifle":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_RevolvingRifle_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                        if (cameraController != null)
+                        {
+                            Camera.main.fieldOfView = 60;
+                        }
+                        break;
+                    }
+                case "Sniper":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Sniper_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                        if (cameraController != null)
+                        {
+                            Camera.main.fieldOfView = 60;
+                        }
+                        break;
+                    }
+
+                case "Pistol":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Pistol_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                        break;
+                    }
+
+                case "Bullpup":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Bullpup_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                        break;
+                    }
+
+                case "Carbine":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Carbine_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                        break;
+                    }
+
+                case "CompactCharger":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Compact_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Compact_Idle");
+                        break;
+                    }
+
+                case "Compensator":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Compensator_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                        break;
+                    }
+
+                case "DrumPDW":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_DrumPDW_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                        break;
+                    }
+                case "AR":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_AR_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("AR_Idle");
+                        break;
+                    }
+                case "Shotgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Shotgun_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                        break;
+                    }
+                case "Handgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Handgun_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                        break;
+                    }
+                case "MicroSMG":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_MicroSMG_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                        break;
+                    }
+                case "SnubRevolver":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_SnubRevolver_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                        break;
+                    }
+                case "Suppressor":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_Suppressor_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                        break;
+                    }
+                case "Willy":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_WillySlapper_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                        break;
+                    }
+                case "WristBreaker":
+                    {
+                        armModel.GetComponent<Animator>().Play("ADS_WristBreaker_Disable");
+                        yield return new WaitForSeconds(0.2f);
+                        armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
             }
             isAiming = false;
         }
+    }
+    IEnumerator ReloadAnim()
+    {
+        if (isReloading)
+        {
+            switch (gunModel.tag)
+            {
+                case "RevRifle":
+                    {
+                        armModel.GetComponent<Animator>().Play("RevolvingRifle_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                        break;
+                    }
+                case "Sniper":
+                    {
+                        armModel.GetComponent<Animator>().Play("Sniper_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                        break;
+                    }
 
+                case "Pistol":
+                    {
+                        Debug.Log("Animation Started");
+                        armModel.GetComponent<Animator>().Play("Pistol_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                        Debug.Log("Animation Started");
+                        break;
+                    }
+
+                case "Bullpup":
+                    {
+                        armModel.GetComponent<Animator>().Play("Bullpup_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                        break;
+                    }
+
+                case "Carbine":
+                    {
+                        armModel.GetComponent<Animator>().Play("Carbine_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                        break;
+                    }
+
+                case "CompactCharger":
+                    {
+                        armModel.GetComponent<Animator>().Play("Compact_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Compact_Idle");
+                        break;
+                    }
+
+                case "Compensator":
+                    {
+                        armModel.GetComponent<Animator>().Play("Compensator_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                        break;
+                    }
+
+                case "DrumPDW":
+                    {
+                        armModel.GetComponent<Animator>().Play("DrumPDW_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                        break;
+                    }
+                case "AR":
+                    {
+                        armModel.GetComponent<Animator>().Play("AR_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("AR_Idle");
+                        break;
+                    }
+                case "Shotgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("Shotgun_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                        break;
+                    }
+                case "Handgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("Handgun_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                        break;
+                    }
+                case "MicroSMG":
+                    {
+                        armModel.GetComponent<Animator>().Play("MicroSMG_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                        break;
+                    }
+                case "SnubRevolver":
+                    {
+                        armModel.GetComponent<Animator>().Play("SnubRevolver_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                        break;
+                    }
+                case "Suppressor":
+                    {
+                        armModel.GetComponent<Animator>().Play("Suppressor_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                        break;
+                    }
+                case "Willy":
+                    {
+                        armModel.GetComponent<Animator>().Play("WillySlapper_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                        break;
+                    }
+                case "WristBreaker":
+                    {
+                        armModel.GetComponent<Animator>().Play("WristBreaker_Reload");
+                        yield return new WaitForSeconds(2);
+                        armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
     }
 
     public void takeDamage(float amount)
@@ -623,9 +1212,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         isReloading = true;
         Debug.Log("Reloading");
         AudioManager.instance.reloadSound(gunAud);
-        gunModel.GetComponent<Animator>().Play("Reload");
-        yield return new WaitForSeconds(2);
-        gunModel.GetComponent<Animator>().Play("New State");
+        yield return StartCoroutine(ReloadAnim());
         int ammoToReload = Mathf.Min(magazineSize, stockAmmo);
         int neededAmmo = magazineSize - currentAmmo;
 
