@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CollectibleManager : MonoBehaviour
 {
-   
+
     [SerializeField] private GameObject[] collectibleArr;
 
     public static CollectibleManager instance;
@@ -55,10 +55,10 @@ public class CollectibleManager : MonoBehaviour
             string name = collectibleArr[i].name;
             int isActive = collectibleArr[i].activeSelf ? 1 : 0;
             PlayerPrefs.SetInt(name, isActive);
-            if(isActive == 1)
+            if (isActive == 1)
             {
                 gameManager.instance.collectiblesCollected++;
-            } 
+            }
         }
         PlayerPrefs.Save();
     }
@@ -72,17 +72,23 @@ public class CollectibleManager : MonoBehaviour
             {
                 if (PlayerPrefs.GetInt(collectibleArr[i].name, 0) == 1)
                 {
-                    GameObject.Find(collectibleArr[i].name).SetActive(false);
+                    if (GameObject.Find(collectibleArr[i].name) != null)
+                        GameObject.Find(collectibleArr[i].name).SetActive(false);
+                    else
                     item.gameObject.SetActive(true);
                 }
-                else if(GameObject.Find(collectibleArr[i].name)!=null)
+                else if (GameObject.Find(collectibleArr[i].name) != null)
                 {
-                    GameObject.Find(collectibleArr[i].name).SetActive(true);
+                    if (GameObject.Find(collectibleArr[i].name) != null)
+                        GameObject.Find(collectibleArr[i].name).SetActive(true);
                 }
                 else
-                    item.gameObject.SetActive(false);
+                {
+                    if (GameObject.Find(collectibleArr[i].name) != null)
+                        item.gameObject.SetActive(false);
+                }
             }
-            
+
         }
     }
 }
