@@ -187,8 +187,18 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public IEnumerator loadIcon()
     {
         loadingIcon.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.75f);
         loadingIcon.SetActive(false);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(false);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(false);
+
+
     }
 
     void OnJump(InputAction.CallbackContext context)
