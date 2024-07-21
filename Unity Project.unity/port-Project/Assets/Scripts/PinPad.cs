@@ -10,6 +10,7 @@ public class PinPad : MonoBehaviour
     [SerializeField] private KeycardInventory _keyCards = null;
     [SerializeField] GameObject keyCard;
     public bool iscorrect = false;
+    [SerializeField][Range(0, 1.0f)] float winVol; 
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class PinPad : MonoBehaviour
                 code.text = "";
             }
             code.text += num.ToString();
+            AudioManager.instance.Keypad();
         }
         else
         {
@@ -39,12 +41,14 @@ public class PinPad : MonoBehaviour
             if (code.text == answer)
             {
                 code.text = "Correct";
+                AudioManager.instance.playClip(gameManager.instance.winSound, winVol);
                 _keyCards.hasKeyCode = true;
                 iscorrect = true;
             }
             else
             {
                 code.text = "Invalid";
+                AudioManager.instance.error();
             }
         }
         else
@@ -56,6 +60,7 @@ public class PinPad : MonoBehaviour
     {
         if (code.text != "Correct")
         {
+            AudioManager.instance.Keypad();
             string result = code.text;
             code.text = result.Remove(result.Length - 1);
         }

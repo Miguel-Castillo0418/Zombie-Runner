@@ -34,7 +34,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
     [SerializeField] AudioSource pipeWin;
-    [SerializeField] AudioClip winSound;
+    [SerializeField] public AudioClip winSound;
     [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
@@ -47,6 +47,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text timeText;
     [SerializeField] TMP_Text killCount;
     [SerializeField] TMP_Text coinCount;
+    [SerializeField] TMP_Text collectCount;
     public SaveSystem saveSystem;
     public float hpTarget = 1f;
     public Coroutine drainHealthBar;
@@ -115,12 +116,12 @@ public class gameManager : MonoBehaviour
             //saveSystem.loadCollectibles();
             points = gameManager.instance.saveSystem.LoadPoints();
         }
-        
-        //AudioManager.instance.playMusic("Song");
-        
 
     }
-
+    private void Start()
+    {
+        AudioManager.instance.playMusic("Song");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -147,6 +148,7 @@ public class gameManager : MonoBehaviour
         pointsCountText.text = points.ToString("F0");
         killCount.text = deadEnemies.ToString();
         coinCount.text = coinsCollected.ToString();
+        collectCount.text = collectiblesCollected.ToString();
     }
 
 
