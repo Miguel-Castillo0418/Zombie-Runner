@@ -1174,18 +1174,10 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 }
 
             }
-            //else
-            //{
-            //    IDamage damageable = enemy.GetComponent<IDamage>();
-            //    if (damageable != null)
-            //    {
-            //        damageable.takeDamage(meleeDamage);
-            //    }
-            //}
         }
 
         // Play sword swing animation
-        SwordModel.GetComponent<Animator>().Play("Sword Swing");
+        armModel.GetComponent<Animator>().Play("Sword_Swing");
 
         yield return new WaitForSeconds(attackRate);
 
@@ -1195,7 +1187,103 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             gunMeshRenderer.enabled = true;
         }
 
-        SwordModel.GetComponent<Animator>().Play("New State");
+        switch (gunModel.tag)
+        {
+            case "RevRifle":
+                {
+                    armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                    break;
+                }
+            case "Sniper":
+                {
+                  
+                    armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                    break;
+                }
+
+            case "Pistol":
+                {
+                   
+                    armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                    break;
+                }
+
+            case "Bullpup":
+                {
+                    armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                    break;
+                }
+
+            case "Carbine":
+                {
+                    armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                    break;
+                }
+
+            case "CompactCharger":
+                {
+                    armModel.GetComponent<Animator>().Play("Compact_Idle");
+                    break;
+                }
+
+            case "Compensator":
+                {
+                    armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                    break;
+                }
+
+            case "DrumPDW":
+                {
+                    armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                    break;
+                }
+            case "AR":
+                {
+                    armModel.GetComponent<Animator>().Play("AR_Idle");
+                    break;
+                }
+            case "Shotgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                    break;
+                }
+            case "Handgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                    break;
+                }
+            case "MicroSMG":
+                {
+                    armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                    break;
+                }
+            case "SnubRevolver":
+                {
+                    armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                    break;
+                }
+            case "Suppressor":
+                {
+                    armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                    break;
+                }
+            case "Willy":
+                {
+                    armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                    break;
+                }
+            case "WristBreaker":
+                {
+                    armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                    break;
+                }
+
+            default:
+                {
+                    break;
+                }
+        }
+
     }
 
     void OnDrawGizmosSelected()
