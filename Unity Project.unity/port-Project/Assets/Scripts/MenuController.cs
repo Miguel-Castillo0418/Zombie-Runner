@@ -39,6 +39,12 @@ public class MenuController : MonoBehaviour
     public string _newGameLevel;
     public string _newGameLevel2;
 
+    [SerializeField] GameObject music;
+
+    private void Awake()
+    {
+        music = GameObject.FindWithTag("Music");
+    }
     private void Start()
     {
         resolutions = Screen.resolutions;
@@ -61,7 +67,7 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        AudioManager.instance.playMusic("Theme");
+        AudioManager.instance.playMusic(music.name);
 
         UpdateLevelButtons();
     }
