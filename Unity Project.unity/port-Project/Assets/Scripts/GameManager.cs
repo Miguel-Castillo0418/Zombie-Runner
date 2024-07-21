@@ -16,7 +16,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuShop;
 
     [SerializeField] GameObject loadingScreen;
-
+    [SerializeField] GameObject music;
     [SerializeField] GameObject gameComputer;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
@@ -93,6 +93,7 @@ public class gameManager : MonoBehaviour
         shopText = GameObject.FindWithTag("ShopTxt");
         computer = GameObject.FindWithTag("Computer");
         compText = GameObject.FindWithTag("CompTxt");
+        music = GameObject.FindWithTag("Music");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         CheckHealthBar();
@@ -120,7 +121,7 @@ public class gameManager : MonoBehaviour
     }
     private void Start()
     {
-        AudioManager.instance.playMusic("Song");
+        AudioManager.instance.playMusic(music.name);
     }
     // Update is called once per frame
     void Update()
