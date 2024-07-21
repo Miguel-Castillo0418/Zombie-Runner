@@ -17,7 +17,7 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] GameObject music;
-    [SerializeField] GameObject gameComputer;
+    [SerializeField] GameObject[] gameComputer;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
     [SerializeField] TMP_Text pointsCountText;
@@ -29,8 +29,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
-    [SerializeField] GameObject computer;
-    [SerializeField] GameObject compText;
+    [SerializeField] GameObject[] computer;
+    [SerializeField] GameObject[] compText;
     [SerializeField] GameObject key;
     [SerializeField] Animator keyAnim;
     [SerializeField] AudioSource pipeWin;
@@ -91,8 +91,8 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
-        computer = GameObject.FindWithTag("Computer");
-        compText = GameObject.FindWithTag("CompTxt");
+        computer = GameObject.FindGameObjectsWithTag("Computer");
+        compText = GameObject.FindGameObjectsWithTag("CompTxt");
         music = GameObject.FindWithTag("Music");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
@@ -332,35 +332,39 @@ public class gameManager : MonoBehaviour
     {
         playerHPBar.color = PlayerHPBarGradient.Evaluate(hpTarget);
     }
-    public void game()
+    public void game(int version)
     {
         statePause();
-        menuActive = gameComputer;
+        menuActive = gameComputer[version];
         menuActive.SetActive(isPaused);
     }
     public void ComputerGame()
     {
-        float computerDist = Vector3.Distance(computer.transform.position, gameManager.instance.player.transform.position);
-        if (computerDist < 3.2)
+        for(int comp = 0; comp < computer.Length;comp++)
         {
-            compText.SetActive(true);
-            if (Input.GetButtonDown("Shop"))
+            float computerDist = Vector3.Distance(computer[comp].transform.position, gameManager.instance.player.transform.position);
+            if (computerDist < 3.2)
             {
-                if (menuActive == null && !isWon)
+                compText[comp].SetActive(true);
+                if (Input.GetButtonDown("Shop"))
                 {
-                    game();
-                }
-                else if (menuActive == gameComputer)
-                {
-                    stateUnpause();
+                    if (menuActive == null && !isWon)
+                    {
+                        game(comp);
+                    }
+                    else if (menuActive == gameComputer[comp])
+                    {
+                        stateUnpause();
 
+                    }
                 }
             }
+            else
+            {
+                compText[comp].SetActive(false);
+            }
         }
-        else
-        {
-            compText.SetActive(false);
-        }
+
     }
 
     public void goodMove()
@@ -370,9 +374,8 @@ public class gameManager : MonoBehaviour
         {
             puzzleTxt.SetActive(true);
             pipeWin.PlayOneShot(winSound);
-            Instantiate(key, computer.transform);
+            Instantiate(key, computer[0].transform);
             keyAnimation();
-            isWon = true;
         }
     }
     public void badMove()

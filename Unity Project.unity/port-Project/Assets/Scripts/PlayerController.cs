@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
+    [SerializeField] AudioClip fireSword;
+    [SerializeField] AudioClip electricSword;
+    [SerializeField] AudioClip acidSword;
 
     [SerializeField] public GameObject loadingIcon;
 
@@ -1139,7 +1142,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         {
             gunMeshRenderer.enabled = false;
         }
-
         // Detect enemies in range
         Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
 
@@ -1149,6 +1151,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
             if (SwordModel.CompareTag("Electric"))
             {
+                AudioManager.instance.swordElement(electricSword);
                 IElementalDamage ElectricDamageable = enemy.GetComponent<IElementalDamage>();
                 if (ElectricDamageable != null)
                 {
@@ -1158,6 +1161,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             }
             else if (SwordModel.CompareTag("Acid"))
             {
+                AudioManager.instance.swordElement(acidSword);
                 IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
                 if (AcidDamageable != null)
                 {
@@ -1167,6 +1171,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             }
             else if (SwordModel.CompareTag("Fire"))
             {
+                AudioManager.instance.swordElement(fireSword);
                 IElementalDamage FireDamageable = enemy.GetComponent<IElementalDamage>();
                 if (FireDamageable != null)
                 {
