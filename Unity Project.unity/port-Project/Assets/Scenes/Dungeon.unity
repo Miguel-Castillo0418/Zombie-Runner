@@ -3297,6 +3297,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &338514011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4543,31 +4545,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.25
+      value: -16.44
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1
+      value: 1.218
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.24
+      value: 23.519
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7401703
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6724195
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4575,7 +4577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 84.508
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7465,6 +7467,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1 &658170946
 GameObject:
   m_ObjectHideFlags: 0
@@ -7514,6 +7518,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &660833726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9704,6 +9710,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &891067464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93642,6 +93650,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1 &1998380034
 GameObject:
   m_ObjectHideFlags: 0
