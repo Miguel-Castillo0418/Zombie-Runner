@@ -631,10 +631,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 56070738}
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
-      propertyPath: loadingScreen
-      value: 
-      objectReference: {fileID: 1596906280331727573, guid: b7b523d96d53efd42873b608a8de5b80, type: 3}
-    - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: gameLevelManager
       value: 
       objectReference: {fileID: 984604443}
@@ -4217,6 +4213,14 @@ PrefabInstance:
     - target: {fileID: 29554488161434703, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876643846664007689, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: _newGameLevel3
+      value: Hook
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876643846664007689, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: _newGameLevel4
+      value: AbandonedHospital
       objectReference: {fileID: 0}
     - target: {fileID: 7505583995604084115, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_Pivot.x
