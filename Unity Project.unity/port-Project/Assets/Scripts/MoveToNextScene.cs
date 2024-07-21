@@ -5,7 +5,7 @@ public class MoveToNextScene : MonoBehaviour
 {
     public int nextSceneLoad;
     public MenuController gameLevelManager;
-    public LoadingScreen loadingScreen;
+    public GameObject loadingScreen;
     public GameObject nextLevel;
     public GameObject menuActive;
     public static MoveToNextScene instance;
@@ -23,7 +23,7 @@ public class MoveToNextScene : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (SceneManager.GetActiveScene().buildIndex == 2)
+            if (SceneManager.GetActiveScene().buildIndex == 4)
             {
                 gameManager.instance.DisplayWinMenu();
                 Debug.Log("YOU WIN THE GAME");

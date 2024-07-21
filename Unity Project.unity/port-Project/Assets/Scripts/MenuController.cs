@@ -38,6 +38,8 @@ public class MenuController : MonoBehaviour
     public Button[] lvlButtons;
     public string _newGameLevel;
     public string _newGameLevel2;
+    public string _newGameLevel3;
+    public string _newGameLevel4;
 
     [SerializeField] GameObject music;
 
@@ -86,6 +88,16 @@ public class MenuController : MonoBehaviour
     public void GameLevel2()
     {
         SceneManager.LoadScene(_newGameLevel2);
+    }
+
+    public void GameLevel3()
+    {
+        SceneManager.LoadScene(_newGameLevel3);
+    }
+
+    public void GameLevel4()
+    {
+        SceneManager.LoadScene(_newGameLevel4);
     }
 
     public void UnlockLevel(int levelIndex)
