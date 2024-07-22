@@ -9,10 +9,14 @@ public class Mausoleum : MonoBehaviour
     [SerializeField] Animator animExit;
     [SerializeField] Animator animExit2;
     [SerializeField] Spawner spawner;
+    [SerializeField] Spawner spawner2;
+    [SerializeField] Spawner spawner3;
     [SerializeField] gameManager gameManager;
+    public int enemyGoal;
     // Start is called before the first frame update
     void Start()
     {  
+        enemyGoal = spawner.maxEnemies+spawner2.maxEnemies+spawner3.maxEnemies;
         enabled = false;
 
        // gameObject.GetComponent<Animator>().Play(); ;
@@ -21,7 +25,7 @@ public class Mausoleum : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.instance.deadEnemies >= 2)
+        if (gameManager.instance.deadEnemies >= enemyGoal)
         {
             spawner.canSpawn = false;
             animExit.SetTrigger("EnemiesDead");
