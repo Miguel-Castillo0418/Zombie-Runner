@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
-    
+
     public void resume()
     {
         AudioManager.instance.clickSound("click");
@@ -24,6 +24,13 @@ public class buttonFunctions : MonoBehaviour
     {
         AudioManager.instance.clickSound("click");
         SceneManager.LoadScene("Level1");
+    }
+    public void creditsMenu()
+    {
+        gameManager.instance.loading();
+        gameManager.instance.stateUnpause();
+        SceneManager.LoadScene("EndCredits");
+        
     }
 
     public void nextLevel()
