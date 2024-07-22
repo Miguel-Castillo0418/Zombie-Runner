@@ -8982,9 +8982,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: All_seeing_eye
       objectReference: {fileID: 0}
+    - target: {fileID: 423054999102705524, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2162528020599874548, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
       propertyPath: m_Name
       value: Book_of_Flamel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162528020599874548, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2451539539036271891, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
       propertyPath: m_Pivot.x
@@ -9082,6 +9090,10 @@ PrefabInstance:
       propertyPath: collectibleArr.Array.data[3]
       value: 
       objectReference: {fileID: 1579352957}
+    - target: {fileID: 3430867695568416175, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4567910755205033011, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
       propertyPath: m_Name
       value: Skull_ of_the_First
@@ -9113,6 +9125,10 @@ PrefabInstance:
     - target: {fileID: 8136013057814731041, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
       propertyPath: m_Name
       value: Scroll_of_the_Damned
+      objectReference: {fileID: 0}
+    - target: {fileID: 8136013057814731041, guid: 46d7f1deec97b544c9fba6f1754c92c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11013,7 +11029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -11021,7 +11037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalRotation.z
@@ -11033,7 +11049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7885215037950153453, guid: 53c77217294ecde4da1764b760900ce9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

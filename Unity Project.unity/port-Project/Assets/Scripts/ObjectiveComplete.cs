@@ -8,6 +8,14 @@ public class ObjectiveComplete : MonoBehaviour
     public string TextComplete;
     public TextMeshProUGUI Text;
     // Start is called before the first frame update
+    void Update()
+    {
+        if (Complete)
+        {
+            Text.text = TextComplete.ToString();
+            enabled = false;
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
