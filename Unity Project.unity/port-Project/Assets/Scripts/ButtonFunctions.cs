@@ -24,7 +24,6 @@ public class buttonFunctions : MonoBehaviour
     {
         AudioManager.instance.clickSound("click");
         SceneManager.LoadScene("Level1");
-        gameManager.instance.statePause();
     }
 
     public void nextLevel()

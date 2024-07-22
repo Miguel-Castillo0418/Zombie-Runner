@@ -114,10 +114,10 @@ public class MenuController : MonoBehaviour
 
     private void UpdateLevelButtons()
     {
-        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
+        int levelAt = PlayerPrefs.GetInt("levelAt", 4);
         for (int i = 0; i < lvlButtons.Length; i++)
         {
-            if (i + 2 < levelAt)
+            if (i + 4 < levelAt)
                 lvlButtons[i].interactable = false;
             else
                 lvlButtons[i].interactable = true;
