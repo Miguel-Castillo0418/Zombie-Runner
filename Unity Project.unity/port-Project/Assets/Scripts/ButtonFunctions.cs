@@ -27,7 +27,10 @@ public class buttonFunctions : MonoBehaviour
     }
     public void creditsMenu()
     {
-        SceneManager.LoadScene("Level1");
+        gameManager.instance.loading();
+        gameManager.instance.stateUnpause();
+        SceneManager.LoadScene("EndCredits");
+        
     }
 
     public void nextLevel()
