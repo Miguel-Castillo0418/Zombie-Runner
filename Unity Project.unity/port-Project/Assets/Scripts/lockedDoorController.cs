@@ -15,8 +15,7 @@ namespace keyCards
         [SerializeField] public AnimationClip openAnim ;
         [SerializeField] public AnimationClip closeAnim ;
 
-        [SerializeField] private int lockedWaitTime = 1;
-        [SerializeField] private GameObject lockedDoorTxt;
+
         [SerializeField] private KeycardInventory _keyCards = null;
         [SerializeField] private int waitTime = 1;
         [SerializeField] private bool pauseInteraction = false;
@@ -36,8 +35,6 @@ namespace keyCards
         }
         public void PlayAnim()
         {
-            if (_keyCards.hasKeyCard || _keyCards.hasKeyCode)
-            {
                 if(!doorOpen && !pauseInteraction)
                 {
                     AudioManager.instance.openDoor();
@@ -52,19 +49,8 @@ namespace keyCards
                     doorOpen = false;
                     StartCoroutine(PauseInteract());
                 }
-            }
-            else
-            {
-                StartCoroutine(doorIsLocked());
-            }
         }
-        IEnumerator doorIsLocked()
-        {
-            AudioManager.instance.doorLocked();
-            lockedDoorTxt.SetActive(true);
-            yield return new WaitForSeconds(lockedWaitTime);
-            lockedDoorTxt.SetActive(false);
-        }
+
     }
 }
 

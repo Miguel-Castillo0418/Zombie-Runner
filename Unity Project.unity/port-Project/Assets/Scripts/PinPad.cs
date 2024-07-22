@@ -41,7 +41,6 @@ public class PinPad : MonoBehaviour
             if (code.text == answer)
             {
                 code.text = "Correct";
-                AudioManager.instance.playClip(gameManager.instance.winSound, winVol);
                 _keyCards.hasKeyCode = true;
                 iscorrect = true;
             }

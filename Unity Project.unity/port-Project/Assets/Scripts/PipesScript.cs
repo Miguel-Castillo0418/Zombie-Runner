@@ -8,6 +8,7 @@ public class PipesScript : MonoBehaviour
     float[] rotations = { 0, 90, 180, 270 };
     public float[] correctRotation;
     [SerializeField] bool isCorrect = false;
+    [SerializeField] Computer computer;
 
     int corRotate = 1;
 
@@ -22,7 +23,7 @@ public class PipesScript : MonoBehaviour
             if (((int)transform.eulerAngles.z == correctRotation[0] || (int)transform.eulerAngles.z == correctRotation[1]))
             {
                 isCorrect = true;
-                gameManager.instance.goodMove();
+                computer.goodMove();
             }
         }
         else
@@ -30,26 +31,26 @@ public class PipesScript : MonoBehaviour
             if((int)transform.eulerAngles.z == correctRotation[0])
             {
                 isCorrect = true;
-                gameManager.instance.goodMove();
+                computer.goodMove();
             }
         }
     }
     public void rotatePipe()
     {
         transform.Rotate(new Vector3(0, 0, 90));
-        gameManager.instance.clickAud();
+        computer.clickAud();
 
         if (corRotate > 1)
         {
             if (((int)transform.eulerAngles.z == correctRotation[0] || (int)transform.eulerAngles.z == correctRotation[1]) && isCorrect == false)
             {
                 isCorrect = true;
-                gameManager.instance.goodMove();
+                computer.goodMove();
             }
             else if (isCorrect == true)
             {
                 isCorrect = false;
-                gameManager.instance.badMove();
+                computer.badMove();
             }
         }
         else
@@ -57,12 +58,12 @@ public class PipesScript : MonoBehaviour
             if ((int)transform.eulerAngles.z == correctRotation[0] && isCorrect == false)
             {
                 isCorrect = true;
-                gameManager.instance.goodMove();
+                computer.goodMove();
             }
             else if (isCorrect == true)
             {
                 isCorrect = false;
-                gameManager.instance.badMove();
+                computer.badMove();
             }
         }
     }

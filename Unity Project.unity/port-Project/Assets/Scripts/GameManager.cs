@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
-    [SerializeField] GameObject menuActive;
+    [SerializeField] public GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -17,7 +17,7 @@ public class gameManager : MonoBehaviour
 
     [SerializeField] GameObject loadingScreen;
     [SerializeField] GameObject music;
-    [SerializeField] GameObject[] gameComputer;
+
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] TMP_Text roundCountText;
     [SerializeField] TMP_Text pointsCountText;
@@ -29,20 +29,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject shopText;
     [SerializeField] Wave tempRound;
     [SerializeField] WaveManager waveManager;
-    [SerializeField] GameObject[] computer;
-    [SerializeField] GameObject[] compText;
-    [SerializeField] GameObject key;
-    [SerializeField] Animator keyAnim;
-    [SerializeField] AudioSource pipeWin;
-    [SerializeField] public AudioClip winSound;
-    [SerializeField] AudioClip pipeClick;
     //[SerializeField] GameObject doorObj1;
     //[SerializeField] GameObject doorText;
     //[SerializeField] GameObject doorText2;
     [SerializeField] private float attackRate;
     [SerializeField] private float drainTime = 0.25f;
     [SerializeField] private Gradient PlayerHPBarGradient;
-    [SerializeField] GameObject puzzleTxt;
+
     [SerializeField] public GameObject savesystemobj;
     [SerializeField] TMP_Text timeText;
     [SerializeField] TMP_Text killCount;
@@ -63,16 +56,12 @@ public class gameManager : MonoBehaviour
 
     public bool isHint;
     public bool isPaused;
-    private bool isWon = false;
     //bool doorPurchased;
     int enemycount;
     [SerializeField] public int points;
     int round;
 
-    public GameObject PipeHolder;
-    public GameObject[] Pipes;
-    public int totalPipes = 0;
-    private int correctPipes = 0;
+
 
     private int enemyCount;
     public int deadEnemies;
@@ -91,20 +80,11 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
-        computer = GameObject.FindGameObjectsWithTag("Computer");
-        compText = GameObject.FindGameObjectsWithTag("CompTxt");
+        pin = PinPadUI.GetComponent<PinPad>();
         music = GameObject.FindWithTag("Music");
         playerScript = player.GetComponent<PlayerController>();
         updateRound(1);
         CheckHealthBar();
-        keyAnim = key.GetComponent<Animator>();
-        totalPipes = PipeHolder.transform.childCount;
-        Pipes = new GameObject[totalPipes];
-        for (int i = 0; i < Pipes.Length; i++)
-        {
-            Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
-        }
-        pin = PinPadUI.GetComponent<PinPad>();
     }
     void OnEnable()
     {
@@ -142,7 +122,6 @@ public class gameManager : MonoBehaviour
         // showHints();
         updateAmmo();
         showShop();
-        ComputerGame();
         pinPad();
         timer();
         // buyDoor();
@@ -332,61 +311,7 @@ public class gameManager : MonoBehaviour
     {
         playerHPBar.color = PlayerHPBarGradient.Evaluate(hpTarget);
     }
-    public void game(int version)
-    {
-        statePause();
-        menuActive = gameComputer[version];
-        menuActive.SetActive(isPaused);
-    }
-    public void ComputerGame()
-    {
-        for(int comp = 0; comp < computer.Length;comp++)
-        {
-            float computerDist = Vector3.Distance(computer[comp].transform.position, gameManager.instance.player.transform.position);
-            if (computerDist < 3.2)
-            {
-                compText[comp].SetActive(true);
-                if (Input.GetButtonDown("Shop"))
-                {
-                    if (menuActive == null && !isWon)
-                    {
-                        game(comp);
-                    }
-                    else if (menuActive == gameComputer[comp])
-                    {
-                        stateUnpause();
 
-                    }
-                }
-            }
-            else
-            {
-                compText[comp].SetActive(false);
-            }
-        }
-
-    }
-
-    public void goodMove()
-    {
-        correctPipes += 1;
-        if (correctPipes == totalPipes)
-        {
-            puzzleTxt.SetActive(true);
-            pipeWin.PlayOneShot(winSound);
-            Instantiate(key, computer[0].transform);
-            keyAnimation();
-        }
-    }
-    public void badMove()
-    {
-        correctPipes -= 1;
-    }
-    IEnumerator keyAnimation()
-    {
-        yield return new WaitForSeconds(.4F);
-        keyAnim.Play("KeyMove");
-    }
 
     public void DisplayWinMenu()
     {
@@ -394,10 +319,7 @@ public class gameManager : MonoBehaviour
         menuActive = menuWin;
         menuActive.SetActive(isPaused);
     }
-    public void clickAud()
-    {
-        pipeWin.PlayOneShot(pipeClick, 0.5f);
-    }
+
     public void pinpadMenu()
     {
         statePause();
