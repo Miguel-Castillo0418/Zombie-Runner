@@ -58,7 +58,6 @@ public class LargeEnemy : EnemyAI
             {
                 // Charge towards the player
                 //StartCoroutine(Charge());
-                agent.speed = chargeSpeed;
             }
 
         }
