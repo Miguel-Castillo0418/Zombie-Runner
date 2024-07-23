@@ -38,6 +38,8 @@ public class MenuController : MonoBehaviour
     public Button[] lvlButtons;
     public string _newGameLevel;
     public string _newGameLevel2;
+    public string _newGameLevel3;
+    public string _newGameLevel4;
 
     [SerializeField] GameObject music;
 
@@ -88,6 +90,16 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(_newGameLevel2);
     }
 
+    public void GameLevel3()
+    {
+        SceneManager.LoadScene(_newGameLevel3);
+    }
+
+    public void GameLevel4()
+    {
+        SceneManager.LoadScene(_newGameLevel4);
+    }
+
     public void UnlockLevel(int levelIndex)
     {
         int levelAt = PlayerPrefs.GetInt("levelAt", 2);
@@ -102,10 +114,10 @@ public class MenuController : MonoBehaviour
 
     private void UpdateLevelButtons()
     {
-        int levelAt = PlayerPrefs.GetInt("levelAt", 2);
+        int levelAt = PlayerPrefs.GetInt("levelAt", 4);
         for (int i = 0; i < lvlButtons.Length; i++)
         {
-            if (i + 2 < levelAt)
+            if (i + 4 < levelAt)
                 lvlButtons[i].interactable = false;
             else
                 lvlButtons[i].interactable = true;

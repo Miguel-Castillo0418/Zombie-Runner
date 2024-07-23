@@ -187,8 +187,18 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public IEnumerator loadIcon()
     {
         loadingIcon.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.75f);
         loadingIcon.SetActive(false);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(false);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(true);
+        yield return new WaitForSeconds(0.75f);
+        loadingIcon.SetActive(false);
+
+
     }
 
     void OnJump(InputAction.CallbackContext context)
@@ -821,7 +831,6 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     IEnumerator DisableADS()
     {
-        isAiming = false;
         if (Input.GetButtonUp("Aim"))
         {
             switch (gunModel.tag)
@@ -1132,71 +1141,160 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     IEnumerator MeleeAttack()
     {
-        // Disable gun model components
-        // Disable gun model renderer
-        MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
-
-        if (gunMeshRenderer != null && hasSword)
+        if (hasSword)
         {
-            gunMeshRenderer.enabled = false;
-        }
+            MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
 
-        // Detect enemies in range
-        Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
-
-        // Apply damage to enemies
-        foreach (Collider enemy in hitEnemies)
-        {
-
-            if (SwordModel.CompareTag("Electric"))
+            if (gunMeshRenderer != null && hasSword)
             {
-                IElementalDamage ElectricDamageable = enemy.GetComponent<IElementalDamage>();
-                if (ElectricDamageable != null)
-                {
-                    ElectricDamageable.takeElectricDamage(meleeDamage);
-                }
-
+                gunMeshRenderer.enabled = false;
             }
-            else if (SwordModel.CompareTag("Acid"))
+
+            // Detect enemies in range
+            Collider[] hitEnemies = Physics.OverlapSphere(meleeAttackPoint.position, meleeRange, enemyLayer);
+
+            // Apply damage to enemies
+            foreach (Collider enemy in hitEnemies)
             {
-                IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
-                if (AcidDamageable != null)
-                {
-                    AcidDamageable.takePoisonDamage(meleeDamage);
-                }
 
+                if (SwordModel.CompareTag("Electric"))
+                {
+                    IElementalDamage ElectricDamageable = enemy.GetComponent<IElementalDamage>();
+                    if (ElectricDamageable != null)
+                    {
+                        ElectricDamageable.takeElectricDamage(meleeDamage);
+                    }
+
+                }
+                else if (SwordModel.CompareTag("Acid"))
+                {
+                    IElementalDamage AcidDamageable = enemy.GetComponent<IElementalDamage>();
+                    if (AcidDamageable != null)
+                    {
+                        AcidDamageable.takePoisonDamage(meleeDamage);
+                    }
+
+                }
+                else if (SwordModel.CompareTag("Fire"))
+                {
+                    IElementalDamage FireDamageable = enemy.GetComponent<IElementalDamage>();
+                    if (FireDamageable != null)
+                    {
+                        FireDamageable.takeFireDamage(meleeDamage);
+                    }
+
+                }
             }
-            else if (SwordModel.CompareTag("Fire"))
+
+            // Play sword swing animation
+            armModel.GetComponent<Animator>().Play("Sword_Swing");
+
+            yield return new WaitForSeconds(attackRate);
+
+            // Re-enable gun model renderer
+            if (gunMeshRenderer != null)
             {
-                IElementalDamage FireDamageable = enemy.GetComponent<IElementalDamage>();
-                if (FireDamageable != null)
-                {
-                    FireDamageable.takeFireDamage(meleeDamage);
-                }
-
+                gunMeshRenderer.enabled = true;
             }
-            //else
-            //{
-            //    IDamage damageable = enemy.GetComponent<IDamage>();
-            //    if (damageable != null)
-            //    {
-            //        damageable.takeDamage(meleeDamage);
-            //    }
-            //}
+
+            switch (gunModel.tag)
+            {
+                case "RevRifle":
+                    {
+                        armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                        break;
+                    }
+                case "Sniper":
+                    {
+
+                        armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                        break;
+                    }
+
+                case "Pistol":
+                    {
+
+                        armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                        break;
+                    }
+
+                case "Bullpup":
+                    {
+                        armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                        break;
+                    }
+
+                case "Carbine":
+                    {
+                        armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                        break;
+                    }
+
+                case "CompactCharger":
+                    {
+                        armModel.GetComponent<Animator>().Play("Compact_Idle");
+                        break;
+                    }
+
+                case "Compensator":
+                    {
+                        armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                        break;
+                    }
+
+                case "DrumPDW":
+                    {
+                        armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                        break;
+                    }
+                case "AR":
+                    {
+                        armModel.GetComponent<Animator>().Play("AR_Idle");
+                        break;
+                    }
+                case "Shotgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                        break;
+                    }
+                case "Handgun":
+                    {
+                        armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                        break;
+                    }
+                case "MicroSMG":
+                    {
+                        armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                        break;
+                    }
+                case "SnubRevolver":
+                    {
+                        armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                        break;
+                    }
+                case "Suppressor":
+                    {
+                        armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                        break;
+                    }
+                case "Willy":
+                    {
+                        armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                        break;
+                    }
+                case "WristBreaker":
+                    {
+                        armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
+            }
+
         }
-
-        // Play sword swing animation
-        SwordModel.GetComponent<Animator>().Play("Sword Swing");
-
-        yield return new WaitForSeconds(attackRate);
-
-        // Re-enable gun model renderer
-        if (gunMeshRenderer != null)
-        {
-            gunMeshRenderer.enabled = true;
-        }
-
-        SwordModel.GetComponent<Animator>().Play("New State");
     }
 
     void OnDrawGizmosSelected()

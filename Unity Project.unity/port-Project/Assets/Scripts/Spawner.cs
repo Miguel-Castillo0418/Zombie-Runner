@@ -9,7 +9,6 @@ public class Spawner : MonoBehaviour
     public int maxEnemies = -1; // Maximum number of enemies to spawn (-1 for infinite)
 
     private Transform player;
-    private bool isActive = false;
     private float spawnTimer;
     public int spawnedEnemiesCount = 0;
     public bool canSpawn = true;
@@ -76,13 +75,5 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    //public void SetActive(bool active)
-    //{
-    //    isActive = active;
-    //    if (!active)
-    //    {
-    //        spawnedEnemiesCount = 0;
-    //        canSpawn = true; 
-    //    }
-    //}
+    
 }

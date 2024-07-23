@@ -33,6 +33,7 @@ public class CollectibleManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Load collectibles when a scene is loaded
+        Time.timeScale = 1.0f;
         LoadCollectibles();
     }
 

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1031025971}
   - component: {fileID: 1031025972}
+  - component: {fileID: 399356325570294039}
+  - component: {fileID: 3506673331834908181}
   m_Layer: 0
   m_Name: SM_DoorWay
   m_TagString: Untagged
@@ -55,6 +57,48 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: abc00000000014388841953084738900, type: 3}
+--- !u!65 &399356325570294039
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031025970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 3, z: 1.32}
+  m_Center: {x: -2, y: 1.5, z: 0}
+--- !u!65 &3506673331834908181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031025970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 3, z: 1.32}
+  m_Center: {x: 2, y: 1.5, z: 0}
 --- !u!1 &1031025973
 GameObject:
   m_ObjectHideFlags: 0
