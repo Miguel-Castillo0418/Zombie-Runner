@@ -118,16 +118,19 @@ public class LargeEnemy : EnemyAI
     //------------NEW-------------
     private void OnTriggerEnter(Collider other)
     {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
+        if (other.CompareTag("Player"))
         {
-            int force = lvl * damage;
-            float t = force * Time.deltaTime;
-            Debug.Log(other.transform.name);
-            dmg.takeDamage(damage);
-            _knock.Knockback();
-            attacking = false;
+            IDamage dmg = other.GetComponent<IDamage>();
+            IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+            if (other.name == "Player")
+            {
+                int force = lvl * damage;
+                float t = force * Time.deltaTime;
+                Debug.Log(other.transform.name);
+                dmg.takeDamage(damage);
+                _knock.Knockback();
+                attacking = false;
+            }
         }
     }
     IEnumerator kick()
