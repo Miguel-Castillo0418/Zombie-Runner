@@ -70,7 +70,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         {
             anim.SetBool("PlayerInRange", true);
             anim.SetFloat("Speed", normSpeed);
-            StartCoroutine(MeleeAttack());
+            //StartCoroutine(MeleeAttack());
         }
         else
         {
@@ -184,25 +184,25 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //        }
     //    }
     //}
-    IEnumerator MeleeAttack()
-    {
-        //Stop the enemy
-        //agent.speed = 0;
-        // Detect player in range
-        Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
+    //IEnumerator MeleeAttack()
+    //{
+    //    //Stop the enemy
+    //    //agent.speed = 0;
+    //    // Detect player in range
+    //    Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
 
-        // Apply damage to player
-        foreach (Collider player in hitplayer)
-        {
-            IDamage damageable = player.GetComponent<IDamage>();
-            if (damageable != null)
-            {
-                damageable.takeDamage(damage);
-            }
-        }
+    //    // Apply damage to player
+    //    foreach (Collider player in hitplayer)
+    //    {
+    //        IDamage damageable = player.GetComponent<IDamage>();
+    //        if (damageable != null)
+    //        {
+    //            damageable.takeDamage(damage);
+    //        }
+    //    }
 
-        yield return new WaitForSeconds(atkRate);
-    }
+    //    yield return new WaitForSeconds(atkRate);
+    //}
     public void rewardZombucks()
     {
         gameManager.instance.addPoints(pointsRewarded);
