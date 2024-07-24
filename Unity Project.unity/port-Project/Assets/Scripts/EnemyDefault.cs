@@ -18,13 +18,16 @@ public class EnemyDefault : MonoBehaviour, IElementalDamage
     //melee dealing damage
     private void OnTriggerEnter(Collider other)
     {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
+        if (other.CompareTag("Player"))//if the enemy collides with something other than the player they will not deal damage
         {
+            IDamage dmg = other.GetComponent<IDamage>();
+            IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+            if (other.name == "Player")
+            {
                 Debug.Log(other.transform.name);
                 dmg.takeDamage(_aiScript.damage);
-                _knock.Knockback(_aiScript.lvl, _aiScript.damage);
+                _knock.Knockback(other, _aiScript.lvl, _aiScript.damage);
+            }
         }
     }
     //for IElementalDamage
