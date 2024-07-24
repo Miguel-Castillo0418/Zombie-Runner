@@ -109,7 +109,7 @@ public class LargeEnemy : EnemyAI
                 if (dmg != null)
                 {
                     dmg.takeDamage(chargeDamage);
-                    _knock.Knockback();
+                    _knock.Knockback(collision.collider);
                 }
             }
         }
@@ -128,7 +128,7 @@ public class LargeEnemy : EnemyAI
                 float t = force * Time.deltaTime;
                 Debug.Log(other.transform.name);
                 dmg.takeDamage(damage);
-                _knock.Knockback();
+                _knock.Knockback(other);
                 attacking = false;
             }
         }

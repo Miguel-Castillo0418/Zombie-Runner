@@ -26,7 +26,7 @@ public class EnemyDefault : MonoBehaviour, IElementalDamage
             {
                 Debug.Log(other.transform.name);
                 dmg.takeDamage(_aiScript.damage);
-                _knock.Knockback(_aiScript.lvl, _aiScript.damage);
+                _knock.Knockback(other, _aiScript.lvl, _aiScript.damage);
             }
         }
     }

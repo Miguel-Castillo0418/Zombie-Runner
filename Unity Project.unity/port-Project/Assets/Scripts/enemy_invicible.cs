@@ -26,7 +26,7 @@ public class enemy_invicible : EnemyAI
             if (dmg != null)
             {
                 dmg.takeDamage(100);
-                _knock.Knockback();
+                _knock.Knockback(collision.collider);
             }
         }
     }

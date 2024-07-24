@@ -208,13 +208,13 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    public void Knockback(int lvl, int damage)
+    public void Knockback(Collider other, int lvl, int damage)
     {
         int force = lvl * damage * 10;
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
 
-        Vector3 targetPosition = transform.position + transform.forward * knockbackDistance;
+        Vector3 targetPosition = transform.position + other.transform.forward * knockbackDistance;
         Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
         StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
 
