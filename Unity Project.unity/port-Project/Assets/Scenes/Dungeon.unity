@@ -2231,6 +2231,10 @@ PrefabInstance:
       value: ObjectiveCompleted (Explore
       objectReference: {fileID: 0}
     - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: points
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595784691268794256, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: PinPadDoor
       value: 
       objectReference: {fileID: 916166966}
@@ -2344,7 +2348,7 @@ PrefabInstance:
       objectReference: {fileID: 1873589182}
     - target: {fileID: 2281501883581317752, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.641112
+      value: 3.0740404
       objectReference: {fileID: 0}
     - target: {fileID: 2281501883581317752, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: m_LocalScale.z
@@ -2352,7 +2356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2281501883581317752, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 81.5905
+      value: 81.97
       objectReference: {fileID: 0}
     - target: {fileID: 2281501883581317752, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7347,7 +7351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1036497117907986420, guid: 5a6b7265ada7ed643a70b6366300fcf3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1036497117907986420, guid: 5a6b7265ada7ed643a70b6366300fcf3, type: 3}
       propertyPath: m_LocalScale.y
@@ -7359,7 +7363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1036497117907986420, guid: 5a6b7265ada7ed643a70b6366300fcf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.751
+      value: 80.059
       objectReference: {fileID: 0}
     - target: {fileID: 1036497117907986420, guid: 5a6b7265ada7ed643a70b6366300fcf3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -94609,6 +94613,7 @@ SceneRoots:
   - {fileID: 1873589181}
   - {fileID: 1115983446}
   - {fileID: 210284281}
+  - {fileID: 656652858}
   - {fileID: 1929373167}
   - {fileID: 1031027596}
   - {fileID: 1031026218}
@@ -96096,7 +96101,6 @@ SceneRoots:
   - {fileID: 32708306}
   - {fileID: 1160019268}
   - {fileID: 1706657222}
-  - {fileID: 656652858}
   - {fileID: 488846593}
   - {fileID: 1103867779}
   - {fileID: 181324007}
