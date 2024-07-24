@@ -1494,11 +1494,11 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         if (other.CompareTag("SaveZone"))
         {
             gameManager.instance.saveSystem.SaveHP(HP);
-            StartCoroutine(loadIcon());
             SaveGuns();
             gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
             //SaveSystem.instance.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
+            StartCoroutine(loadIcon());
         }
     }
     public void SaveGuns()
