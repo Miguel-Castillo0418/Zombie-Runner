@@ -33,7 +33,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //bool playerInRange;
     bool isDead=false;
     public GameObject explosion;
-   // float range = 5;
+    // float range = 5;
+    GameObject player;
     Vector3 playerDir;
 
     // Start is called before the first frame update
@@ -42,12 +43,21 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
         HalfHpSpeed = agent.speed * 3.5f;
+        player = gameManager.instance.player;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerDir=(player.transform.position-transform.position).normalized;
+        playerDir.y = 0f;
+        if (playerDir != Vector3.zero) 
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(playerDir);
+            transform.rotation = lookRotation;
+        }
+      
         if (agent.velocity.normalized.magnitude > 0)
             normSpeed = agent.velocity.normalized.magnitude;
 
@@ -60,7 +70,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         {
             anim.SetBool("PlayerInRange", true);
             anim.SetFloat("Speed", normSpeed);
-            StartCoroutine(MeleeAttack());
+            //StartCoroutine(MeleeAttack());
         }
         else
         {
@@ -174,37 +184,37 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //        }
     //    }
     //}
-    IEnumerator MeleeAttack()
-    {
-        //Stop the enemy
-        //agent.speed = 0;
-        // Detect player in range
-        Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
+    //IEnumerator MeleeAttack()
+    //{
+    //    //Stop the enemy
+    //    //agent.speed = 0;
+    //    // Detect player in range
+    //    Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
 
-        // Apply damage to player
-        foreach (Collider player in hitplayer)
-        {
-            IDamage damageable = player.GetComponent<IDamage>();
-            if (damageable != null)
-            {
-                damageable.takeDamage(damage);
-            }
-        }
+    //    // Apply damage to player
+    //    foreach (Collider player in hitplayer)
+    //    {
+    //        IDamage damageable = player.GetComponent<IDamage>();
+    //        if (damageable != null)
+    //        {
+    //            damageable.takeDamage(damage);
+    //        }
+    //    }
 
-        yield return new WaitForSeconds(atkRate);
-    }
+    //    yield return new WaitForSeconds(atkRate);
+    //}
     public void rewardZombucks()
     {
         gameManager.instance.addPoints(pointsRewarded);
     }
 
-    public void Knockback(int lvl, int damage)
+    public void Knockback(Collider other, int lvl, int damage)
     {
         int force = lvl * damage * 10;
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
 
-        Vector3 targetPosition = transform.position + transform.forward * knockbackDistance;
+        Vector3 targetPosition = transform.position + other.transform.forward * knockbackDistance;
         Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
         StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
 

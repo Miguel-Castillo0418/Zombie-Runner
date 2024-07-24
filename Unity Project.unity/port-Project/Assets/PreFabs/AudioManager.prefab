@@ -124,10 +124,11 @@ MonoBehaviour:
   explosion: {fileID: 8300000, guid: e61a4c7cf9ddf5740b13e71c38146f0c, type: 3}
   errorAud: {fileID: 8300000, guid: c4d74bcbbd74e8c4f96b2a50dfd761f5, type: 3}
   keys: {fileID: 8300000, guid: 45a225c95c61d0f4098f2624cb83cb1b, type: 3}
-  swordSwing: {fileID: 0}
+  swordSwing: {fileID: 8300000, guid: a85d580cdfcc3c2419585c68165dc9a0, type: 3}
   gunClick: {fileID: 8300000, guid: 60fd0df21e7dbde40ac0742cd3e19f37, type: 3}
   reloading: {fileID: 8300000, guid: 076a7a73569c49745814281f9b25442a, type: 3}
   collectibleGathered: {fileID: 8300000, guid: fcd7d778aa310294387189ba2c14f91e, type: 3}
+  keypad: {fileID: 8300000, guid: 078b67f0c15a75c46a77c63892fcef41, type: 3}
   MusicSource: {fileID: 1779740058658159246}
   zSFXSource: {fileID: 1299898199855627201}
   pSFXSource: {fileID: 4916492432871705345}
@@ -141,6 +142,7 @@ MonoBehaviour:
   swordVol: 0.5
   damageVol: 0.5
   gunVol: 0.2
+  collectVol: 0
 --- !u!1001 &2787976576023286061
 PrefabInstance:
   m_ObjectHideFlags: 0

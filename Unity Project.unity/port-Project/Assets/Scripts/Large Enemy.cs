@@ -58,7 +58,6 @@ public class LargeEnemy : EnemyAI
             {
                 // Charge towards the player
                 //StartCoroutine(Charge());
-                agent.speed = chargeSpeed;
             }
 
         }
@@ -110,7 +109,7 @@ public class LargeEnemy : EnemyAI
                 if (dmg != null)
                 {
                     dmg.takeDamage(chargeDamage);
-                    _knock.Knockback();
+                    _knock.Knockback(collision.collider);
                 }
             }
         }
@@ -119,16 +118,19 @@ public class LargeEnemy : EnemyAI
     //------------NEW-------------
     private void OnTriggerEnter(Collider other)
     {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
+        if (other.CompareTag("Player"))
         {
-            int force = lvl * damage;
-            float t = force * Time.deltaTime;
-            Debug.Log(other.transform.name);
-            dmg.takeDamage(damage);
-            _knock.Knockback();
-            attacking = false;
+            IDamage dmg = other.GetComponent<IDamage>();
+            IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+            if (other.name == "Player")
+            {
+                int force = lvl * damage;
+                float t = force * Time.deltaTime;
+                Debug.Log(other.transform.name);
+                dmg.takeDamage(damage);
+                _knock.Knockback(other);
+                attacking = false;
+            }
         }
     }
     IEnumerator kick()

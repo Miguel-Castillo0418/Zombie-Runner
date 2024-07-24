@@ -1901,6 +1901,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc00000000011805780618233505443, type: 3}
+--- !u!1001 &181224894
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -75341966256750171, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_Center.x
+      value: -1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978809, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_Name
+      value: SM_Book_Open_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.04072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 49.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7504573
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.66091895
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -82.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030978810, guid: abc00000000009189479640450614978, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: abc00000000009189479640450614978, type: 3}
 --- !u!1001 &181324007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3239,6 +3300,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &338514011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7387,6 +7450,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1 &658170946
 GameObject:
   m_ObjectHideFlags: 0
@@ -7436,6 +7501,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &660833726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9626,6 +9693,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1001 &891067464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90387,8 +90456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572a962b837fc4a4ab49ccb535e1bf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleArr: []
-  instance: {fileID: 0}
 --- !u!4 &1701395155
 Transform:
   m_ObjectHideFlags: 0
@@ -93449,6 +93516,8 @@ MonoBehaviour:
   maxDistanceToPlayer: 20
   minDistanceToPlayer: 5
   maxEnemies: -1
+  spawnedEnemiesCount: 0
+  canSpawn: 1
 --- !u!1 &1998380034
 GameObject:
   m_ObjectHideFlags: 0
@@ -96607,3 +96676,4 @@ SceneRoots:
   - {fileID: 488846593}
   - {fileID: 1701395155}
   - {fileID: 181324007}
+  - {fileID: 181224894}

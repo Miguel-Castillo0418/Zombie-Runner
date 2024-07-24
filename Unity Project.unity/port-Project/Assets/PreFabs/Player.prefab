@@ -1433,6 +1433,9 @@ MonoBehaviour:
     m_Bits: 8
   meleeAttackPoint: {fileID: 5010217418979879590}
   attackRate: 0.5
+  fireSword: {fileID: 8300000, guid: b6c5dcfce44f8ba4b95717462af228b6, type: 3}
+  electricSword: {fileID: 8300000, guid: 12bac81c462ebbb47ba659a3ac68f2d9, type: 3}
+  acidSword: {fileID: 8300000, guid: 3685cf4f017bdf245a78de6a543f0ba2, type: 3}
   loadingIcon: {fileID: 0}
   guns:
   - {fileID: 11400000, guid: 11cc0354b3f1f284a8c66f82fef925c0, type: 2}
@@ -2020,7 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0628df162ba174bbcf883aa6050fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sens: 600
+  sens: 100
   lockVertMin: -70
   lockVertMax: 70
   invertY: 0
@@ -2441,7 +2444,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7716036072084813692}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -16.466663}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.6666665, y: 1, z: 1.6666665}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2449,7 +2452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.916666, y: -1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2590668395495565563

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.Mathematics;
@@ -30,23 +31,26 @@ public class EnemyExploding : MonoBehaviour, IElementalDamage
     //melee dealing damage
     private void OnTriggerEnter(Collider other)
     {
-        IDamage dmg = other.GetComponent<IDamage>();
-        IElementalDamage eDmg = other.GetComponent<IElementalDamage>(); 
-        IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-        if (other.name == "Player")
-        {
-            if (!gonExplode)
+        if (other.CompareTag("Player"))
+        {  //if the enemy collides with something other than the player they will not deal damage
+            IDamage dmg = other.GetComponent<IDamage>();
+            IElementalDamage eDmg = other.GetComponent<IElementalDamage>();
+            IKnockbackable _knock = other.GetComponent<IKnockbackable>();
+            if (other.name == "Player")
             {
-                Debug.Log(other.transform.name);
-                dmg.takeDamage(_aiScript.damage);
-                _knock.Knockback(_aiScript.lvl, _aiScript.damage);
-            }
-            else
-            {
-                eDmg.takeExplosiveDamage(_aiScript.damage*10);
-                _knock.Knockback(_aiScript.lvl, _aiScript.damage);
-                _aiScript.Explode();
-                _aiScript.takeDamage(_aiScript.maxHp);
+                if (!gonExplode)
+                {
+                    Debug.Log(other.transform.name);
+                    dmg.takeDamage(_aiScript.damage);
+                    _knock.Knockback(other, _aiScript.lvl, _aiScript.damage);
+                }
+                else
+                {
+                    eDmg.takeExplosiveDamage(_aiScript.damage * 6);
+                    _knock.Knockback(other,_aiScript.lvl, _aiScript.damage);
+                    _aiScript.Explode();
+                    _aiScript.takeDamage(_aiScript.maxHp);
+                }
             }
         }
     }

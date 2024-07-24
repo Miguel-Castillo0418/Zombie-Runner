@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Transform meleeAttackPoint;
     [SerializeField] private float attackRate;
+    [SerializeField] AudioClip fireSword;
+    [SerializeField] AudioClip electricSword;
+    [SerializeField] AudioClip acidSword;
 
     [SerializeField] public GameObject loadingIcon;
 
@@ -1494,11 +1497,11 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         if (other.CompareTag("SaveZone"))
         {
             gameManager.instance.saveSystem.SaveHP(HP);
-            StartCoroutine(loadIcon());
             SaveGuns();
             gameManager.instance.saveSystem.SavePoints(gameManager.instance.points);
             //SaveSystem.instance.saveCollectibles();
             Debug.Log("Game Saved in SaveZone");
+            StartCoroutine(loadIcon());
         }
     }
     public void SaveGuns()
@@ -1524,14 +1527,14 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     }
 
     //for the knockback to work with the player
-    public void Knockback(int lvl, int damage)
+    public void Knockback(Collider other, int lvl, int damage)
     {
         int force = 5;
         float knockbackDuration = 0.5f;
         float knockbackDistance = 3f;
+        Vector3 knockBackDir = other.transform.forward;//gets direction of the enemy to apply to the player
+        Vector3 targetPosition = transform.position+knockBackDir * knockbackDistance;
 
-        Vector3 targetPosition = transform.position - transform.forward * knockbackDistance;
-        Vector3 knockbackDirection = (targetPosition - transform.position).normalized;
         StartCoroutine(ApplyKnockback(transform, targetPosition, knockbackDuration, force));
     }
     public IEnumerator ApplyKnockback(Transform playerTransform, Vector3 targetPosition, float duration, float force)
@@ -1544,7 +1547,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             float progress = timer / duration;
             float currentSpeed = Mathf.Lerp(0, force, progress);
 
-            playerTransform.position += (targetPosition - initialPosition).normalized * currentSpeed * Time.deltaTime;
+            playerTransform.position += (targetPosition + initialPosition).normalized * currentSpeed * Time.deltaTime;
 
             timer += Time.deltaTime;
             yield return null;

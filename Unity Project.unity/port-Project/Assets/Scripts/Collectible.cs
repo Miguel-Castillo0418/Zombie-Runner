@@ -55,8 +55,8 @@ public class Collectible : MonoBehaviour
         if (newHint == null && other.CompareTag("Player"))
         {
             newHint = Instantiate(hint);
-            newHint.transform.SetParent(transform);
-            newHint.transform.localPosition = new Vector3(0.9f, 1.7f, 0.24f);
+            //newHint.transform.SetParent(transform);
+           // newHint.transform.localPosition = new Vector3(0f, 1f, 0f);
             //now update can be called
             enabled = true;
         }
