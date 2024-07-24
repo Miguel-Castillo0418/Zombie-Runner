@@ -33,7 +33,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     //bool playerInRange;
     bool isDead=false;
     public GameObject explosion;
-   // float range = 5;
+    // float range = 5;
+    GameObject player;
     Vector3 playerDir;
 
     // Start is called before the first frame update
@@ -42,12 +43,21 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         gameManager.instance.updateGameGoal(1);
         maxHp = HP;
         HalfHpSpeed = agent.speed * 3.5f;
+        player = gameManager.instance.player;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerDir=(player.transform.position-transform.position).normalized;
+        playerDir.y = 0f;
+        if (playerDir != Vector3.zero) 
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(playerDir);
+            transform.rotation = lookRotation;
+        }
+      
         if (agent.velocity.normalized.magnitude > 0)
             normSpeed = agent.velocity.normalized.magnitude;
 
