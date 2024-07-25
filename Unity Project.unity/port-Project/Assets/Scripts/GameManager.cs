@@ -61,6 +61,20 @@ public class gameManager : MonoBehaviour
     [SerializeField] public int points;
     int round;
 
+    [SerializeField] GameObject computer;
+    [SerializeField] GameObject compText;
+    [SerializeField] GameObject puzzleTxt;
+    [SerializeField] GameObject gameComputer;
+    [SerializeField] GameObject key;
+    [SerializeField] Animator keyAnim;
+    [SerializeField] AudioSource pipeWin;
+    [SerializeField] public AudioClip winSound;
+    [SerializeField] AudioClip pipeClick;
+    public GameObject PipeHolder;
+    public GameObject[] Pipes;
+    public int totalPipes = 0;
+    private int correctPipes = 0;
+    private bool isWon = false;
 
 
     private int enemyCount;
@@ -80,6 +94,8 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         shopObj = GameObject.FindWithTag("ShopObj");
         shopText = GameObject.FindWithTag("ShopTxt");
+        computer = GameObject.FindWithTag("Computer");
+        compText = GameObject.FindWithTag("CompTxt");
         pin = PinPadUI.GetComponent<PinPad>();
         music = GameObject.FindWithTag("Music");
         playerScript = player.GetComponent<PlayerController>();
@@ -102,6 +118,15 @@ public class gameManager : MonoBehaviour
     private void Start()
     {
         AudioManager.instance.playMusic(music.name);
+
+        keyAnim = key.GetComponent<Animator>();
+
+        totalPipes = PipeHolder.transform.childCount;
+        Pipes = new GameObject[totalPipes];
+        for (int i = 0; i < Pipes.Length; i++)
+        {
+            Pipes[i] = PipeHolder.transform.GetChild(i).gameObject;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -121,8 +146,18 @@ public class gameManager : MonoBehaviour
         }
         // showHints();
         updateAmmo();
-        showShop();
-        pinPad();
+        if (shopObj != null)
+        {
+            showShop();
+        }
+        if (PinPadDoor != null)
+        {
+            pinPad();
+        }
+        if(computer != null)
+        {
+            ComputerGame();
+        }
         timer();
         // buyDoor();
         pointsCountText.text = points.ToString("F0");
@@ -358,5 +393,65 @@ public class gameManager : MonoBehaviour
         int mins = Mathf.FloorToInt(elapsedTime / 60);
         int sec = Mathf.FloorToInt(elapsedTime % 60);
         timeText.text = string.Format("{0:00}:{1:00}", mins, sec);
+    }
+    public void ComputerGame()
+    {
+        //Find distance
+        float computerDist = Vector3.Distance(computer.transform.position, player.transform.position);
+        if (computerDist < 3.2)
+        {
+            //Set text to true
+            compText.SetActive(true);
+            if (Input.GetButtonDown("Shop"))
+            {
+                if (menuActive == null && !isWon)
+                {
+                    game();
+                }
+                else if (menuActive == gameComputer)
+                {
+                    stateUnpause();
+
+                }
+            }
+        }
+        else
+        {
+            compText.SetActive(false);
+        }
+
+
+    }
+
+    public void goodMove()
+    {
+        correctPipes += 1;
+        if (correctPipes == totalPipes)
+        {
+            puzzleTxt.SetActive(true);
+            pipeWin.PlayOneShot(winSound);
+            Instantiate(key, computer.transform);
+            keyAnimation();
+            isWon = true;
+        }
+    }
+    public void badMove()
+    {
+        correctPipes -= 1;
+    }
+    public void game()
+    {
+        statePause();
+        menuActive = gameComputer;
+        menuActive.SetActive(true);
+    }
+    IEnumerator keyAnimation()
+    {
+        yield return new WaitForSeconds(.4F);
+        keyAnim.Play("KeyMove");
+    }
+    public void clickAud()
+    {
+        pipeWin.PlayOneShot(pipeClick, 0.5f);
     }
 }
