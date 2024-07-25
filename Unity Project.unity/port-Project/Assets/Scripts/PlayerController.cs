@@ -87,6 +87,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     public SaveSystem saveSystem;
     private Camera mainCamera;
     private Camera weaponCamera;
+    private bool isAimingJustStarted = false;
+    private float aimingCooldown = 0.21f;
 
 
     void Awake()
@@ -693,6 +695,8 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     IEnumerator ADS()
     {
         isAiming = true;
+        isAimingJustStarted = true; // Set the flag indicating aiming has just started
+        StartCoroutine(ResetAimingJustStarted()); // Start the coroutine to reset the flag
         if (Input.GetButtonDown("Aim"))
         {
             switch (gunModel.tag)
@@ -1144,8 +1148,13 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     IEnumerator MeleeAttack()
     {
-        if (hasSword)
+        if (hasSword && !isAimingJustStarted)
         {
+            if (isAiming)
+            {
+               isAiming = false;
+            }
+
             MeshRenderer gunMeshRenderer = gunModel.GetComponent<MeshRenderer>();
 
             if (gunMeshRenderer != null && hasSword)
@@ -1298,6 +1307,12 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             }
 
         }
+    }
+
+    IEnumerator ResetAimingJustStarted()
+    {
+        yield return new WaitForSeconds(aimingCooldown);
+        isAimingJustStarted = false;
     }
 
     void OnDrawGizmosSelected()
