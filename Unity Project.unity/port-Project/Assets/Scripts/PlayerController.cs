@@ -130,6 +130,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         Debug.Log("Player HP: " + HP);
         updatePlayerUI();
         LoadGuns();
+        gunList[selectedGun].ammoCurr = gunList[selectedGun].ammoMax;
         spreadAngle = 10;
         pelletsFired = 8;
         origHeight = charController.height;
@@ -348,7 +349,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
                     GameObject bulletInstance = Instantiate(bullet, ShootPos.position, Quaternion.LookRotation(shootDirection));
                     Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
-                    rb.velocity = shootDirection * shootDistance;
+                    rb.velocity = shootDirection * shootDistance * 2;
 
                     // Set the damage value of the bullet
                     Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
@@ -365,7 +366,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
                 // If nothing is hit, still instantiate the bullet
                 GameObject bulletInstance = Instantiate(bullet, ShootPos.position, ShootPos.rotation);
                 Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
-                rb.velocity = ShootPos.forward * shootDistance;
+                rb.velocity = ShootPos.forward * shootDistance * 2;
 
                 // Set the damage value of the bullet
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
@@ -1799,7 +1800,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     Vector3 GetTargetPoint()
     {
         // Assuming the crosshair is in the center of the screen
-        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        Vector3 screenCenter = new Vector3(Screen.width / 2.1f, Screen.height / 1.9f, 0);
         Ray ray = mainCamera.ScreenPointToRay(screenCenter);
 
         if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, hitLayers))
