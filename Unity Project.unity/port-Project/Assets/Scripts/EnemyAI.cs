@@ -69,7 +69,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             anim.SetBool("PlayerInRange", true);
-            anim.SetFloat("Speed", 0);
+            anim.SetFloat("Speed", 1);
             //StartCoroutine(MeleeAttack());
         }
         else
