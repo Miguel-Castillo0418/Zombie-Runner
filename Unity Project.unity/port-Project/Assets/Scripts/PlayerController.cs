@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDistance, Color.red);
             movement();
-            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false)
+            if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[selectedGun].ammoCurr > 0 && isShooting == false && !isReloading)
             {
                 StartCoroutine(shoot());
             }
@@ -168,10 +168,14 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             {
                 StartCoroutine(ADS());
                 StartCoroutine(DisableADS());
+            }  
+            if (Input.GetButtonDown("Sprint") || Input.GetButtonUp("Sprint"))
+            {
+                sprint();
+                DisableSprint();
             }
         }
         selectWeapon();
-        sprint();
         crouch();
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -243,7 +247,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             playerVel.y = jumpSpeed;
         }
 
-        playerVel.y -= gravity * Time.deltaTime;
+        playerVel.y -= gravity * 3 * Time.deltaTime;
         charController.Move((playerVel) * Time.deltaTime);
         if (charController.isGrounded && moveDir.magnitude > 0.3f && !isPlayingSteps)
             StartCoroutine(walkCycle());
@@ -254,10 +258,17 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     {
         if (Input.GetButtonDown("Sprint") && charController.isGrounded)
         {
-            isSprinting = true;
-            speed *= sprintMod;
+            if (Input.GetButtonDown("Sprint") && charController.isGrounded)
+            {
+                isSprinting = true;
+                speed *= sprintMod;
+            }
         }
-        else if (Input.GetButtonUp("Sprint"))
+    }
+
+    void DisableSprint()
+    {
+        if (Input.GetButtonUp("Sprint"))
         {
             if (isSprinting && speed != origSpeed)
             {
@@ -317,6 +328,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         if (currentAmmo > 0)
         {
             currentAmmo--;
+            gunList[selectedGun].ammoCurr--;
             isShooting = true;
             gunAud.PlayOneShot(gunList[selectedGun].shootSound, gunList[selectedGun].shootVol);
 
@@ -1343,6 +1355,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
             stockAmmo = 0;
         }
 
+        gunList[selectedGun].ammoCurr = currentAmmo;
         isReloading = false;
 
     }
@@ -1395,8 +1408,105 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         currentAmmo = gun.ammoCurr;
         stockAmmo = gun.ammoMax;
         magazineSize = gun.magazineSize;
-
         gunModel.tag = gun.gunModel.tag;
+
+        switch (gunModel.tag)
+        {
+            case "RevRifle":
+                {
+                    armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                    break;
+                }
+            case "Sniper":
+                {
+
+                    armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                    break;
+                }
+
+            case "Pistol":
+                {
+
+                    armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                    break;
+                }
+
+            case "Bullpup":
+                {
+                    armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                    break;
+                }
+
+            case "Carbine":
+                {
+                    armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                    break;
+                }
+
+            case "CompactCharger":
+                {
+                    armModel.GetComponent<Animator>().Play("Compact_Idle");
+                    break;
+                }
+
+            case "Compensator":
+                {
+                    armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                    break;
+                }
+
+            case "DrumPDW":
+                {
+                    armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                    break;
+                }
+            case "AR":
+                {
+                    armModel.GetComponent<Animator>().Play("AR_Idle");
+                    break;
+                }
+            case "Shotgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                    break;
+                }
+            case "Handgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                    break;
+                }
+            case "MicroSMG":
+                {
+                    armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                    break;
+                }
+            case "SnubRevolver":
+                {
+                    armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                    break;
+                }
+            case "Suppressor":
+                {
+                    armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                    break;
+                }
+            case "Willy":
+                {
+                    armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                    break;
+                }
+            case "WristBreaker":
+                {
+                    armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                    break;
+                }
+
+            default:
+                {
+                    break;
+                }
+        }
+
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterials;
 
@@ -1467,6 +1577,103 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         currentAmmo = gunList[selectedGun].ammoCurr;
         stockAmmo = gunList[selectedGun].ammoMax;
         magazineSize = gunList[selectedGun].magazineSize;
+        gunModel.tag = gunList[selectedGun].gunModel.tag;
+        switch (gunModel.tag)
+        {
+            case "RevRifle":
+                {
+                    armModel.GetComponent<Animator>().Play("RevolvingRifle_Idle");
+                    break;
+                }
+            case "Sniper":
+                {
+
+                    armModel.GetComponent<Animator>().Play("Sniper_Idle");
+                    break;
+                }
+
+            case "Pistol":
+                {
+
+                    armModel.GetComponent<Animator>().Play("Pistol_Idle");
+                    break;
+                }
+
+            case "Bullpup":
+                {
+                    armModel.GetComponent<Animator>().Play("Bullpup_Idle");
+                    break;
+                }
+
+            case "Carbine":
+                {
+                    armModel.GetComponent<Animator>().Play("Carbine_Idle");
+                    break;
+                }
+
+            case "CompactCharger":
+                {
+                    armModel.GetComponent<Animator>().Play("Compact_Idle");
+                    break;
+                }
+
+            case "Compensator":
+                {
+                    armModel.GetComponent<Animator>().Play("Compensator_Idle");
+                    break;
+                }
+
+            case "DrumPDW":
+                {
+                    armModel.GetComponent<Animator>().Play("DrumPDW_Idle");
+                    break;
+                }
+            case "AR":
+                {
+                    armModel.GetComponent<Animator>().Play("AR_Idle");
+                    break;
+                }
+            case "Shotgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Shotgun_Idle");
+                    break;
+                }
+            case "Handgun":
+                {
+                    armModel.GetComponent<Animator>().Play("Handgun_Idle");
+                    break;
+                }
+            case "MicroSMG":
+                {
+                    armModel.GetComponent<Animator>().Play("MicroSMG_Idle");
+                    break;
+                }
+            case "SnubRevolver":
+                {
+                    armModel.GetComponent<Animator>().Play("SnubRevolver_Idle");
+                    break;
+                }
+            case "Suppressor":
+                {
+                    armModel.GetComponent<Animator>().Play("Suppressor_Idle");
+                    break;
+                }
+            case "Willy":
+                {
+                    armModel.GetComponent<Animator>().Play("WillySlapper_Idle");
+                    break;
+                }
+            case "WristBreaker":
+                {
+                    armModel.GetComponent<Animator>().Play("WristBreaker_Idle");
+                    break;
+                }
+
+            default:
+                {
+                    break;
+                }
+        }
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterials = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterials;
