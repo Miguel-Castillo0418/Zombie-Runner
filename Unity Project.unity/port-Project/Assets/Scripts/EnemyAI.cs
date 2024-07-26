@@ -24,7 +24,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
     [SerializeField] public int pointsRewarded;
     [SerializeField] private LayerMask enemyLayer;
     float HalfHpSpeed;
-    float normSpeed;
     [SerializeField] public GameObject onFire;
     [SerializeField] public GameObject poisoned;
     [SerializeField] public GameObject electrified;
@@ -44,6 +43,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         maxHp = HP;
         HalfHpSpeed = agent.speed * 3.5f;
         player = gameManager.instance.player;
+        anim.SetFloat("Speed", 1);
+        agent.speed = 0;
 
     }
 
@@ -56,26 +57,19 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
         {
             Quaternion lookRotation = Quaternion.LookRotation(playerDir);
             transform.rotation = lookRotation;
+            agent.speed = 3.5f;
         }
-      
-        if (agent.velocity.normalized.magnitude > 0)
-            normSpeed = agent.velocity.normalized.magnitude;
-
-        anim.SetFloat("Speed", normSpeed);
         //if player is not in range enemy will follow if not they will stand still while attacking
-       // if (!anim.GetBool("PlayerInRange"))
             agent.SetDestination(gameManager.instance.player.transform.position);
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
+            agent.speed = 0;
             anim.SetBool("PlayerInRange", true);
-            anim.SetFloat("Speed", 1);
-            //StartCoroutine(MeleeAttack());
         }
         else
         {
             anim.SetBool("PlayerInRange", false);
-            anim.SetFloat("Speed", normSpeed);
 
         }
         AudioManager.instance.playZombie();
@@ -118,93 +112,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IKnockbackable
             gameManager.instance.coinsCollected += pointsRewarded;
         }
     }
-    ////for IElementalDamage
-    //public void takeFireDamage(float amount)
-    //{
-    //    GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-    //    fireVFX.transform.parent = transform;
-    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
-    //}
-    //public void takePoisonDamage(float amount)
-    //{
-    //    Vector3 newPosition = Vector3.zero + Vector3.up * 1.5f;
-    //    GameObject poisonVFX = Instantiate(poisoned, newPosition, Quaternion.identity);
-    //    poisonVFX.transform.parent = transform;
-    //    poisonVFX.transform.localPosition = newPosition;
-    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, poisonVFX));
-    //}
-    //public void takeElectricDamage(float amount)
-    //{
-    //    Vector3 newPosition = Vector3.zero + Vector3.forward * 1.3f + Vector3.down * 0.002f;
-    //    GameObject ElecVFX = Instantiate(electrified, transform.position, Quaternion.identity);
-    //    ElecVFX.transform.parent = transform.Find("Z_Body");
-    //    ElecVFX.transform.localRotation = Quaternion.identity;
-    //    ElecVFX.transform.localPosition = newPosition;
-    //    Vector3 newScale = Vector3.one * 0.4f;
-    //    ElecVFX.transform.localScale = newScale;
-    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, ElecVFX));
-    //}
-    //public void takeExplosiveDamage(float amount)
-    //{
-    //    GameObject fireVFX = Instantiate(onFire, transform.position, Quaternion.identity);
-    //    fireVFX.transform.parent = transform;
-    //    StartCoroutine(applyDamageOverTime(amount, 5.0f, fireVFX));
-    //}
-    //public IEnumerator applyDamageOverTime(float amount, float duration, GameObject VFX) //the total damage over time in seconds
-    //{
-    //    float timer = 0f;
-    //    float damagePerSec = amount / duration;
-
-    //    while (timer < duration)
-    //    {
-    //        float damagePerFrame = damagePerSec * Time.deltaTime;
-    //        takeDamage(damagePerFrame);
-    //        timer += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    Destroy(VFX);
-    //}
-    //
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    IDamage dmg = other.GetComponent<IDamage>();
-    //    IKnockbackable _knock = other.GetComponent<IKnockbackable>();
-    //    if (other.name == "Player")
-    //    {
-    //        if (!gonExplode)
-    //        {
-    //            Debug.Log(other.transform.name);
-    //            dmg.takeDamage(damage);
-    //            _knock.Knockback(lvl, damage);
-    //        }
-    //        else
-    //        {
-    //            dmg.takeExplosiveDamage(damage);
-    //            _knock.Knockback(lvl, damage);
-    //            takeDamage(maxHp);
-
-    //        }
-    //    }
-    //}
-    //IEnumerator MeleeAttack()
-    //{
-    //    //Stop the enemy
-    //    //agent.speed = 0;
-    //    // Detect player in range
-    //    Collider[] hitplayer = Physics.OverlapSphere(meleeAttack[meleeAttackIndex].position, meleeRange, enemyLayer);
-
-    //    // Apply damage to player
-    //    foreach (Collider player in hitplayer)
-    //    {
-    //        IDamage damageable = player.GetComponent<IDamage>();
-    //        if (damageable != null)
-    //        {
-    //            damageable.takeDamage(damage);
-    //        }
-    //    }
-
-    //    yield return new WaitForSeconds(atkRate);
-    //}
     public void rewardZombucks()
     {
         gameManager.instance.addPoints(pointsRewarded);
