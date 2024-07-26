@@ -1037,6 +1037,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2398520863123793492, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1795199526}
+    - target: {fileID: 2398520863123793492, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398520863123793492, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3526685497621629034, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1245,9 +1257,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1859757370955410642, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1795199526}
+    - target: {fileID: 1859757370955410642, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1769732763}
+    - target: {fileID: 1859757370955410642, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 1859757370955410642, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetActive
@@ -1374,6 +1394,11 @@ GameObject:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4376887802911255722, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
   m_PrefabInstance: {fileID: 1320381778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1795199526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4343907829384353228, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+  m_PrefabInstance: {fileID: 1715492241}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1896177087
 PrefabInstance:
