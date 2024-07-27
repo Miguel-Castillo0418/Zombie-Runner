@@ -29,12 +29,14 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.loading();
         gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("EndCredits");
+        SceneManager.LoadScene("6-EndCredits");
 
     }
     public void creditsMainMenu()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("1-MainMenu");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void nextLevel()
