@@ -876,6 +876,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Choose Map
       objectReference: {fileID: 0}
+    - target: {fileID: 5561674806323573645, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6019991200683111198, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -20.359985
@@ -924,6 +928,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3ca8651862003f843a8e3b21199baa03, type: 3}
+    - target: {fileID: 8191340904599972100, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191340904599972100, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191340904599972100, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -975,6 +991,10 @@ PrefabInstance:
     - target: {fileID: 29554488161434703, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122323938666521611, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 331853463554645437, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_RaycastTarget
@@ -1210,7 +1230,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7134448471413189273, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134448471413189273, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
+      propertyPath: m_TagString
+      value: Options
       objectReference: {fileID: 0}
     - target: {fileID: 7182141898549317971, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
       propertyPath: m_AnchorMax.x
