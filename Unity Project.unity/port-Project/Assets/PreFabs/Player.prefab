@@ -809,13 +809,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125571938769910091}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.69743025, y: -0.019669384, z: -0.01071462, w: 0.7163026}
-  m_LocalPosition: {x: -0.0017000055, y: -0.012600012, z: 0.004600001}
+  m_LocalRotation: {x: 0.696968, y: 0.032122638, z: 0.04245274, w: 0.7151235}
+  m_LocalPosition: {x: -0.00021000224, y: -0.012550006, z: 0.004600001}
   m_LocalScale: {x: 0.004808276, y: 0.0034392278, z: 0.0027289875}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4217894165981820677}
-  m_LocalEulerAnglesHint: {x: 98.069, y: 100.856, z: 101.68}
+  m_LocalEulerAnglesHint: {x: 96.221985, y: 255.89801, z: 256.737}
 --- !u!1 &2210493219773713781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1411,7 @@ MonoBehaviour:
   gravity: 10
   crouchHeight: 0.5
   slideSpeed: 15
+  money: 0
   hitLayers:
     serializedVersion: 2
     m_Bits: 8
@@ -1437,6 +1438,7 @@ MonoBehaviour:
   electricSword: {fileID: 8300000, guid: 12bac81c462ebbb47ba659a3ac68f2d9, type: 3}
   acidSword: {fileID: 8300000, guid: 3685cf4f017bdf245a78de6a543f0ba2, type: 3}
   loadingIcon: {fileID: 0}
+  playerCollecibles: []
   guns:
   - {fileID: 11400000, guid: 11cc0354b3f1f284a8c66f82fef925c0, type: 2}
   - {fileID: 11400000, guid: f0fa3aece94a57447ba75d43968cf7e0, type: 2}
