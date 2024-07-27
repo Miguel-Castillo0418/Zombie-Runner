@@ -16,17 +16,17 @@ public class enemy_invicible : EnemyAI
         agent.SetDestination(gameManager.instance.player.transform.position);
 
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             Debug.Log("chargeDMG");
-            IDamage dmg = collision.collider.GetComponent<IDamage>();
-            IKnockbackable _knock = collision.collider.GetComponent<IKnockbackable>();
+            IDamage dmg = collision.GetComponent<IDamage>();
+            IKnockbackable _knock = collision.GetComponent<IKnockbackable>();
             if (dmg != null)
             {
                 dmg.takeDamage(100);
-                _knock.Knockback(collision.collider);
+                _knock.Knockback(collision);
             }
         }
     }
