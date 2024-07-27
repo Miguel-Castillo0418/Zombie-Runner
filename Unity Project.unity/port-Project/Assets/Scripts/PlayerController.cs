@@ -14,18 +14,18 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     [SerializeField] AudioSource gunAud;
 
     [SerializeField] public float HP;
-    [SerializeField] int speed;
+    [SerializeField] public int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] float crouchHeight;
     [SerializeField] int slideSpeed;
-
+    public int money;
     [SerializeField] LayerMask hitLayers;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform ShootPos;
-    [SerializeField] GameObject gunModel;
+    [SerializeField] public GameObject gunModel;
     [SerializeField] GameObject armModel;
     [SerializeField] GameObject SwordModel;
     [SerializeField] float shootDamage;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     [SerializeField] AudioClip acidSword;
 
     [SerializeField] public GameObject loadingIcon;
-
+    public GameObject[]playerCollecibles;
     [SerializeField] gunStats[] guns;
     [SerializeField] SwordStats[] swords;
     [SerializeField] public GameObject damageIndicatorPrefab;
@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     void Awake()
     {
         playerControls = new PlayerControls();
+        instance= this;
         
     }
 
@@ -123,8 +124,9 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
     // Start is called before the first frame update
     void Start()
     {
+        playerCollecibles = CollectibleManager.instance.collectibleArr;
         playerControls = new PlayerControls();
-
+        money=gameManager.instance.points;
         HP = gameManager.instance.saveSystem.LoadHP();
         HPorig = 100;
         Debug.Log("Player HP: " + HP);

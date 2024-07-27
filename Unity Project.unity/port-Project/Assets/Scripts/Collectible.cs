@@ -45,8 +45,10 @@ public class Collectible : MonoBehaviour
             item.gameObject.SetActive(true);
             hasObject = true;
             enabled = false;
-            collectibleManager.SaveData();
+            JsonSaveSystem.SavePlayer(PlayerController.instance);
+            //collectibleManager.SaveData();
             AudioManager.instance.playCollectibleGatheredSound();
+            Destroy(newHint);
         }
     }
     private void OnTriggerEnter(Collider other)

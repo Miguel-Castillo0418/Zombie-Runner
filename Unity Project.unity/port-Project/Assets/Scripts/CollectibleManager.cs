@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CollectibleManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] collectibleArr;
+    [SerializeField] public GameObject[] collectibleArr;
 
     public static CollectibleManager instance;
 
@@ -34,7 +34,8 @@ public class CollectibleManager : MonoBehaviour
     {
         // Load collectibles when a scene is loaded
         Time.timeScale = 1.0f;
-        LoadCollectibles();
+        JsonSaveSystem.LoadPlayer();
+        //LoadCollectibles();
     }
 
     public void SaveData()
