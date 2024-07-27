@@ -23,7 +23,7 @@ public class buttonFunctions : MonoBehaviour
     public void mainMenu()
     {
         AudioManager.instance.clickSound("click");
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("1-MainMenu");
     }
     public void creditsMenu()
     {
