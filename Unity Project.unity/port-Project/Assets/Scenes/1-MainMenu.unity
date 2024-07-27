@@ -127,11 +127,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8354875304920652893, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
   m_PrefabInstance: {fileID: 1320381778}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &146024527 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 122323938666521611, guid: eae0a8b68f3a7d84298a368b7c80d814, type: 3}
-  m_PrefabInstance: {fileID: 1715492241}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &364297364 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3526685497621629034, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
@@ -671,11 +666,23 @@ PrefabInstance:
     - target: {fileID: 787400082042454202, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 146024527}
+      objectReference: {fileID: 1769732763}
     - target: {fileID: 787400082042454202, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1795199526}
+    - target: {fileID: 787400082042454202, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 787400082042454202, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 946256226382821523, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_Name
+      value: Back
+      objectReference: {fileID: 0}
     - target: {fileID: 1169086813199229542, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
@@ -875,6 +882,10 @@ PrefabInstance:
     - target: {fileID: 5561674806323573645, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_Name
       value: Choose Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561674806323573645, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6019991200683111198, guid: 68edb512a5a05894897350bcfafc2262, type: 3}
       propertyPath: m_AnchoredPosition.x
