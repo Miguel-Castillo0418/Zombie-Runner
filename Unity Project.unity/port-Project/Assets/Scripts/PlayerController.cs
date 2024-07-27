@@ -1801,17 +1801,35 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     Vector3 GetTargetPoint()
     {
-        // Assuming the crosshair is in the center of the screen
-        Vector3 screenCenter = new Vector3(Screen.width / 2.1f, Screen.height / 1.9f, 0);
-        Ray ray = mainCamera.ScreenPointToRay(screenCenter);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, hitLayers))
+        if (isAiming)
         {
-            return hit.point;
+            // Assuming the crosshair is in the center of the screen
+            Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            Ray ray = mainCamera.ScreenPointToRay(screenCenter);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, hitLayers))
+            {
+                return hit.point;
+            }
+            else
+            {
+                return ray.GetPoint(shootDistance);
+            }
         }
         else
         {
-            return ray.GetPoint(shootDistance);
+            // Assuming the crosshair is in the center of the screen
+            Vector3 screenCenter = new Vector3(Screen.width / 2.1f, Screen.height / 1.9f, 0);
+            Ray ray = mainCamera.ScreenPointToRay(screenCenter);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, shootDistance, hitLayers))
+            {
+                return hit.point;
+            }
+            else
+            {
+                return ray.GetPoint(shootDistance);
+            }
         }
     }
 }
