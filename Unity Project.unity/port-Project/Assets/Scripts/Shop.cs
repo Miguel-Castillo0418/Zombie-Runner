@@ -75,7 +75,7 @@ public class Shop : MonoBehaviour
     public void speedButton()
     {
         
-        if (Zombucks - speedCost >= 0 && speedCap <= 9)
+        if (Zombucks - speedCost >= 0 && speedCap <= 4)
         {
             gameManager.instance.points -= speedCost;
             AudioManager.instance.purchaseSound("Purchase Sound");
