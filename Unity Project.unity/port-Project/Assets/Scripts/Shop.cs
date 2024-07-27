@@ -20,8 +20,13 @@ public class Shop : MonoBehaviour
     [SerializeField] Button healthbutton;
     int Zombucks;
     bool lowHealth;
-
+    int speedCap;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+    }
     void Start()
     {
         HealthCostText.text = healthCost.ToString();
@@ -70,12 +75,13 @@ public class Shop : MonoBehaviour
     public void speedButton()
     {
         
-        if (Zombucks - speedCost >= 0)
+        if (Zombucks - speedCost >= 0 && speedCap <= 9)
         {
             gameManager.instance.points -= speedCost;
             AudioManager.instance.purchaseSound("Purchase Sound");
             updateZombucks();
             playerController.IncreaseSpeed();
+            speedCap++;
         }
         else 
         {

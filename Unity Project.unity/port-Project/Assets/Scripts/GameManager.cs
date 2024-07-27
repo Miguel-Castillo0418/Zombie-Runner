@@ -275,7 +275,7 @@ public class gameManager : MonoBehaviour
 
         {
             shopText.SetActive(true);
-            if (Input.GetButtonDown("Shop"))
+            if (Input.GetButtonDown("Interact"))
             {
                 shopText.SetActive(false);
                 if (menuActive == null)
@@ -289,6 +289,14 @@ public class gameManager : MonoBehaviour
                     stateUnpause();
                     shopText.SetActive(true);
                 }
+            }
+            else if (Input.GetButtonDown("Cancel") && menuActive == menuShop)
+            {
+                stateUnpause();
+                shopText.SetActive(true);
+            }
+            {
+
             }
         }
         else
@@ -370,7 +378,7 @@ public class gameManager : MonoBehaviour
             {
                 pinPadText.SetActive(true);
             }
-            if (Input.GetButtonDown("Shop"))
+            if (Input.GetButtonDown("Interact"))
             {
                 if (menuActive == null && pin.iscorrect == false)
                 {
@@ -380,6 +388,10 @@ public class gameManager : MonoBehaviour
                 {
                     stateUnpause();
                 }
+            }
+            else if (Input.GetButtonDown("Cancel") && menuActive == PinPadUI)
+            {
+                stateUnpause();
             }
         }
         else
@@ -402,7 +414,7 @@ public class gameManager : MonoBehaviour
         {
             //Set text to true
             compText.SetActive(true);
-            if (Input.GetButtonDown("Shop"))
+            if (Input.GetButtonDown("Interact"))
             {
                 if (menuActive == null && !isWon)
                 {
@@ -413,6 +425,10 @@ public class gameManager : MonoBehaviour
                     stateUnpause();
 
                 }
+            }
+            else if(Input.GetButtonDown("Cancel") && menuActive == gameComputer)
+            {
+                stateUnpause();
             }
         }
         else
