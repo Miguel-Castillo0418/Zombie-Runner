@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
         Debug.Log("Player HP: " + HP);
         updatePlayerUI();
         LoadGuns();
-        gunList[selectedGun].ammoCurr = gunList[selectedGun].ammoMax;
+        gunList[selectedGun].ammoCurr = magazineSize;
         spreadAngle = 10;
         pelletsFired = 8;
         origHeight = charController.height;
