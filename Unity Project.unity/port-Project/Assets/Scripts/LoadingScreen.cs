@@ -9,20 +9,6 @@ public class LoadingScreen : MonoBehaviour
     public static LoadingScreen instance;
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Image loadFill;
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-
-    }
 
     public void loadScene(int sceneID)
     {
