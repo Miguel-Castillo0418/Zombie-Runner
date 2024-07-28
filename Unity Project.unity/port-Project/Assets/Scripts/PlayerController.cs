@@ -1378,7 +1378,7 @@ public class PlayerController : MonoBehaviour, IDamage, IKnockbackable, IElement
 
     public void IncreaseSpeed()
     {
-        speed += 2;
+        speed += 1;
     }
 
     public void IncreaseStrength()
