@@ -34,8 +34,8 @@ public class CollectibleManager : MonoBehaviour
     {
         // Load collectibles when a scene is loaded
         Time.timeScale = 1.0f;
-        JsonSaveSystem.LoadPlayer();
-        //LoadCollectibles();
+        //JsonSaveSystem.LoadPlayer();
+        LoadCollectibles();
     }
 
     public void SaveData()
