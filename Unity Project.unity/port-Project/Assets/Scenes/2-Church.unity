@@ -311,6 +311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1350395280189760501, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1591360909698689331, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: loadingScreen
       value: 
@@ -399,9 +403,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI WebGL
       objectReference: {fileID: 0}
+    - target: {fileID: 4878517228896752951, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787629340505401834, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7395779393109160595, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 155.27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -733,7 +745,7 @@ PrefabInstance:
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: nextLevel
       value: 
-      objectReference: {fileID: 1733687424}
+      objectReference: {fileID: 5051340252147912861}
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: gameLevelManager
       value: 
@@ -17666,11 +17678,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9493521d3e3fb249b454d15e047ae71, type: 3}
---- !u!1 &1733687424 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 217696097226575470, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
-  m_PrefabInstance: {fileID: 17773409}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1745018855
 GameObject:
   m_ObjectHideFlags: 0
@@ -21909,11 +21916,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1864232488470686768, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 155.27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3399594874471102281, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381996029984557972, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_Name
@@ -21921,7 +21928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381996029984557972, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4901896175604387733, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_Pivot.x
@@ -22017,13 +22024,18 @@ PrefabInstance:
       objectReference: {fileID: 881927299}
     - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+--- !u!1 &5051340252147912861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8969317558050656461, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+  m_PrefabInstance: {fileID: 5051340252147912860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &5055347409160866258
 BoxCollider:
   m_ObjectHideFlags: 0

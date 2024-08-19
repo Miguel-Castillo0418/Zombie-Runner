@@ -1817,7 +1817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1864232488470686768, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 155.27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2203002662449233558, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_isRightToLeft
@@ -1857,7 +1857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3399594874471102281, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3499815315626665843, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_BlockingMask.m_Bits
@@ -1893,7 +1893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381996029984557972, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4525004928770143749, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: playerController
@@ -2049,7 +2049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7979233586746447973, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_fontColor.a
@@ -2101,6 +2101,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+--- !u!1 &187872239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8969317558050656461, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+  m_PrefabInstance: {fileID: 187872238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &206266524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20072,7 +20077,7 @@ PrefabInstance:
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: nextLevel
       value: 
-      objectReference: {fileID: 2096555445}
+      objectReference: {fileID: 187872239}
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: nextSceneLoad
       value: 4
@@ -29501,6 +29506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1350395280189760501, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1591360909698689331, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: loadingScreen
       value: 
@@ -29589,20 +29598,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI WebGL
       objectReference: {fileID: 0}
+    - target: {fileID: 4878517228896752951, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787629340505401834, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7395779393109160595, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 155.27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
---- !u!1 &2096555445 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 217696097226575470, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
-  m_PrefabInstance: {fileID: 2096555444}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2121571200
 PrefabInstance:
   m_ObjectHideFlags: 0

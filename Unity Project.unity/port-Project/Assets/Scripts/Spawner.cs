@@ -64,7 +64,7 @@ public class Spawner : MonoBehaviour
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere; // * spawnRadius;
         spawnPosition.y = transform.position.y; 
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        Instantiate(enemyPrefab, spawnPosition, enemyPrefab.transform.rotation);
         ++spawnedEnemiesCount;
         Debug.Log("Enemy spawned. Total spawned: " + spawnedEnemiesCount);
 

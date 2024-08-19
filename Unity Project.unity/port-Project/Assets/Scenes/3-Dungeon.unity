@@ -191,6 +191,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1350395280189760501, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1591360909698689331, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: loadingScreen
       value: 
@@ -279,20 +283,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI WebGL
       objectReference: {fileID: 0}
+    - target: {fileID: 4878517228896752951, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787629340505401834, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 20.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7395779393109160595, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 155.27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
---- !u!1 &4511737 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 217696097226575470, guid: 7a815fa6207e2994fa0ef24730404a2b, type: 3}
-  m_PrefabInstance: {fileID: 4511736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6666288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2252,15 +2259,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1864232488470686768, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 155.27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2224284357352845245, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_text
       value: Explore The Catacombs
       objectReference: {fileID: 0}
+    - target: {fileID: 3171479762044887582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3399594874471102281, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3499815315626665843, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_BlockingMask.m_Bits
@@ -2276,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381996029984557972, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4459469321177343974, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_IsActive
@@ -2392,9 +2403,13 @@ PrefabInstance:
       objectReference: {fileID: 1596906280331727573, guid: b7b523d96d53efd42873b608a8de5b80, type: 3}
     - target: {fileID: 7908763929050250582, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8870182191528139042, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8969317558050656461, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2477,7 +2492,7 @@ PrefabInstance:
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: nextLevel
       value: 
-      objectReference: {fileID: 4511737}
+      objectReference: {fileID: 1528442920}
     - target: {fileID: 1294998570048754125, guid: 01311494bf65cf74bb31069d48ca935f, type: 3}
       propertyPath: nextSceneLoad
       value: 3
@@ -22770,6 +22785,14 @@ PrefabInstance:
     - target: {fileID: 1031013980, guid: abc00000000018136321804453325569, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016760213539591035, guid: abc00000000018136321804453325569, type: 3}
+      propertyPath: m_Size.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016760213539591035, guid: abc00000000018136321804453325569, type: 3}
+      propertyPath: m_Center.z
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -88423,6 +88446,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc00000000001161965698868781309, type: 3}
+--- !u!1 &1528442920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8969317558050656461, guid: 54cb1e61785f6fd41ac00d60efdb9e4f, type: 3}
+  m_PrefabInstance: {fileID: 187872238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1538510974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92342,7 +92370,7 @@ PrefabInstance:
       objectReference: {fileID: 1405712784865628135, guid: c792e5ddf40ecb5469cce823bf5fdc68, type: 3}
     - target: {fileID: 6946633519991693708, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
       propertyPath: spawnInterval
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7535136550467049849, guid: 3ea401687b976cd42b4b64260f148d70, type: 3}
       propertyPath: m_Size.x
